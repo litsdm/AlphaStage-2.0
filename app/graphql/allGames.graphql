@@ -1,0 +1,8 @@
+query AllGames {
+  games {
+    _id
+    name
+    description
+    img
+  }
+}
