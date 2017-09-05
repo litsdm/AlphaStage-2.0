@@ -1,1 +1,23 @@
 @import "~font-awesome/css/font-awesome.css";
+
+body {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: 0;
+  font-family: "Open Sans";
+  background-color: #36393E;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none !important;
+}
+
+.content-container {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 270px;
+  width: auto; height: auto;
+  transition: all 0.2s ease-out;
+  overflow-y: scroll;
+}
