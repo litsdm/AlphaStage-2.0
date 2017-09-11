@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import type { Children } from 'react';
 
 import SideBar from '../components/SideBar';
+import TopBar from '../components/TopBar';
 
 export default class App extends Component {
   props: {
@@ -14,6 +15,7 @@ export default class App extends Component {
       <div>
         <SideBar />
         <div className="content-container">
+          <TopBar />
           {this.props.children}
         </div>
       </div>
