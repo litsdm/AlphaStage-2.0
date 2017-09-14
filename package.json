@@ -191,6 +191,7 @@
     "font-awesome": "^4.7.0",
     "graphql-tag": "^2.4.2",
     "history": "^4.6.3",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-apollo": "^1.4.15",
     "react-dom": "^15.6.1",
@@ -199,9 +200,12 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
+    "react-slick": "^0.15.4",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.15"
+    "slick-carousel": "^1.7.1",
+    "source-map-support": "^0.4.15",
+    "uuid": "^3.1.0"
   },
   "devEngines": {
     "node": ">=7.x",

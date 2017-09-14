@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { ConnectedRouter } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
