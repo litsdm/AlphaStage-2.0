@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 
@@ -16,15 +16,11 @@ const withGames = graphql(allGamesQuery, {
   }
 });
 
-class BrowsePage extends Component {
-  render() {
-    return (
-      this.props.loading
-      ? null
-      : <Browse games={this.props.games} />
-    );
-  }
-}
+const BrowsePage = ({ games, loading }) => (
+  loading
+  ? null
+  : <Browse games={games} />
+);
 
 BrowsePage.propTypes = {
   loading: PropTypes.bool,

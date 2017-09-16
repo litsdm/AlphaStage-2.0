@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import uuid from 'uuid/v4';
@@ -8,9 +9,9 @@ import styles from './styles.scss';
 const TopSlider = ({ games }) => {
   const renderGames = () =>
     games.map(game => (
-      <div key={uuid()}>
+      <Link to="/games" key={uuid()}>
         <img className={styles.SliderImage} alt="Game in slider" src={game.img} />
-      </div>
+      </Link>
     ));
 
   const settings = {
