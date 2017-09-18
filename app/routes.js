@@ -9,7 +9,7 @@ import GamePage from './containers/GamePage';
 export default () => (
   <App>
     <Switch>
-      <Route path="/games" component={GamePage} />
+      <Route path="/games/:id" component={GamePage} />
       <Route path="/" component={BrowsePage} />
     </Switch>
   </App>

@@ -1,11 +1,38 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
+import PropTypes from 'prop-types';
 
 import GameShow from '../components/GameShow';
 
-const GamePage = () => (
-  <div>
-    <GameShow />
-  </div>
+import fullGameQuery from '../graphql/fullGame.graphql';
+
+const withGame = graphql(fullGameQuery, {
+  props: ({ data }) => {
+    if (!data.game) return { loading: data.loading };
+    if (data.error) return { hasErrors: true };
+    return {
+      game: data.game,
+    };
+  },
+  options: (props) => ({ variables: { id: props.match.params.id } })
+});
+
+const GamePage = ({ game, loading }) => (
+  loading
+  ? null
+  : <GameShow game={game} />
 );
 
-export default GamePage;
+GamePage.propTypes = {
+  loading: PropTypes.bool,
+  game: PropTypes.object,
+};
+
+GamePage.defaultProps = {
+  loading: false,
+  game: {}
+};
+
+const GamePageWithData = withGame(GamePage);
+
+export default GamePageWithData;
