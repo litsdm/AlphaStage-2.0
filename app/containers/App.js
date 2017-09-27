@@ -7,7 +7,8 @@ import TopBar from '../components/TopBar';
 
 export default class App extends Component {
   props: {
-    children: Children
+    children: Children,
+    history: {}
   };
 
   render() {

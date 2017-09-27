@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 
 import GameShow from '../components/GameShow';
+import Loader from '../components/Loader';
 
 import fullGameQuery from '../graphql/fullGame.graphql';
 
@@ -19,7 +20,7 @@ const withGame = graphql(fullGameQuery, {
 
 const GamePage = ({ game, loading }) => (
   loading
-  ? null
+  ? <Loader />
   : <GameShow game={game} />
 );
 
