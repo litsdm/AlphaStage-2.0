@@ -14,7 +14,7 @@ export default function Root({ store, history }: RootType) {
   return (
     <ApolloProvider store={store} client={client}>
       <ConnectedRouter history={history}>
-        <Routes />
+        <Routes history={history} />
       </ConnectedRouter>
     </ApolloProvider>
   );

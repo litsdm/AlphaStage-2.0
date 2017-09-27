@@ -15,7 +15,7 @@ export default class App extends Component {
       <div>
         <SideBar />
         <div className="content-container">
-          <TopBar />
+          <TopBar history={this.props.history} />
           {this.props.children}
         </div>
       </div>
