@@ -1,0 +1,65 @@
+.Profile {
+  align-items: center;
+  background-color: #2B2C31;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  height: 72px;
+  position: absolute;
+  width: 100%;
+}
+
+.ProfileImg {
+  border-radius: 50%;
+  height: 36px;
+  margin-left: 12px;
+  width: 36px;
+}
+
+.ProfileInfo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  margin-left: 12px;
+  width: 100%;
+}
+
+.Name {
+  font-weight: 100;
+  margin-bottom: 8px;
+}
+
+.ExpBar {
+  height: 3px;
+  background-color: #404040;
+  border-radius: 24px;
+}
+
+.ExpBarFill {
+  height: 3px;
+  width: 0;
+  background-color: hsl(208, 90%, 54%);
+  border-radius: 24px;
+}
+
+.Level {
+  font-size: 12px;
+  font-weight: 100;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.GearIcon {
+  margin: 0 6px;
+  font-size: 1.25rem !important;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}

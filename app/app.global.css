@@ -44,3 +44,7 @@ button:focus {
   filter: alpha(opacity=100);
   cursor: pointer;
 }
+
+p {
+  margin: 0;
+}

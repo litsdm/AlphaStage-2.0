@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { remote } from 'electron';
 import styles from './SideBar.scss';
 
+import Profile from './Profile';
+
 export default class SideBar extends Component {
   handleMaximize = () => {
     const win = remote.getCurrentWindow();
@@ -31,6 +33,7 @@ export default class SideBar extends Component {
           <button className={styles.MinimizeControl} onClick={this.handleMinimize} />
           <button className={styles.MaximizeControl} onClick={this.handleMaximize} />
         </div>
+        <Profile />
       </div>
     );
   }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import type { Children } from 'react';
 
-import SideBar from '../components/SideBar';
+import SideBar from '../components/SideBar/SideBar';
 import TopBar from '../components/TopBar';
 import Auth from '../components/Auth/Auth';
 
