@@ -1,0 +1,117 @@
+.Auth {
+  align-items: center;
+  background: url(https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-245438.jpg) no-repeat center;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.AuthBox {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  display: flex;
+  transition: all 0.2s ease;
+
+  &.OldUser {
+    max-width: 605px;
+  }
+}
+
+.Login, .Signup {
+  background-color: rgba(34, 34, 34, 0.9);
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  padding: 15px 2.5%;
+  width: 300px;
+}
+
+.Signup {
+  width: 400px;
+}
+
+.InputGroup {
+  margin-bottom: 30px;
+}
+
+.Input {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  margin-top: 6px;
+  outline: none;
+  padding: 10px 5px;
+  width: 98%;
+
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: #64B5F6;
+  }
+}
+
+.Tag {
+  color: #afafaf;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.Info {
+  background-color: rgba(34, 34, 34, 1);
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px 2.5%;
+  text-align: center;
+  width: 250px;
+
+  &.NewUser {
+    width: 300px;
+  }
+}
+
+.SubmitButton {
+  align-self: center;
+  background: linear-gradient(hsl(194, 90%, 54%), hsl(208, 90%, 54%));
+  border-radius: 24px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1.4px;
+  max-width: 150px;
+  padding: 8px 26px;
+  transition: all .1s ease-out;
+  text-transform: uppercase;
+
+  &:hover {
+    background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1px;
+    margin-top: -1px;
+  }
+}
+
+.Switch {
+  font-size: 12px;
+  margin-top: 12px;
+
+  button {
+    color: #2091f3;
+    font-size: 12px;
+    padding: 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #20c2f3
+    }
+  }
+}
