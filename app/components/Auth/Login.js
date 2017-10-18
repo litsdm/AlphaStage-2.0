@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import toastr from 'toastr';
 import styles from './styles.scss';
+
+import callApi from '../../helpers/apiCaller';
 
 class Login extends Component {
   state = {
@@ -14,10 +17,36 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
+  login = () => {
+    const { email, password } = this.state;
+    const user = {
+      email,
+      password
+    };
+
+    let errorMessage = '';
+    if (email === '') errorMessage = 'Please enter your email.';
+    else if (password === '') errorMessage = 'Please enter your password.';
+
+    if (errorMessage !== '') {
+      toastr.error(errorMessage);
+      return;
+    }
+
+    callApi('login', user, 'POST')
+      .then(res => res.json())
+      .then(({ token, message }) => {
+        if (message) return Promise.reject(message);
+
+        localStorage.setItem('token', token);
+        return token;
+      })
+      .catch(err => toastr.error(err));
+  }
+
   render() {
     const { switchForm } = this.props;
     const { email, password } = this.state;
-    console.log(email, password);
     return (
       <div className={styles.Login}>
         <div className={styles.InputGroup}>
@@ -43,7 +72,9 @@ class Login extends Component {
           />
         </div>
 
-        <button className={styles.SubmitButton}>Login</button>
+        <button className={styles.SubmitButton} onClick={this.login}>
+          Login
+        </button>
 
         <span className={styles.Switch}>
           New to Alpha Stage? <button onClick={switchForm}>Create an account!</button>
