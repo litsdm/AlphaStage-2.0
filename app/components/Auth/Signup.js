@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import toastr from 'toastr';
 import styles from './styles.scss';
+
+import callApi from '../../helpers/apiCaller';
 
 class Signup extends Component {
   state = {
@@ -14,6 +17,31 @@ class Signup extends Component {
     const { name, value } = event.target;
 
     this.setState({ [name]: value });
+  }
+
+  signup = () => {
+    const { email, username, password, confirmPassword } = this.state;
+
+    let errorMessage = '';
+    if (email === '') errorMessage = 'Please enter your email.';
+    else if (username === '') errorMessage = 'Please enter your username.';
+    else if (password === '') errorMessage = 'Please enter your password.';
+    else if (confirmPassword === '') errorMessage = 'Please re-enter your password to confirm it.';
+
+    if (errorMessage !== '') {
+      toastr.error(errorMessage);
+      return;
+    }
+
+    callApi('signup', this.state, 'POST')
+      .then(res => res.json())
+      .then(({ token, message }) => {
+        if (message) return Promise.reject(message);
+
+        localStorage.setItem('token', token);
+        return token;
+      })
+      .catch(err => toastr.error(err));
   }
 
   render() {
@@ -66,7 +94,9 @@ class Signup extends Component {
           />
         </div>
 
-        <button className={styles.SubmitButton}>Signup</button>
+        <button className={styles.SubmitButton} onClick={this.signup}>
+          Signup
+        </button>
 
         <span className={styles.Switch}>
           Already have an account? <button onClick={switchForm}>Login now!</button>

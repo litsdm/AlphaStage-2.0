@@ -19,10 +19,6 @@ class Login extends Component {
 
   login = () => {
     const { email, password } = this.state;
-    const user = {
-      email,
-      password
-    };
 
     let errorMessage = '';
     if (email === '') errorMessage = 'Please enter your email.';
@@ -33,7 +29,7 @@ class Login extends Component {
       return;
     }
 
-    callApi('login', user, 'POST')
+    callApi('login', this.state, 'POST')
       .then(res => res.json())
       .then(({ token, message }) => {
         if (message) return Promise.reject(message);
