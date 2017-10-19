@@ -23,6 +23,12 @@ class Signup extends Component {
     const { addUser } = this.props;
     const { email, username, password, confirmPassword } = this.state;
 
+    const payload = {
+      user: {
+        ...this.state
+      }
+    };
+
     let errorMessage = '';
     if (email === '') errorMessage = 'Please enter your email.';
     else if (username === '') errorMessage = 'Please enter your username.';
@@ -34,7 +40,7 @@ class Signup extends Component {
       return;
     }
 
-    callApi('signup', this.state, 'POST')
+    callApi('signup', payload, 'POST')
       .then(res => res.json())
       .then(({ token, message }) => {
         if (message) return Promise.reject(message);

@@ -1,23 +1,29 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 import type { Children } from 'react';
 
 import SideBar from '../components/SideBar';
 import TopBar from '../components/TopBar';
 import Auth from '../components/Auth/Auth';
 
-export default class App extends Component {
+const mapStateToProps = ({ user }) => (
+  {
+    user
+  }
+);
+
+class App extends Component {
   props: {
     children: Children,
-    history: {}
+    history: {},
+    user: {}
   };
 
-  state = {
-    isAuthorized: localStorage.getItem('token')
-  }
-
   render() {
-    const { isAuthorized } = this.state;
+    const { user } = this.props;
+    const isAuthorized = !_.isEmpty(user);
     return (
       <div>
         {
@@ -37,3 +43,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, null)(App);
