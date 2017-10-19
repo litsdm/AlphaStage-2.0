@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Profile.scss';
 
-const Profile = ({ user }) => (
+const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+
+const Profile = ({ user, logout }) => (
   <div className={styles.Profile}>
     <img
       className={styles.ProfileImg}
       alt="profile"
-      src="http://www.konbini.com/wp-content/blogs.dir/9/files/2017/04/onepunchman-480x279.jpg"
+      src={DEFAULT_IMAGE}
     />
     <div className={styles.ProfileInfo}>
       <p className={styles.Name}>{user.username}</p>
@@ -16,12 +18,15 @@ const Profile = ({ user }) => (
       </div>
       <p className={styles.Level}>Lv. 100</p>
     </div>
-    <i className={[styles.GearIcon, 'fa fa-cog'].join(' ')} />
+    <button className={styles.OptionsButton} onClick={logout}>
+      <i className="fa fa-sign-out" />
+    </button>
   </div>
 );
 
 Profile.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
 };
 
 export default Profile;

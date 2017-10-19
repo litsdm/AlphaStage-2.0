@@ -27,7 +27,7 @@ class SideBar extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, logout } = this.props;
     return (
       <div className={styles.Menu}>
         <div className={styles.Controls}>
@@ -35,14 +35,15 @@ class SideBar extends Component {
           <button className={styles.MinimizeControl} onClick={this.handleMinimize} />
           <button className={styles.MaximizeControl} onClick={this.handleMaximize} />
         </div>
-        <Profile user={user} />
+        <Profile user={user} logout={logout} />
       </div>
     );
   }
 }
 
 SideBar.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
 };
 
 export default SideBar;
