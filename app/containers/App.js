@@ -30,7 +30,7 @@ class App extends Component {
           isAuthorized
           ? (
             <div>
-              <SideBar />
+              <SideBar user={user} />
               <div className="content-container">
                 <TopBar history={this.props.history} />
                 {this.props.children}
