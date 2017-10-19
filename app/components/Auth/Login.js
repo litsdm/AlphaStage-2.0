@@ -18,6 +18,7 @@ class Login extends Component {
   }
 
   login = () => {
+    const { addUser } = this.props;
     const { email, password } = this.state;
 
     let errorMessage = '';
@@ -35,6 +36,7 @@ class Login extends Component {
         if (message) return Promise.reject(message);
 
         localStorage.setItem('token', token);
+        addUser(token);
         return token;
       })
       .catch(err => toastr.error(err));
@@ -81,7 +83,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  switchForm: PropTypes.func.isRequired
+  switchForm: PropTypes.func.isRequired,
+  addUser: PropTypes.func.isRequired
 };
 
 export default Login;

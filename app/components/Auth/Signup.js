@@ -20,6 +20,7 @@ class Signup extends Component {
   }
 
   signup = () => {
+    const { addUser } = this.props;
     const { email, username, password, confirmPassword } = this.state;
 
     let errorMessage = '';
@@ -39,6 +40,7 @@ class Signup extends Component {
         if (message) return Promise.reject(message);
 
         localStorage.setItem('token', token);
+        addUser(token);
         return token;
       })
       .catch(err => toastr.error(err));
@@ -107,7 +109,8 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  switchForm: PropTypes.func.isRequired
+  switchForm: PropTypes.func.isRequired,
+  addUser: PropTypes.func.isRequired
 };
 
 export default Signup;
