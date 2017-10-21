@@ -9,10 +9,35 @@
   width: 100%;
 }
 
+.ImageContainer {
+  color: white;
+  font-size: 1rem;
+  margin-left: 12px;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+
+  &:hover .ImgOverlay {
+    display: flex;
+  }
+}
+
 .ProfileImg {
   border-radius: 50%;
   height: 36px;
-  margin-left: 12px;
+  width: 36px;
+}
+
+.ImgOverlay {
+  align-items: center;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  height: 36px;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
   width: 36px;
 }
 
