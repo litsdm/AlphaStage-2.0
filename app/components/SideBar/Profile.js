@@ -1,14 +1,25 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import styles from './Profile.scss';
+
+import setProfilePicture from '../../graphql/setProfilePicture.graphql';
 
 import parseImageUpload, { profilePictureOptions } from '../../helpers/parseImageUpload';
 
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
-const Profile = ({ user, logout }) => {
+const withMutation = graphql(setProfilePicture, {
+  props: ({ mutate }) => ({
+    setImage: (userId, url) => mutate({ variables: { userId, url } }),
+  }),
+});
+
+const Profile = ({ user, logout, setImage }) => {
   const chooseProfilePicture = () => {
-    parseImageUpload(profilePictureOptions);
+    parseImageUpload(profilePictureOptions)
+      .then(({ filesUploaded }) => setImage(user._id, filesUploaded[0].url))
+      .catch(err => console.log(err));
   };
 
   return (
@@ -17,7 +28,7 @@ const Profile = ({ user, logout }) => {
         <img
           className={styles.ProfileImg}
           alt="profile"
-          src={DEFAULT_IMAGE}
+          src={user.profilePic || DEFAULT_IMAGE}
         />
         <div className={styles.ImgOverlay}>
           <i className="fa fa-pencil" />
@@ -39,7 +50,8 @@ const Profile = ({ user, logout }) => {
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  setImage: PropTypes.func.isRequired
 };
 
-export default Profile;
+export default withMutation(Profile);

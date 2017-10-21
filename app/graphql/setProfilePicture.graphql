@@ -1,0 +1,8 @@
+mutation SetProfilePicture($userId: String, $url: String) {
+  setProfilePicture(userId: $userId, url: $url) {
+    _id,
+    username,
+    email,
+    profilePic
+  }
+}
