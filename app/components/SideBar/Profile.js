@@ -6,6 +6,7 @@ import styles from './Profile.scss';
 import setProfilePicture from '../../graphql/setProfilePicture.graphql';
 
 import parseImageUpload, { profilePictureOptions } from '../../helpers/parseImageUpload';
+import { renewToken } from '../../helpers/apiCaller';
 
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
@@ -20,7 +21,9 @@ const Profile = ({ user, logout, setImage, updateUserPic }) => {
     parseImageUpload(profilePictureOptions)
       .then(({ filesUploaded }) => {
         const url = filesUploaded[0].url;
-        setImage(user._id, url);
+        setImage(user._id, url)
+          .then(() => renewToken(user._id))
+          .catch(err => console.log(err));
         updateUserPic(url);
 
         return filesUploaded;
