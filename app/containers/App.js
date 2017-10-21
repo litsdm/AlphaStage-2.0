@@ -7,7 +7,7 @@ import SideBar from '../components/SideBar/SideBar';
 import TopBar from '../components/TopBar';
 import Auth from '../components/Auth/Auth';
 
-import { removeUser } from '../actions/user';
+import { removeUser, updateProfilePic } from '../actions/user';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
     localStorage.removeItem('token');
     dispatch(removeUser());
   },
+  updateUserPic: profilePic => dispatch(updateProfilePic(profilePic))
 });
 
 class App extends Component {
@@ -27,11 +28,12 @@ class App extends Component {
     children: Children,
     history: {},
     user: {},
-    logout: Function //eslint-disable-line
+    logout: Function, //eslint-disable-line
+    updateUserPic: Function //eslint-disable-line
   };
 
   render() {
-    const { user, logout } = this.props;
+    const { user, logout, updateUserPic } = this.props;
     const isAuthorized = !_.isEmpty(user);
     return (
       <div>
@@ -39,7 +41,7 @@ class App extends Component {
           isAuthorized
           ? (
             <div>
-              <SideBar user={user} logout={logout} />
+              <SideBar user={user} logout={logout} updateUserPic={updateUserPic} />
               <div className="content-container">
                 <TopBar history={this.props.history} />
                 {this.props.children}

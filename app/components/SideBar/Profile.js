@@ -15,10 +15,16 @@ const withMutation = graphql(setProfilePicture, {
   }),
 });
 
-const Profile = ({ user, logout, setImage }) => {
+const Profile = ({ user, logout, setImage, updateUserPic }) => {
   const chooseProfilePicture = () => {
     parseImageUpload(profilePictureOptions)
-      .then(({ filesUploaded }) => setImage(user._id, filesUploaded[0].url))
+      .then(({ filesUploaded }) => {
+        const url = filesUploaded[0].url;
+        setImage(user._id, url);
+        updateUserPic(url);
+
+        return filesUploaded;
+      })
       .catch(err => console.log(err));
   };
 
@@ -51,7 +57,8 @@ const Profile = ({ user, logout, setImage }) => {
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
-  setImage: PropTypes.func.isRequired
+  setImage: PropTypes.func.isRequired,
+  updateUserPic: PropTypes.func.isRequired
 };
 
 export default withMutation(Profile);
