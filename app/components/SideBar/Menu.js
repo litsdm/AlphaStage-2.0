@@ -4,7 +4,7 @@ import styles from './Menu.scss';
 
 const Menu = () => (
   <div className={styles.Menu}>
-    <NavLink to="/" className={styles.Item} activeClassName={styles.active}>
+    <NavLink to="/" exact className={styles.Item} activeClassName={styles.active}>
       <div className={styles.Indicator} />
       Browse
     </NavLink>
