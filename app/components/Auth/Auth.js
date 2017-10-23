@@ -7,6 +7,7 @@ import styles from './styles.scss';
 import Login from './Login';
 import Signup from './Signup';
 import Info from './Info';
+import Controls from '../Controls';
 
 import { addUser } from '../../actions/user';
 
@@ -28,6 +29,7 @@ class Auth extends Component {
     const { isNewUser } = this.state;
     return (
       <div className={styles.Auth}>
+        <Controls />
         <div className={[styles.AuthBox, isNewUser ? '' : styles.OldUser].join(' ')}>
           {
             isNewUser
