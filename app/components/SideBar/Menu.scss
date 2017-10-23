@@ -1,0 +1,38 @@
+.Menu {
+  margin-top: 52px;
+}
+
+.Item {
+  color: #97989A;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1.4px;
+  padding: 12px 24px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+
+  &:hover {
+    background: linear-gradient(#2B2C31, #2b2b31);
+    color: #fff;
+  }
+
+  &.active {
+    background: linear-gradient(#2B2C31, #2b2b31);
+    color: #fff;
+
+    .Indicator {
+      display: block;
+    }
+  }
+}
+
+.Indicator {
+  background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
+  display: none;
+  height: 43px;
+  position: absolute;
+  margin-left: -24px;
+  margin-top: -12px;
+  width: 4px;
+}
