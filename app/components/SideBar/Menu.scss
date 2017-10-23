@@ -5,12 +5,10 @@
 .Item {
   color: #97989A;
   display: block;
-  font-size: 14px;
   font-weight: bold;
-  letter-spacing: 1.4px;
+  letter-spacing: 1px;
   padding: 12px 24px;
   transition: all 0.2s ease;
-  text-transform: uppercase;
 
   &:hover {
     background: linear-gradient(#2B2C31, #2b2b31);
