@@ -1,25 +1,18 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import styles from './Menu.scss';
 
-const Menu = ({ location }) => {
-  const getClassName = (path) => (
-    location.pathname === path ? [styles.Item, styles.active].join(' ') : styles.Item
-  );
+const Menu = () => (
+  <div className={styles.Menu}>
+    <NavLink to="/" className={styles.Item} activeClassName={styles.active}>
+      <div className={styles.Indicator} />
+      Browse
+    </NavLink>
+    <NavLink to="/games/59cd9b5daa26c7178df5f511" className={styles.Item} activeClassName={styles.active}>
+      <div className={styles.Indicator} />
+      Game
+    </NavLink>
+  </div>
+);
 
-  return (
-    <div className={styles.Menu}>
-      <Link to="/" className={getClassName('/')}>
-        <div className={styles.Indicator} />
-        Browse
-      </Link>
-    </div>
-  );
-};
-
-Menu.propTypes = {
-  location: PropTypes.object.isRequired
-};
-
-export default withRouter(Menu);
+export default Menu;
