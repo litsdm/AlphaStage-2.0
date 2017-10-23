@@ -1,0 +1,44 @@
+.Controls {
+  position: absolute;
+  top: 0; left: 0;
+  padding: 12px;
+}
+
+.CloseControl,
+.MinimizeControl,
+.MaximizeControl {
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  height: 12px;
+  margin: 0 3px;
+  width: 12px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.CloseControl {
+  background-color: #CF4747;
+
+  &:hover {
+    background-color: #FC5252;
+  }
+}
+
+.MinimizeControl {
+  background-color: #CCB544;
+
+  &:hover {
+    background-color: #FCDF52;
+  }
+}
+
+.MaximizeControl {
+  background-color: #36A336;
+
+  &:hover {
+    background-color: #42C942;
+  }
+}
