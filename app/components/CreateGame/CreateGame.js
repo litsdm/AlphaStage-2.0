@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles.scss';
 
 import Basic from './Basic';
+import Media from './Media';
 
 class CreateGame extends Component {
   state = {
@@ -17,7 +18,6 @@ class CreateGame extends Component {
 
   render() {
     const { title, shortDescription, releaseStatus } = this.state;
-    console.log(this.state);
     return (
       <div className={styles.CreateGame}>
         <Basic
@@ -26,6 +26,8 @@ class CreateGame extends Component {
           releaseStatus={releaseStatus}
           handleChange={this.handleChange}
         />
+        <div className={styles.Divider} />
+        <Media />
         <div className={styles.Divider} />
       </div>
     );
