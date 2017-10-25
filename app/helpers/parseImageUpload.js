@@ -35,7 +35,12 @@ export const thumbnailOptions = {
   },
 };
 
+export const screenshotOptions = {
+  maxFiles: 6
+};
+
 const baseOptions = {
+  accept: 'image/*',
   uploadInBackground: false // hack for crop to be respected when not moved by users
 };
 

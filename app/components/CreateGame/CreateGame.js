@@ -10,7 +10,8 @@ class CreateGame extends Component {
     shortDescription: '',
     releaseStatus: '',
     coverImage: '',
-    thumbnail: ''
+    thumbnail: '',
+    screenshots: []
   }
 
   handleChange = ({ target }) => {
@@ -24,7 +25,8 @@ class CreateGame extends Component {
       shortDescription,
       releaseStatus,
       coverImage,
-      thumbnail
+      thumbnail,
+      screenshots
     } = this.state;
 
     return (
@@ -39,6 +41,7 @@ class CreateGame extends Component {
         <Media
           coverImage={coverImage}
           thumbnail={thumbnail}
+          screenshots={screenshots}
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />

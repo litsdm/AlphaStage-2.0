@@ -1,18 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import parseImageUpload, { coverImageOptions, thumbnailOptions } from '../../helpers/parseImageUpload';
+import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
 
 const Media = ({ handleChange }) => {
-  const chooseSingleImage = (type) => () => {
-    const options = type === 'cover' ? coverImageOptions : thumbnailOptions;
-    const name = type === 'cover' ? 'coverImage' : 'thumbnail';
-    parseImageUpload(options)
+  const chooseImage = (type) => () => {
+    const options = {
+      cover: coverImageOptions,
+      thumb: thumbnailOptions,
+      screenshots: screenshotOptions
+    };
+
+    const names = {
+      cover: 'coverImage',
+      thumb: 'thumbnail',
+      screenshots: 'screenshots'
+    };
+
+    parseImageUpload(options[type])
       .then(({ filesUploaded }) => {
+        const value = type === 'screenshots' ? filesUploaded : filesUploaded[0].url;
         const event = {
           target: {
-            name,
-            value: filesUploaded[0].url
+            name: names[type],
+            value
           }
         };
         handleChange(event);
@@ -35,7 +46,7 @@ const Media = ({ handleChange }) => {
           <button
             id="coverImg"
             className={styles.ImageButton}
-            onClick={chooseSingleImage('cover')}
+            onClick={chooseImage('cover')}
           >
             Add cover image
           </button>
@@ -49,7 +60,7 @@ const Media = ({ handleChange }) => {
           <button
             id="thumbnail"
             className={styles.ImageButton}
-            onClick={chooseSingleImage('thumb')}
+            onClick={chooseImage('thumb')}
           >
               Add Thumbnail
             </button>
@@ -59,7 +70,13 @@ const Media = ({ handleChange }) => {
           <p className={styles.InputDescription}>
             Adding screenshots is optional but highly recommended
           </p>
-          <button id="screenshots" className={styles.ImageButton}>Add Screenshots</button>
+          <button
+            id="screenshots"
+            className={styles.ImageButton}
+            onClick={chooseImage('screenshots')}
+          >
+              Add Screenshots
+            </button>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="trailer" className={styles.Tag}>Trailer</label>
