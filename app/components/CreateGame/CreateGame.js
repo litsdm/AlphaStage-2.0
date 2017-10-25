@@ -8,7 +8,9 @@ class CreateGame extends Component {
   state = {
     title: '',
     shortDescription: '',
-    releaseStatus: ''
+    releaseStatus: '',
+    coverImage: '',
+    thumbnail: ''
   }
 
   handleChange = ({ target }) => {
@@ -17,7 +19,14 @@ class CreateGame extends Component {
   }
 
   render() {
-    const { title, shortDescription, releaseStatus } = this.state;
+    const {
+      title,
+      shortDescription,
+      releaseStatus,
+      coverImage,
+      thumbnail
+    } = this.state;
+
     return (
       <div className={styles.CreateGame}>
         <Basic
@@ -27,7 +36,11 @@ class CreateGame extends Component {
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
-        <Media />
+        <Media
+          coverImage={coverImage}
+          thumbnail={thumbnail}
+          handleChange={this.handleChange}
+        />
         <div className={styles.Divider} />
       </div>
     );

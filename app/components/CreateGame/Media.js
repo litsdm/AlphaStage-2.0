@@ -1,7 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import parseImageUpload, { coverImageOptions, thumbnailOptions } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
 
-const Media = () => {
+const Media = ({ handleChange }) => {
+  const chooseSingleImage = (type) => () => {
+    const options = type === 'cover' ? coverImageOptions : thumbnailOptions;
+    const name = type === 'cover' ? 'coverImage' : 'thumbnail';
+    parseImageUpload(options)
+      .then(({ filesUploaded }) => {
+        const event = {
+          target: {
+            name,
+            value: filesUploaded[0].url
+          }
+        };
+        handleChange(event);
+        return Promise.resolve(event);
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
@@ -13,15 +32,27 @@ const Media = () => {
           <p className={styles.InputDescription}>
             {'This image will be used as the header in your game\'s page. (Aspect ratio: 980x400)'}
           </p>
-          <button id="coverImg" className={styles.ImageButton}>Add cover image</button>
+          <button
+            id="coverImg"
+            className={styles.ImageButton}
+            onClick={chooseSingleImage('cover')}
+          >
+            Add cover image
+          </button>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="thumbnail" className={styles.Tag}>Thumbnail</label>
           <p className={styles.InputDescription}>
             This image will be used to display your game throughout Alpha Stage.
-            (Aspect ratio: 325x152)
+            (Aspect ratio: 325x150)
           </p>
-          <button id="thumbnail" className={styles.ImageButton}>Add Thumbnail</button>
+          <button
+            id="thumbnail"
+            className={styles.ImageButton}
+            onClick={chooseSingleImage('thumb')}
+          >
+              Add Thumbnail
+            </button>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="screenshots" className={styles.Tag}>Screenshots</label>
@@ -40,6 +71,10 @@ const Media = () => {
       </div>
     </div>
   );
+};
+
+Media.propTypes = {
+  handleChange: PropTypes.func.isRequired
 };
 
 export default Media;
