@@ -33,10 +33,10 @@
   border-radius: 4px;
   color: white;
   display: block;
-  font-size: 12px;
+  font-size: 16px;
   margin-top: 6px;
   outline: none;
-  padding: 10px 5px;
+  padding: 10px 10px;
   width: 80%;
 
   &:focus {
@@ -109,4 +109,15 @@
     font-size: 1rem;
     margin-right: 12px;
   }
+}
+
+.Select {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  color: white;
+  display: block;
+  font-size: 16px;
+  height: 35px;
+  margin-top: 6px;
+  width: 80%;
 }

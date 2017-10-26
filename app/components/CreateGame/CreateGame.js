@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; //eslint-disable-line
 import { EditorState } from 'draft-js';
 import styles from './styles.scss';
 
@@ -14,7 +14,9 @@ class CreateGame extends Component {
     coverImage: '',
     thumbnail: '',
     screenshots: [],
-    editorState: EditorState.createEmpty()
+    editorState: EditorState.createEmpty(),
+    genre: 'Adventure',
+    tags: ''
   }
 
   handleChange = ({ target }) => {
@@ -30,7 +32,8 @@ class CreateGame extends Component {
       coverImage,
       thumbnail,
       screenshots,
-      editorState
+      editorState,
+      tags
     } = this.state;
 
     return (
@@ -49,7 +52,7 @@ class CreateGame extends Component {
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
-        <Details handleChange={this.handleChange} editorState={editorState} />
+        <Details handleChange={this.handleChange} editorState={editorState} tags={tags} />
         <div className={styles.Divider} />
       </div>
     );

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'; //eslint-disable-line
 import PropTypes from 'prop-types';
 import { Editor, RichUtils } from 'draft-js';
 import styles from './styles.scss';
 
-const Details = ({ editorState, handleChange }) => {
+const Details = ({ editorState, tags, handleChange }) => {
   const onChange = (value) => {
     handleChange({ target: { name: 'editorState', value } });
   };
@@ -44,6 +44,29 @@ const Details = ({ editorState, handleChange }) => {
             />
           </div>
         </div>
+        <div className={styles.InputContainer}>
+          <label htmlFor="genreSelect" className={styles.Tag}>Genre</label>
+          <select
+            id="genreSelect"
+            name="genre"
+            className={styles.Select}
+            onChange={handleChange}
+          >
+            <option>Adventure</option>
+            <option>Action</option>
+            <option>Shooter</option>
+          </select>
+        </div>
+        <div className={styles.InputContainer}>
+          <label htmlFor="tags" className={styles.Tag}>Tags</label>
+          <input
+            id="tags"
+            name="tags"
+            className={styles.Input}
+            onChange={handleChange}
+            value={tags}
+          />
+        </div>
       </div>
     </div>
   );
@@ -51,7 +74,8 @@ const Details = ({ editorState, handleChange }) => {
 
 Details.propTypes = {
   editorState: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  tags: PropTypes.string.isRequired
 };
 
 export default Details;
