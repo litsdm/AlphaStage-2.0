@@ -70,6 +70,10 @@ class CreateGame extends Component {
         <div className={styles.Divider} />
         <Uploads platforms={platforms} />
         <div className={styles.Divider} />
+        <div className={styles.OptionsContainer}>
+          <button className={styles.CancelButton}>Cancel</button>
+          <button className={styles.FormButton}>Create Game</button>
+        </div>
       </div>
     );
   }
