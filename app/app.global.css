@@ -53,3 +53,15 @@ button:focus {
 p {
   margin: 0;
 }
+
+.DraftEditor-root {
+  color: black;
+  width: 550px;
+  padding: 12px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.public-DraftEditor-content {
+  height: 200px;
+}

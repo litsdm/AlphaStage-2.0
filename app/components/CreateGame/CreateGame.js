@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { EditorState } from 'draft-js';
 import styles from './styles.scss';
 
 import Basic from './Basic';
 import Media from './Media';
+import Details from './Details';
 
 class CreateGame extends Component {
   state = {
@@ -11,7 +13,8 @@ class CreateGame extends Component {
     releaseStatus: '',
     coverImage: '',
     thumbnail: '',
-    screenshots: []
+    screenshots: [],
+    editorState: EditorState.createEmpty()
   }
 
   handleChange = ({ target }) => {
@@ -26,7 +29,8 @@ class CreateGame extends Component {
       releaseStatus,
       coverImage,
       thumbnail,
-      screenshots
+      screenshots,
+      editorState
     } = this.state;
 
     return (
@@ -44,6 +48,8 @@ class CreateGame extends Component {
           screenshots={screenshots}
           handleChange={this.handleChange}
         />
+        <div className={styles.Divider} />
+        <Details handleChange={this.handleChange} editorState={editorState} />
         <div className={styles.Divider} />
       </div>
     );

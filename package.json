@@ -187,6 +187,7 @@
   },
   "dependencies": {
     "devtron": "^1.4.0",
+    "draft-js": "^0.10.4",
     "electron-debug": "^1.2.0",
     "filestack-js": "^0.9.9",
     "font-awesome": "^4.7.0",

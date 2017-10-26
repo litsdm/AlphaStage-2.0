@@ -88,3 +88,25 @@
     background-color: #2098f3;
   }
 }
+
+.Editor {
+  background-color: #fff;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.EditorDivider {
+  background-color: #dfdfdf;
+  height: 1px;
+  margin-top: 6px;
+}
+
+.EditorButtons {
+  padding-top: 12px;
+  padding-left: 12px;
+
+  button {
+    font-size: 1rem;
+    margin-right: 12px;
+  }
+}
