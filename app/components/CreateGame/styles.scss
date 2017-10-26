@@ -72,10 +72,11 @@
   font-size: 12px;
 }
 
-.ImageButton {
+.FormButton {
   background-color: #2091f3;
   border-radius: 4px;
   color: white;
+  display: block;
   font-size: 16px;
   font-weight: bold;
   margin-top: 12px;
@@ -108,6 +109,10 @@
   button {
     font-size: 1rem;
     margin-right: 12px;
+
+    i {
+      pointer-events: none;
+    }
   }
 }
 
@@ -120,4 +125,30 @@
   height: 35px;
   margin-top: 6px;
   width: 80%;
+}
+
+.Platforms {
+  margin-top: 6px;
+}
+
+.PlatformButton {
+  border-radius: 4px;
+  color: #dfdfdf;
+  font-size: 1.5rem;
+  height: 40px;
+  margin-right: 12px;
+  width: 40px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &.active {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+  }
+
+  i {
+    pointer-events: none;
+  }
 }

@@ -45,7 +45,7 @@ const Media = ({ handleChange }) => {
           </p>
           <button
             id="coverImg"
-            className={styles.ImageButton}
+            className={styles.FormButton}
             onClick={chooseImage('cover')}
           >
             Add cover image
@@ -59,7 +59,7 @@ const Media = ({ handleChange }) => {
           </p>
           <button
             id="thumbnail"
-            className={styles.ImageButton}
+            className={styles.FormButton}
             onClick={chooseImage('thumb')}
           >
               Add Thumbnail
@@ -72,7 +72,7 @@ const Media = ({ handleChange }) => {
           </p>
           <button
             id="screenshots"
-            className={styles.ImageButton}
+            className={styles.FormButton}
             onClick={chooseImage('screenshots')}
           >
               Add Screenshots

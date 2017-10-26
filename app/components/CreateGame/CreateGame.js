@@ -5,12 +5,15 @@ import styles from './styles.scss';
 import Basic from './Basic';
 import Media from './Media';
 import Details from './Details';
+import Uploads from './Uploads';
 
 class CreateGame extends Component {
   state = {
     title: '',
     shortDescription: '',
     releaseStatus: '',
+    win: true,
+    mac: false,
     coverImage: '',
     thumbnail: '',
     screenshots: [],
@@ -29,6 +32,8 @@ class CreateGame extends Component {
       title,
       shortDescription,
       releaseStatus,
+      win,
+      mac,
       coverImage,
       thumbnail,
       screenshots,
@@ -37,12 +42,15 @@ class CreateGame extends Component {
       tags
     } = this.state;
 
+    const platforms = { win, mac };
+
     return (
       <div className={styles.CreateGame}>
         <Basic
           title={title}
           shortDescription={shortDescription}
           releaseStatus={releaseStatus}
+          platforms={platforms}
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
@@ -59,6 +67,8 @@ class CreateGame extends Component {
           tags={tags}
           genre={genre}
         />
+        <div className={styles.Divider} />
+        <Uploads platforms={platforms} />
         <div className={styles.Divider} />
       </div>
     );
