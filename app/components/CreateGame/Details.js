@@ -1,9 +1,25 @@
 import React from 'react'; //eslint-disable-line
 import PropTypes from 'prop-types';
 import { Editor, RichUtils } from 'draft-js';
+import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
-const Details = ({ editorState, tags, handleChange }) => {
+const genres = [
+  'Action',
+  'Adventure',
+  'Indie',
+  'Massively Multiplayer',
+  'Platformer',
+  'Puzzle',
+  'Role Playing',
+  'Shooter',
+  'Simulation',
+  'Sports',
+  'Strategy',
+  'Other'
+];
+
+const Details = ({ editorState, tags, genre, handleChange }) => {
   const onChange = (value) => {
     handleChange({ target: { name: 'editorState', value } });
   };
@@ -20,6 +36,10 @@ const Details = ({ editorState, tags, handleChange }) => {
   const toggleInlineStyle = (inlineStyle) => () => {
     onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
   };
+
+  const renderOptions = () => (
+    genres.map(value => <option value={value} key={uuid()}>{value}</option>)
+  );
 
   return (
     <div className={styles.Row}>
@@ -51,10 +71,9 @@ const Details = ({ editorState, tags, handleChange }) => {
             name="genre"
             className={styles.Select}
             onChange={handleChange}
+            value={genre}
           >
-            <option>Adventure</option>
-            <option>Action</option>
-            <option>Shooter</option>
+            {renderOptions()}
           </select>
         </div>
         <div className={styles.InputContainer}>
@@ -75,7 +94,8 @@ const Details = ({ editorState, tags, handleChange }) => {
 Details.propTypes = {
   editorState: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  tags: PropTypes.string.isRequired
+  tags: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired
 };
 
 export default Details;

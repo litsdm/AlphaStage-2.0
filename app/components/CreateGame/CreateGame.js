@@ -15,7 +15,7 @@ class CreateGame extends Component {
     thumbnail: '',
     screenshots: [],
     editorState: EditorState.createEmpty(),
-    genre: 'Adventure',
+    genre: 'Action',
     tags: ''
   }
 
@@ -33,6 +33,7 @@ class CreateGame extends Component {
       thumbnail,
       screenshots,
       editorState,
+      genre,
       tags
     } = this.state;
 
@@ -52,7 +53,12 @@ class CreateGame extends Component {
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
-        <Details handleChange={this.handleChange} editorState={editorState} tags={tags} />
+        <Details
+          handleChange={this.handleChange}
+          editorState={editorState}
+          tags={tags}
+          genre={genre}
+        />
         <div className={styles.Divider} />
       </div>
     );
