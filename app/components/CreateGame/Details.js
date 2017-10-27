@@ -4,6 +4,8 @@ import { Editor, RichUtils } from 'draft-js';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
+import TagsInput from '../TagsInput/TagsInput';
+
 const genres = [
   'Action',
   'Adventure',
@@ -20,6 +22,16 @@ const genres = [
 ];
 
 const Details = ({ editorState, tags, genre, handleChange }) => {
+  const handleAddTag = (tag) => {
+    const value = [...tags, tag];
+    handleChange({ target: { name: 'tags', value } });
+  };
+
+  const handleRemoveTag = (index) => {
+    const value = [...tags.slice(0, index), ...tags.slice(index + 1)];
+    handleChange({ target: { name: 'tags', value } });
+  };
+
   const onChange = (value) => {
     handleChange({ target: { name: 'editorState', value } });
   };
@@ -78,13 +90,10 @@ const Details = ({ editorState, tags, genre, handleChange }) => {
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="tags" className={styles.Tag}>Tags</label>
-          <input
-            id="tags"
-            name="tags"
-            className={styles.Input}
-            onChange={handleChange}
-            value={tags}
-          />
+          <p className={styles.InputDescription}>
+            When you finish writing your tag press Enter to add it.
+          </p>
+          <TagsInput tags={tags} handleAddTag={handleAddTag} handleRemoveTag={handleRemoveTag} />
         </div>
       </div>
     </div>
@@ -94,7 +103,7 @@ const Details = ({ editorState, tags, genre, handleChange }) => {
 Details.propTypes = {
   editorState: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  tags: PropTypes.string.isRequired,
+  tags: PropTypes.array.isRequired,
   genre: PropTypes.string.isRequired
 };
 

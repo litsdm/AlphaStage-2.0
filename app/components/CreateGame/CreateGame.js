@@ -19,7 +19,7 @@ class CreateGame extends Component {
     screenshots: [],
     editorState: EditorState.createEmpty(),
     genre: 'Action',
-    tags: ''
+    tags: []
   }
 
   handleChange = ({ target }) => {
