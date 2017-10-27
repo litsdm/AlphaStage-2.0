@@ -2703,6 +2703,14 @@ double-ended-queue@^2.1.0-0:
   version "2.1.0-0"
   resolved "https://registry.yarnpkg.com/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz#103d3527fd31528f40188130c841efdd78264e5c"
 
+draft-js@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.4.tgz#147741642097c8120d8edc232e9503e8b7fb8d35"
+  dependencies:
+    fbjs "^0.8.15"
+    immutable "~3.7.4"
+    object-assign "^4.1.0"
+
 duplexer2@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/duplexer2/-/duplexer2-0.0.2.tgz#c614dcf67e2fb14995a91711e5a617e8a60a31db"
@@ -3536,6 +3544,18 @@ fbjs-scripts@^0.8.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
+fbjs@^0.8.15:
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
+  dependencies:
+    core-js "^1.0.0"
+    isomorphic-fetch "^2.1.1"
+    loose-envify "^1.0.0"
+    object-assign "^4.1.0"
+    promise "^7.1.1"
+    setimmediate "^1.0.5"
+    ua-parser-js "^0.7.9"
+
 fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
@@ -4341,6 +4361,10 @@ ieee754@^1.1.4:
 ignore@^3.2.0:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.3.tgz#432352e57accd87ab3110e82d3fea0e47812156d"
+
+immutable@~3.7.4:
+  version "3.7.6"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
 
 import-lazy@^2.1.0:
   version "2.1.0"

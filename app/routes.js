@@ -6,10 +6,12 @@ import PropTypes from 'prop-types';
 import App from './containers/App';
 import BrowsePage from './containers/BrowsePage';
 import GamePage from './containers/GamePage';
+import CreateGamePage from './containers/CreateGamePage';
 
 const Routes = ({ history }) => (
   <App history={history}>
     <Switch>
+      <Route path="/games/new" component={CreateGamePage} />
       <Route path="/games/:id" component={GamePage} />
       <Route path="/" component={BrowsePage} />
     </Switch>
