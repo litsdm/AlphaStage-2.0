@@ -8,12 +8,14 @@ const Uploads = ({ platforms }) => {
       ? (
         <div className={styles.InputContainer}>
           <label htmlFor="winBuild" className={styles.Tag}>Windows Build</label>
-          <button
+          <input id="winFilePicker" className={styles.FileInput} type="file" />
+          <label
             id="winBuild"
-            className={styles.FormButton}
+            htmlFor="winFilePicker"
+            className={styles.LabelButton}
           >
             Add windows build
-          </button>
+          </label>
         </div>
       )
       : null
@@ -24,12 +26,14 @@ const Uploads = ({ platforms }) => {
       ? (
         <div className={styles.InputContainer}>
           <label htmlFor="macBuild" className={styles.Tag}>Mac Build</label>
-          <button
+          <input id="macFilePicker" className={styles.FileInput} type="file" />
+          <label
             id="macBuild"
-            className={styles.FormButton}
+            htmlFor="macFilePicker"
+            className={styles.LabelButton}
           >
             Add mac build
-          </button>
+          </label>
         </div>
       )
       : null
@@ -38,7 +42,7 @@ const Uploads = ({ platforms }) => {
   return (
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
-        <p className={styles.Title}>Media</p>
+        <p className={styles.Title}>Uploads</p>
       </div>
       <div className={styles.ColumnRight}>
         {renderWinButton()}
