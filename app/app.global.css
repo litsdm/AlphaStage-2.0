@@ -25,6 +25,10 @@ a {
   overflow-y: scroll;
 }
 
+.content {
+  padding-top: 52px;
+}
+
 button {
   background: none;
   border: none;

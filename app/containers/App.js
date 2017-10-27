@@ -44,7 +44,9 @@ class App extends Component {
               <SideBar user={user} logout={logout} updateUserPic={updateUserPic} />
               <div className="content-container">
                 <TopBar history={this.props.history} />
-                {this.props.children}
+                <div className="content">
+                  {this.props.children}
+                </div>
               </div>
             </div>
           )
