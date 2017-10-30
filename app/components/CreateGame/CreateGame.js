@@ -41,7 +41,7 @@ class CreateGame extends Component {
   renderSubmitButton = () => {
     const { uploadingMacBuild, uploadingWindowsBuild } = this.state;
     return uploadingMacBuild || uploadingWindowsBuild
-      ? <button className={styles.FormButton} disabled>Create Game</button>
+      ? <button className={styles.FormButtonDisabled} disabled>Create Game</button>
       : <button className={styles.FormButton}>Create Game</button>;
   }
 
@@ -52,12 +52,16 @@ class CreateGame extends Component {
       editorState,
       coverImage,
       genre,
+      macBuild,
       releaseStatus,
       screenshots,
       shortDescription,
       tags,
       title,
       thumbnail,
+      uploadingMacBuild,
+      uploadingWindowsBuild,
+      windowsBuild
     } = this.state;
 
     const platforms = { availableWin, availableMac };
@@ -90,6 +94,10 @@ class CreateGame extends Component {
           platforms={platforms}
           handleChange={this.handleChange}
           handleBuildChange={this.handleBuildChange}
+          macBuild={macBuild}
+          uploadingMacBuild={uploadingMacBuild}
+          uploadingWindowsBuild={uploadingWindowsBuild}
+          windowsBuild={windowsBuild}
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
