@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 const Uploads = ({ platforms }) => {
+  const { availableWin, availableMac } = platforms;
   const renderWinButton = () => (
-    platforms.win
+    availableWin
       ? (
         <div className={styles.InputContainer}>
           <label htmlFor="winBuild" className={styles.Tag}>Windows Build</label>
@@ -22,7 +23,7 @@ const Uploads = ({ platforms }) => {
   );
 
   const renderMacButton = () => (
-    platforms.mac
+    availableMac
       ? (
         <div className={styles.InputContainer}>
           <label htmlFor="macBuild" className={styles.Tag}>Mac Build</label>

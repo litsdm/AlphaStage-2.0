@@ -12,8 +12,8 @@ class CreateGame extends Component {
     title: '',
     shortDescription: '',
     releaseStatus: '',
-    win: true,
-    mac: false,
+    availableWin: true,
+    availableMac: false,
     coverImage: '',
     thumbnail: '',
     screenshots: [],
@@ -32,8 +32,8 @@ class CreateGame extends Component {
       title,
       shortDescription,
       releaseStatus,
-      win,
-      mac,
+      availableWin,
+      availableMac,
       coverImage,
       thumbnail,
       screenshots,
@@ -42,7 +42,7 @@ class CreateGame extends Component {
       tags
     } = this.state;
 
-    const platforms = { win, mac };
+    const platforms = { availableWin, availableMac };
 
     return (
       <div className={styles.CreateGame}>

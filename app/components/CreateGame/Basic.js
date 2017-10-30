@@ -14,6 +14,8 @@ const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange
     handleChange(event);
   };
 
+  const { availableWin, availableMac } = platforms;
+
   return (
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
@@ -57,16 +59,16 @@ const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange
           <label htmlFor="platforms" className={styles.Tag}>Platforms</label>
           <div className={styles.Platforms}>
             <button
-              name="win"
-              className={[styles.PlatformButton, platforms.win ? styles.active : ''].join(' ')}
-              onClick={onPlatformClick(platforms.win)}
+              name="availableWin"
+              className={[styles.PlatformButton, availableWin ? styles.active : ''].join(' ')}
+              onClick={onPlatformClick(availableWin)}
             >
               <i className="fa fa-windows" />
             </button>
             <button
-              name="mac"
-              className={[styles.PlatformButton, platforms.mac ? styles.active : ''].join(' ')}
-              onClick={onPlatformClick(platforms.mac)}
+              name="availableMac"
+              className={[styles.PlatformButton, availableMac ? styles.active : ''].join(' ')}
+              onClick={onPlatformClick(availableMac)}
             >
               <i className="fa fa-apple" />
             </button>
