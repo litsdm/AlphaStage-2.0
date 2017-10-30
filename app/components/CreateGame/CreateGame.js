@@ -21,12 +21,28 @@ class CreateGame extends Component {
     tags: [],
     title: '',
     thumbnail: '',
+    uploadingMacBuild: false,
+    uploadingWindowsBuild: false,
     windowsBuild: ''
   }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
+  }
+
+  handleBuildChange = (name, value, uploadingName) => {
+    this.setState({
+      [name]: value,
+      [uploadingName]: false
+    });
+  }
+
+  renderSubmitButton = () => {
+    const { uploadingMacBuild, uploadingWindowsBuild } = this.state;
+    return uploadingMacBuild || uploadingWindowsBuild
+      ? <button className={styles.FormButton} disabled>Create Game</button>
+      : <button className={styles.FormButton}>Create Game</button>;
   }
 
   render() {
@@ -41,7 +57,7 @@ class CreateGame extends Component {
       shortDescription,
       tags,
       title,
-      thumbnail
+      thumbnail,
     } = this.state;
 
     const platforms = { availableWin, availableMac };
@@ -70,11 +86,15 @@ class CreateGame extends Component {
           genre={genre}
         />
         <div className={styles.Divider} />
-        <Uploads platforms={platforms} />
+        <Uploads
+          platforms={platforms}
+          handleChange={this.handleChange}
+          handleBuildChange={this.handleBuildChange}
+        />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
           <button className={styles.CancelButton}>Cancel</button>
-          <button className={styles.FormButton}>Create Game</button>
+          {this.renderSubmitButton()}
         </div>
       </div>
     );

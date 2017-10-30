@@ -4,12 +4,24 @@ import styles from './styles.scss';
 
 import callApi, { uploadFile } from '../../helpers/apiCaller';
 
-const Uploads = ({ platforms }) => {
-  const getSignedRequest = (file) => {
+const Uploads = ({ platforms, handleChange, handleBuildChange }) => {
+  const getSignedRequest = (file, name) => {
+    const uploadingName = `uploading${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+    let buildUrl = '';
+
+    handleChange({ target: { name: uploadingName, value: true } });
+
     callApi(`sign-s3?file-name=${file.name}&file-type=${file.type}`)
       .then(res => res.json())
-      .then(({ signedRequest }) => uploadFile(file, signedRequest))
-      .then(res => console.log(res))
+      .then(({ signedRequest, url }) => {
+        buildUrl = url;
+        return uploadFile(file, signedRequest);
+      })
+      .then(res => {
+        if (res.status !== 200) return Promise.reject('Unable to upload. Please try again later.');
+        handleBuildChange(name, buildUrl, uploadingName);
+        return buildUrl;
+      })
       .catch(err => console.log(err));
   };
 
@@ -18,7 +30,7 @@ const Uploads = ({ platforms }) => {
 
     if (file == null) return;
 
-    getSignedRequest(file);
+    getSignedRequest(file, target.name);
   };
 
   const { availableWin, availableMac } = platforms;
@@ -28,7 +40,13 @@ const Uploads = ({ platforms }) => {
       ? (
         <div className={styles.InputContainer}>
           <label htmlFor="winBuild" className={styles.Tag}>Windows Build</label>
-          <input id="winFilePicker" className={styles.FileInput} type="file" onChange={handleFileChange} />
+          <input
+            id="winFilePicker"
+            name="windowsBuild"
+            className={styles.FileInput}
+            type="file"
+            onChange={handleFileChange}
+          />
           <label
             id="winBuild"
             htmlFor="winFilePicker"
@@ -46,7 +64,13 @@ const Uploads = ({ platforms }) => {
       ? (
         <div className={styles.InputContainer}>
           <label htmlFor="macBuild" className={styles.Tag}>Mac Build</label>
-          <input id="macFilePicker" className={styles.FileInput} type="file" onChange={handleFileChange} />
+          <input
+            id="macFilePicker"
+            name="macBuild"
+            className={styles.FileInput}
+            type="file"
+            onChange={handleFileChange}
+          />
           <label
             id="macBuild"
             htmlFor="macFilePicker"
@@ -73,7 +97,9 @@ const Uploads = ({ platforms }) => {
 };
 
 Uploads.propTypes = {
-  platforms: PropTypes.object.isRequired
+  platforms: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBuildChange: PropTypes.func.isRequired
 };
 
 export default Uploads;
