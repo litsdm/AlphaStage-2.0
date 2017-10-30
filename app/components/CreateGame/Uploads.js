@@ -45,60 +45,31 @@ const Uploads = (props) => {
 
   const { availableWin, availableMac } = platforms;
 
-  const renderWinButton = () => (
-    availableWin
+  const renderPlatformButton = (name, available, uploading, build) => (
+    available
       ? (
         <div className={styles.InputContainer}>
-          <label htmlFor="winBuild" className={styles.Tag}>Windows Build</label>
-          { uploadingWindowsBuild ? <i className="fa fa-spinner fa-spin" /> : null }
-          {
-            !uploadingWindowsBuild && windowsBuild
-              ? <i className="fa fa-check" style={{ color: '#12F812' }} />
-              : null
-          }
-          <input
-            id="winFilePicker"
-            name="windowsBuild"
-            className={styles.FileInput}
-            type="file"
-            onChange={handleFileChange}
-          />
-          <label
-            id="winBuild"
-            htmlFor="winFilePicker"
-            className={styles.LabelButton}
-          >
-            Add windows build
+          <label htmlFor="macBuild" className={styles.Tag}>
+            { name === 'macBuild' ? 'Mac Build' : 'Windows Build' }
           </label>
-        </div>
-      )
-      : null
-  );
-
-  const renderMacButton = () => (
-    availableMac
-      ? (
-        <div className={styles.InputContainer}>
-          <label htmlFor="macBuild" className={styles.Tag}>Mac Build</label>
-          { uploadingMacBuild ? <i className="fa fa-spinner fa-spin" /> : null }
+          { uploading ? <i className="fa fa-spinner fa-spin" /> : null }
           {
-            !uploadingMacBuild && macBuild
+            !uploading && build
               ? <i className="fa fa-check" style={{ color: '#12F812' }} />
               : null
           }
           <input
-            id="macFilePicker"
-            name="macBuild"
+            id={name}
+            name={name}
             className={styles.FileInput}
             type="file"
             onChange={handleFileChange}
           />
           <label
-            id="macBuild"
-            htmlFor="macFilePicker"
+            htmlFor={name}
             className={styles.LabelButton}
           >
-            Add mac build
+            Add {name === 'macBuild' ? 'mac' : 'windows'} build
           </label>
         </div>
       )
@@ -111,8 +82,8 @@ const Uploads = (props) => {
         <p className={styles.Title}>Uploads</p>
       </div>
       <div className={styles.ColumnRight}>
-        {renderWinButton()}
-        {renderMacButton()}
+        {renderPlatformButton('windowsBuild', availableWin, uploadingWindowsBuild, windowsBuild)}
+        {renderPlatformButton('macBuild', availableMac, uploadingMacBuild, macBuild)}
       </div>
     </div>
   );
