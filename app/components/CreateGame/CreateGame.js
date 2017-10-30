@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; //eslint-disable-line
 import { EditorState } from 'draft-js';
+import shortid from 'shortid';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -13,6 +14,7 @@ class CreateGame extends Component {
     availableWin: true,
     coverImage: '',
     editorState: EditorState.createEmpty(),
+    fileId: shortid.generate(),
     genre: 'Action',
     macBuild: '',
     releaseStatus: '',
@@ -51,6 +53,7 @@ class CreateGame extends Component {
       availableWin,
       editorState,
       coverImage,
+      fileId,
       genre,
       macBuild,
       releaseStatus,
@@ -98,6 +101,7 @@ class CreateGame extends Component {
           uploadingMacBuild={uploadingMacBuild}
           uploadingWindowsBuild={uploadingWindowsBuild}
           windowsBuild={windowsBuild}
+          fileId={fileId}
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>

@@ -7,6 +7,7 @@ import callApi, { uploadFile } from '../../helpers/apiCaller';
 const Uploads = (props) => {
   const {
     platforms,
+    fileId,
     handleChange,
     handleBuildChange,
     macBuild,
@@ -17,11 +18,12 @@ const Uploads = (props) => {
 
   const getSignedRequest = (file, name) => {
     const uploadingName = `uploading${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+    const fileName = `${name}-${fileId}.${file.type.split('/')[1]}`;
     let buildUrl = '';
 
     handleChange({ target: { name: uploadingName, value: true } });
 
-    callApi(`sign-s3?file-name=${file.name}&file-type=${file.type}`)
+    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
       .then(res => res.json())
       .then(({ signedRequest, url }) => {
         buildUrl = url;
@@ -91,6 +93,7 @@ const Uploads = (props) => {
 
 Uploads.propTypes = {
   platforms: PropTypes.object.isRequired,
+  fileId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBuildChange: PropTypes.func.isRequired,
   macBuild: PropTypes.string.isRequired,
