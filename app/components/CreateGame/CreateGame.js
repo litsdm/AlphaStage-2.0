@@ -9,17 +9,19 @@ import Uploads from './Uploads';
 
 class CreateGame extends Component {
   state = {
-    title: '',
-    shortDescription: '',
-    releaseStatus: '',
-    availableWin: true,
     availableMac: false,
+    availableWin: true,
     coverImage: '',
-    thumbnail: '',
-    screenshots: [],
     editorState: EditorState.createEmpty(),
     genre: 'Action',
-    tags: []
+    macBuild: '',
+    releaseStatus: '',
+    screenshots: [],
+    shortDescription: '',
+    tags: [],
+    title: '',
+    thumbnail: '',
+    windowsBuild: ''
   }
 
   handleChange = ({ target }) => {
@@ -29,17 +31,17 @@ class CreateGame extends Component {
 
   render() {
     const {
-      title,
-      shortDescription,
-      releaseStatus,
-      availableWin,
       availableMac,
-      coverImage,
-      thumbnail,
-      screenshots,
+      availableWin,
       editorState,
+      coverImage,
       genre,
-      tags
+      releaseStatus,
+      screenshots,
+      shortDescription,
+      tags,
+      title,
+      thumbnail
     } = this.state;
 
     const platforms = { availableWin, availableMac };

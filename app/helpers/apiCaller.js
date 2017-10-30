@@ -5,6 +5,13 @@ export const renewToken = (userId) => {
     .catch(err => console.log(err));
 };
 
+export const uploadFile = (file, signedRequest) => (
+  fetch(signedRequest, {
+    method: 'PUT',
+    body: file
+  })
+);
+
 const callApi = (endpoint, body, method = 'GET') => {
   const token = localStorage.getItem('token') || null;
   const apiUrl = 'localhost:3001';
