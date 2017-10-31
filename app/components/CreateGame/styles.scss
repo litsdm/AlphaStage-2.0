@@ -57,6 +57,7 @@
   color: #efefef;
   font-weight: bold;
   letter-spacing: 0.5px;
+  margin-right: 12px;
   opacity: 0.7;
   text-transform: uppercase;
 }
@@ -72,7 +73,9 @@
   font-size: 12px;
 }
 
-.FormButton, .LabelButton {
+.FormButton,
+.FormButtonDisabled,
+.LabelButton {
   background-color: #2091f3;
   border-radius: 4px;
   color: white;
@@ -87,6 +90,15 @@
 
   &:hover {
     background-color: #2098f3;
+  }
+}
+
+.FormButtonDisabled {
+  background-color: grey;
+  cursor: none;
+
+  &:hover {
+    background-color: grey;
   }
 }
 
@@ -124,6 +136,7 @@
   font-size: 16px;
   height: 35px;
   margin-top: 6px;
+  outline: 0;
   width: 80%;
 }
 
@@ -183,5 +196,19 @@
 }
 
 .FileInput {
-  opacity: 0;
+  display: none;
+}
+
+.UploadError {
+  color: #FF1111;
+
+  i {
+    margin-right: 6px;
+  }
+
+  span {
+    color: #efefef;
+    font-size: 12px;
+    opacity: 0.6;
+  }
 }

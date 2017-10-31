@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 import styles from './styles.scss';
+
+const releaseOptions = [
+  'Released',
+  'In Development',
+  'In QA'
+];
 
 const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange }) => {
   const onPlatformClick = (platform) => (e) => {
@@ -13,6 +20,10 @@ const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange
 
     handleChange(event);
   };
+
+  const renderOptions = () => (
+    releaseOptions.map(value => <option value={value} key={uuid()}>{value}</option>)
+  );
 
   const { availableWin, availableMac } = platforms;
 
@@ -46,14 +57,15 @@ const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="releaseStatus" className={styles.Tag}>Release Status</label>
-          <input
-            type="text"
+          <select
             id="releaseStatus"
             name="releaseStatus"
-            className={styles.Input}
-            value={releaseStatus}
+            className={styles.Select}
             onChange={handleChange}
-          />
+            value={releaseStatus}
+          >
+            {renderOptions()}
+          </select>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="platforms" className={styles.Tag}>Platforms</label>

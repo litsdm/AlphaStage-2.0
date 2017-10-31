@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; //eslint-disable-line
 import { EditorState } from 'draft-js';
+import shortid from 'shortid';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -9,17 +10,23 @@ import Uploads from './Uploads';
 
 class CreateGame extends Component {
   state = {
-    title: '',
-    shortDescription: '',
-    releaseStatus: '',
-    availableWin: true,
     availableMac: false,
+    availableWin: true,
     coverImage: '',
-    thumbnail: '',
-    screenshots: [],
     editorState: EditorState.createEmpty(),
+    fileId: shortid.generate(),
     genre: 'Action',
-    tags: []
+    macBuild: '',
+    releaseStatus: '',
+    screenshots: [],
+    shortDescription: '',
+    tags: [],
+    title: '',
+    thumbnail: '',
+    uploadError: '',
+    uploadingMacBuild: false,
+    uploadingWindowsBuild: false,
+    windowsBuild: ''
   }
 
   handleChange = ({ target }) => {
@@ -27,19 +34,39 @@ class CreateGame extends Component {
     this.setState({ [name]: value });
   }
 
+  handleBuildChange = (name, value, uploadingName) => {
+    this.setState({
+      [name]: value,
+      [uploadingName]: false
+    });
+  }
+
+  renderSubmitButton = () => {
+    const { uploadingMacBuild, uploadingWindowsBuild } = this.state;
+    return uploadingMacBuild || uploadingWindowsBuild
+      ? <button className={styles.FormButtonDisabled} disabled>Create Game</button>
+      : <button className={styles.FormButton}>Create Game</button>;
+  }
+
   render() {
     const {
-      title,
-      shortDescription,
-      releaseStatus,
-      availableWin,
       availableMac,
-      coverImage,
-      thumbnail,
-      screenshots,
+      availableWin,
       editorState,
+      coverImage,
+      fileId,
       genre,
-      tags
+      macBuild,
+      releaseStatus,
+      screenshots,
+      shortDescription,
+      tags,
+      title,
+      thumbnail,
+      uploadError,
+      uploadingMacBuild,
+      uploadingWindowsBuild,
+      windowsBuild
     } = this.state;
 
     const platforms = { availableWin, availableMac };
@@ -68,11 +95,21 @@ class CreateGame extends Component {
           genre={genre}
         />
         <div className={styles.Divider} />
-        <Uploads platforms={platforms} />
+        <Uploads
+          platforms={platforms}
+          handleChange={this.handleChange}
+          handleBuildChange={this.handleBuildChange}
+          macBuild={macBuild}
+          uploadingMacBuild={uploadingMacBuild}
+          uploadingWindowsBuild={uploadingWindowsBuild}
+          windowsBuild={windowsBuild}
+          fileId={fileId}
+          uploadError={uploadError}
+        />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
           <button className={styles.CancelButton}>Cancel</button>
-          <button className={styles.FormButton}>Create Game</button>
+          {this.renderSubmitButton()}
         </div>
       </div>
     );
