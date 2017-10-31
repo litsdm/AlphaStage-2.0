@@ -21,7 +21,7 @@ const genres = [
   'Other'
 ];
 
-const Details = ({ editorState, tags, genre, handleChange }) => {
+const Details = ({ editorState, tags, genre, handleChange, validatedInputClass }) => {
   const handleAddTag = (tag) => {
     const value = [...tags, tag];
     handleChange({ target: { name: 'tags', value } });
@@ -61,7 +61,7 @@ const Details = ({ editorState, tags, genre, handleChange }) => {
       <div className={styles.ColumnRight}>
         <div className={styles.InputContainer}>
           <label htmlFor="editor" className={styles.Tag}>Description</label>
-          <div className={styles.Editor}>
+          <div className={validatedInputClass(styles.Editor, 'editorContainer')} id="editorContainer">
             <div className={styles.EditorButtons}>
               <button onClick={toggleInlineStyle('BOLD')}><i className="fa fa-bold" /></button>
               <button onClick={toggleInlineStyle('ITALIC')}><i className="fa fa-italic" /></button>
@@ -104,7 +104,8 @@ Details.propTypes = {
   editorState: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   tags: PropTypes.array.isRequired,
-  genre: PropTypes.string.isRequired
+  genre: PropTypes.string.isRequired,
+  validatedInputClass: PropTypes.func.isRequired
 };
 
 export default Details;

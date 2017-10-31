@@ -14,6 +14,7 @@ const Uploads = (props) => {
     uploadError,
     uploadingMacBuild,
     uploadingWindowsBuild,
+    validatedInputClass,
     windowsBuild,
   } = props;
 
@@ -82,7 +83,7 @@ const Uploads = (props) => {
           />
           <label
             htmlFor={name}
-            className={styles.LabelButton}
+            className={validatedInputClass(styles.LabelButton, name)}
           >
             Add {name === 'macBuild' ? 'mac' : 'windows'} build
           </label>
@@ -113,6 +114,7 @@ Uploads.propTypes = {
   uploadError: PropTypes.string.isRequired,
   uploadingMacBuild: PropTypes.bool.isRequired,
   uploadingWindowsBuild: PropTypes.bool.isRequired,
+  validatedInputClass: PropTypes.func.isRequired,
   windowsBuild: PropTypes.string.isRequired
 };
 

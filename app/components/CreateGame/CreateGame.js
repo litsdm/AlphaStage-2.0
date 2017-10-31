@@ -41,20 +41,30 @@ class CreateGame extends Component {
     _invalidFields = {};
     focusElement = null;
 
-    this.requiredFieldsAreValid();
+    this.checkRequiredFields();
+    this.checkBuilds();
 
     this.setState({ invalidFields: _invalidFields });
+
+    return focusElement === null;
   }
 
-  requiredFieldsAreValid = () => {
-    const { coverImage, shortDescription, title, thumbnail } = this.state;
+  checkRequiredFields = () => {
+    const { coverImage, shortDescription, title, thumbnail, editorState } = this.state;
 
     if (!coverImage) this.markError('coverImage');
     if (!shortDescription) this.markError('shortDescription');
     if (!title) this.markError('title');
     if (!thumbnail) this.markError('thumbnail');
+    if (!editorState.getCurrentContent().hasText()) this.markError('editorContainer');
+  }
 
-    return coverImage && shortDescription && title && thumbnail;
+  checkBuilds = () => {
+    const { availableMac, availableWin, macBuild, windowsBuild } = this.state;
+
+    if (availableMac && !macBuild) this.markError('macBuild');
+    if (availableWin && !windowsBuild) this.markError('windowsBuild');
+    if (!availableMac && !availableWin) this.markError('platforms');
   }
 
   markError = (fieldId) => {
@@ -138,6 +148,7 @@ class CreateGame extends Component {
           editorState={editorState}
           tags={tags}
           genre={genre}
+          validatedInputClass={this.validatedInputClass}
         />
         <div className={styles.Divider} />
         <Uploads
@@ -150,6 +161,7 @@ class CreateGame extends Component {
           windowsBuild={windowsBuild}
           fileId={fileId}
           uploadError={uploadError}
+          validatedInputClass={this.validatedInputClass}
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>

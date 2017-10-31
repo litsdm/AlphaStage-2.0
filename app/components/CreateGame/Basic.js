@@ -78,7 +78,7 @@ const Basic = (props) => {
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="platforms" className={styles.Tag}>Platforms</label>
-          <div className={styles.Platforms}>
+          <div className={validatedInputClass(styles.Platforms, 'platforms')} id="platforms">
             <button
               name="availableWin"
               className={[styles.PlatformButton, availableWin ? styles.active : ''].join(' ')}
