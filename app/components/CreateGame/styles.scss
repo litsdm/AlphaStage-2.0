@@ -195,5 +195,19 @@
 }
 
 .FileInput {
-  opacity: 0;
+  display: none;
+}
+
+.UploadError {
+  color: #FF1111;
+
+  i {
+    margin-right: 6px;
+  }
+
+  span {
+    color: #efefef;
+    font-size: 12px;
+    opacity: 0.6;
+  }
 }

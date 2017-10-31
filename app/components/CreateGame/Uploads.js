@@ -11,6 +11,7 @@ const Uploads = (props) => {
     handleChange,
     handleBuildChange,
     macBuild,
+    uploadError,
     uploadingMacBuild,
     uploadingWindowsBuild,
     windowsBuild,
@@ -30,11 +31,13 @@ const Uploads = (props) => {
         return uploadFile(file, signedRequest);
       })
       .then(res => {
-        if (res.status !== 200) return Promise.reject('Unable to upload. Please try again later.');
+        if (res.status !== 200) return Promise.reject();
         handleBuildChange(name, buildUrl, uploadingName);
         return buildUrl;
       })
-      .catch(err => console.log(err));
+      .catch(() => {
+        handleBuildChange('uploadError', 'An error ocurred, please try again later.', uploadingName);
+      });
   };
 
   const handleFileChange = ({ target }) => {
@@ -58,6 +61,16 @@ const Uploads = (props) => {
           {
             !uploading && build
               ? <i className="fa fa-check" style={{ color: '#12F812' }} />
+              : null
+          }
+          {
+            uploadError
+              ? (
+                <span className={styles.UploadError}>
+                  <i className="fa fa-times" />
+                  <span>{uploadError}</span>
+                </span>
+              )
               : null
           }
           <input
@@ -97,6 +110,7 @@ Uploads.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBuildChange: PropTypes.func.isRequired,
   macBuild: PropTypes.string.isRequired,
+  uploadError: PropTypes.string.isRequired,
   uploadingMacBuild: PropTypes.bool.isRequired,
   uploadingWindowsBuild: PropTypes.bool.isRequired,
   windowsBuild: PropTypes.string.isRequired

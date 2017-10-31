@@ -23,6 +23,7 @@ class CreateGame extends Component {
     tags: [],
     title: '',
     thumbnail: '',
+    uploadError: '',
     uploadingMacBuild: false,
     uploadingWindowsBuild: false,
     windowsBuild: ''
@@ -62,6 +63,7 @@ class CreateGame extends Component {
       tags,
       title,
       thumbnail,
+      uploadError,
       uploadingMacBuild,
       uploadingWindowsBuild,
       windowsBuild
@@ -102,6 +104,7 @@ class CreateGame extends Component {
           uploadingWindowsBuild={uploadingWindowsBuild}
           windowsBuild={windowsBuild}
           fileId={fileId}
+          uploadError={uploadError}
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
