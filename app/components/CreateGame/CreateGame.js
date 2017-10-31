@@ -45,6 +45,7 @@ class CreateGame extends Component {
     this.checkBuilds();
 
     this.setState({ invalidFields: _invalidFields });
+    this.focusOnInvalidField();
 
     return focusElement === null;
   }
@@ -52,9 +53,9 @@ class CreateGame extends Component {
   checkRequiredFields = () => {
     const { coverImage, shortDescription, title, thumbnail, editorState } = this.state;
 
-    if (!coverImage) this.markError('coverImage');
-    if (!shortDescription) this.markError('shortDescription');
     if (!title) this.markError('title');
+    if (!shortDescription) this.markError('shortDescription');
+    if (!coverImage) this.markError('coverImage');
     if (!thumbnail) this.markError('thumbnail');
     if (!editorState.getCurrentContent().hasText()) this.markError('editorContainer');
   }
@@ -62,8 +63,8 @@ class CreateGame extends Component {
   checkBuilds = () => {
     const { availableMac, availableWin, macBuild, windowsBuild } = this.state;
 
-    if (availableMac && !macBuild) this.markError('macBuild');
     if (availableWin && !windowsBuild) this.markError('windowsBuild');
+    if (availableMac && !macBuild) this.markError('macBuild');
     if (!availableMac && !availableWin) this.markError('platforms');
   }
 
@@ -71,6 +72,23 @@ class CreateGame extends Component {
     _invalidFields[fieldId] = true;
     const element = document.getElementById(fieldId);
     if (!focusElement) focusElement = element;
+  }
+
+  focusOnInvalidField = () => {
+    if (!focusElement) return;
+
+    window.scroll(0, this.findPosition(focusElement));
+    focusElement.focus();
+  }
+
+  findPosition = (element) => {
+    let pos = 0;
+    if (element.offsetParent) {
+      do {
+        pos += element.offsetTop;
+      } while (element === element.offsetParent);
+      return [pos];
+    }
   }
 
   validatedInputClass = (classList, fieldId) => {
