@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; //eslint-disable-line
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import shortid from 'shortid';
+import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -27,6 +28,7 @@ class CreateGame extends Component {
     tags: [],
     title: '',
     thumbnail: '',
+    trailer: '',
     uploadError: '',
     uploadingMacBuild: false,
     uploadingWindowsBuild: false,
@@ -34,7 +36,43 @@ class CreateGame extends Component {
   }
 
   submit = () => {
-    this.validate();
+    const { submitGame, user } = this.props;
+    const {
+      coverImage,
+      editorState,
+      fieldId,
+      genre,
+      macBuild,
+      releaseStatus,
+      screenshots,
+      shortDescription,
+      tags,
+      title,
+      thumbnail,
+      trailer,
+      windowsBuild
+    } = this.state;
+
+    const game = {
+      buildsId: fieldId,
+      coverImage,
+      descriptionState: convertToRaw(editorState),
+      developerIds: [user._id],
+      genre,
+      macBuild,
+      releaseStatus,
+      screenshots,
+      shortDescription,
+      tags,
+      title,
+      thumbnail,
+      trailer,
+      windowsBuild
+    };
+
+    if (this.validate()) return;
+
+    submitGame(game);
   }
 
   validate = () => {
@@ -190,5 +228,10 @@ class CreateGame extends Component {
     );
   }
 }
+
+CreateGame.propTypes = {
+  submitGame: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
+};
 
 export default CreateGame;
