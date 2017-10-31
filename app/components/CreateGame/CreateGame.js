@@ -172,6 +172,7 @@ class CreateGame extends Component {
       tags,
       title,
       thumbnail,
+      trailer,
       uploadError,
       uploadingMacBuild,
       uploadingWindowsBuild,
@@ -195,6 +196,7 @@ class CreateGame extends Component {
           coverImage={coverImage}
           thumbnail={thumbnail}
           screenshots={screenshots}
+          trailer={trailer}
           handleChange={this.handleChange}
           validatedInputClass={this.validatedInputClass}
         />
