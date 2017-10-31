@@ -8,6 +8,9 @@ import Media from './Media';
 import Details from './Details';
 import Uploads from './Uploads';
 
+let _invalidFields = {};
+let focusElement = null;
+
 class CreateGame extends Component {
   state = {
     availableMac: false,
@@ -16,8 +19,9 @@ class CreateGame extends Component {
     editorState: EditorState.createEmpty(),
     fileId: shortid.generate(),
     genre: 'Action',
+    invalidFields: {},
     macBuild: '',
-    releaseStatus: '',
+    releaseStatus: 'Released',
     screenshots: [],
     shortDescription: '',
     tags: [],
@@ -27,6 +31,41 @@ class CreateGame extends Component {
     uploadingMacBuild: false,
     uploadingWindowsBuild: false,
     windowsBuild: ''
+  }
+
+  submit = () => {
+    this.validate();
+  }
+
+  validate = () => {
+    _invalidFields = {};
+    focusElement = null;
+
+    this.requiredFieldsAreValid();
+
+    this.setState({ invalidFields: _invalidFields });
+  }
+
+  requiredFieldsAreValid = () => {
+    const { coverImage, shortDescription, title, thumbnail } = this.state;
+
+    if (!coverImage) this.markError('coverImage');
+    if (!shortDescription) this.markError('shortDescription');
+    if (!title) this.markError('title');
+    if (!thumbnail) this.markError('thumbnail');
+
+    return coverImage && shortDescription && title && thumbnail;
+  }
+
+  markError = (fieldId) => {
+    _invalidFields[fieldId] = true;
+    const element = document.getElementById(fieldId);
+    if (!focusElement) focusElement = element;
+  }
+
+  validatedInputClass = (classList, fieldId) => {
+    const { invalidFields } = this.state;
+    return invalidFields[fieldId] ? `${classList} ${styles.Invalid}` : classList;
   }
 
   handleChange = ({ target }) => {
@@ -44,8 +83,12 @@ class CreateGame extends Component {
   renderSubmitButton = () => {
     const { uploadingMacBuild, uploadingWindowsBuild } = this.state;
     return uploadingMacBuild || uploadingWindowsBuild
-      ? <button className={styles.FormButtonDisabled} disabled>Create Game</button>
-      : <button className={styles.FormButton}>Create Game</button>;
+      ? (
+        <button className={styles.FormButtonDisabled} disabled onClick={this.submit}>
+          Create Game
+        </button>
+      )
+      : <button className={styles.FormButton} onClick={this.submit}>Create Game</button>;
   }
 
   render() {
@@ -79,6 +122,7 @@ class CreateGame extends Component {
           releaseStatus={releaseStatus}
           platforms={platforms}
           handleChange={this.handleChange}
+          validatedInputClass={this.validatedInputClass}
         />
         <div className={styles.Divider} />
         <Media
@@ -86,6 +130,7 @@ class CreateGame extends Component {
           thumbnail={thumbnail}
           screenshots={screenshots}
           handleChange={this.handleChange}
+          validatedInputClass={this.validatedInputClass}
         />
         <div className={styles.Divider} />
         <Details

@@ -9,7 +9,16 @@ const releaseOptions = [
   'In QA'
 ];
 
-const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange }) => {
+const Basic = (props) => {
+  const {
+    title,
+    shortDescription,
+    releaseStatus,
+    platforms,
+    handleChange,
+    validatedInputClass
+  } = props;
+
   const onPlatformClick = (platform) => (e) => {
     const event = {
       target: {
@@ -39,7 +48,7 @@ const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange
             type="text"
             id="title"
             name="title"
-            className={styles.Input}
+            className={validatedInputClass(styles.Input, 'title')}
             value={title}
             onChange={handleChange}
           />
@@ -50,7 +59,7 @@ const Basic = ({ title, shortDescription, releaseStatus, platforms, handleChange
             type="text"
             id="shortDescription"
             name="shortDescription"
-            className={styles.Input}
+            className={validatedInputClass(styles.Input, 'shortDescription')}
             value={shortDescription}
             onChange={handleChange}
           />
@@ -96,7 +105,8 @@ Basic.propTypes = {
   shortDescription: PropTypes.string.isRequired,
   releaseStatus: PropTypes.string.isRequired,
   platforms: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  validatedInputClass: PropTypes.func.isRequired
 };
 
 export default Basic;

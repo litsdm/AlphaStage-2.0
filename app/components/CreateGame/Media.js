@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
 
-const Media = ({ handleChange }) => {
+const Media = ({ handleChange, validatedInputClass }) => {
   const chooseImage = (type) => () => {
     const options = {
       cover: coverImageOptions,
@@ -44,8 +44,8 @@ const Media = ({ handleChange }) => {
             {'This image will be used as the header in your game\'s page. (Aspect ratio: 980x400)'}
           </p>
           <button
-            id="coverImg"
-            className={styles.FormButton}
+            id="coverImage"
+            className={validatedInputClass(styles.FormButton, 'coverImage')}
             onClick={chooseImage('cover')}
           >
             Add cover image
@@ -59,7 +59,7 @@ const Media = ({ handleChange }) => {
           </p>
           <button
             id="thumbnail"
-            className={styles.FormButton}
+            className={validatedInputClass(styles.FormButton, 'coverImage')}
             onClick={chooseImage('thumb')}
           >
               Add Thumbnail
@@ -91,7 +91,8 @@ const Media = ({ handleChange }) => {
 };
 
 Media.propTypes = {
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  validatedInputClass: PropTypes.func.isRequired
 };
 
 export default Media;
