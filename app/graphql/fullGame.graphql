@@ -1,8 +1,8 @@
 query FullGame($id: String) {
   game(_id: $id) {
-    name,
-    description,
-    img,
+    title,
+    shortDescription,
+    thumbnail,
     coverImage
   }
 }

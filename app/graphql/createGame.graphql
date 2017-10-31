@@ -1,5 +1,5 @@
 mutation CreateGame($input: GameInput!) {
-  createGame(input: $input) {
+  createGame(game: $input) {
     _id
   }
 }

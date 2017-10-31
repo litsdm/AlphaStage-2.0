@@ -53,10 +53,12 @@ class CreateGame extends Component {
       windowsBuild
     } = this.state;
 
+    const currentContent = editorState.getCurrentContent();
+
     const game = {
       buildsId: fieldId,
       coverImage,
-      descriptionState: convertToRaw(editorState),
+      descriptionState: JSON.stringify(convertToRaw(currentContent)),
       developerIds: [user._id],
       genre,
       macBuild,
@@ -70,7 +72,7 @@ class CreateGame extends Component {
       windowsBuild
     };
 
-    if (this.validate()) return;
+    if (!this.validate()) return;
 
     submitGame(game);
   }
