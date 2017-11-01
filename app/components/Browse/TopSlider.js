@@ -10,7 +10,7 @@ const TopSlider = ({ games }) => {
   const renderGames = () =>
     games.map(game => (
       <Link to={`/games/${game._id}`} key={uuid()}>
-        <img className={styles.SliderImage} alt="Game in slider" src={game.img} />
+        <img className={styles.SliderImage} alt="Game in slider" src={game.thumbnail} />
       </Link>
     ));
 

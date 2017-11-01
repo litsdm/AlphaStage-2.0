@@ -1,6 +1,6 @@
 export type Game = {
   _id: string,
-  name: string,
-  description: string,
-  img: string
+  title: string,
+  shortDescription: string,
+  thumbnail: string
 };

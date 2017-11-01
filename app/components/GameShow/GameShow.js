@@ -5,7 +5,7 @@ import Header from './Header';
 
 const GameShow = ({ game }) => (
   <div>
-    <Header coverImage={game.coverImage} name={game.name} />
+    <Header coverImage={game.coverImage} title={game.title} />
   </div>
 );
 

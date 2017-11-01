@@ -1,6 +1,9 @@
 import React, { Component } from 'react'; //eslint-disable-line
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+import { withRouter } from 'react-router-dom';
 import shortid from 'shortid';
+import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -27,6 +30,7 @@ class CreateGame extends Component {
     tags: [],
     title: '',
     thumbnail: '',
+    trailer: '',
     uploadError: '',
     uploadingMacBuild: false,
     uploadingWindowsBuild: false,
@@ -34,7 +38,65 @@ class CreateGame extends Component {
   }
 
   submit = () => {
-    this.validate();
+    const { submitGame, user, history } = this.props;
+    const {
+      coverImage,
+      editorState,
+      fieldId,
+      genre,
+      macBuild,
+      releaseStatus,
+      screenshots,
+      shortDescription,
+      tags,
+      title,
+      thumbnail,
+      trailer,
+      windowsBuild
+    } = this.state;
+
+    const currentContent = editorState.getCurrentContent();
+
+    const game = {
+      buildsId: fieldId,
+      coverImage,
+      descriptionState: JSON.stringify(convertToRaw(currentContent)),
+      developerIds: [user._id],
+      genre,
+      macBuild,
+      releaseStatus,
+      screenshots,
+      shortDescription,
+      tags,
+      title,
+      thumbnail,
+      trailer,
+      windowsBuild
+    };
+
+    if (!this.validate()) return;
+
+    submitGame(game)
+      .then(({ data }) => (
+        swal({
+          title: 'Success!',
+          text: 'Your game was succesfully created.',
+          icon: 'success',
+          buttons: {
+            goHome: {
+              text: 'Go home',
+              value: '/'
+            },
+            viewPage: {
+              text: 'Go to game page',
+              value: `/games/${data.createGame._id}`
+            }
+          }
+        })
+         .then(route => history.push(route))
+         .catch(err => console.log(err))
+      ))
+      .catch(err => console.log(err));
   }
 
   validate = () => {
@@ -134,6 +196,7 @@ class CreateGame extends Component {
       tags,
       title,
       thumbnail,
+      trailer,
       uploadError,
       uploadingMacBuild,
       uploadingWindowsBuild,
@@ -157,6 +220,7 @@ class CreateGame extends Component {
           coverImage={coverImage}
           thumbnail={thumbnail}
           screenshots={screenshots}
+          trailer={trailer}
           handleChange={this.handleChange}
           validatedInputClass={this.validatedInputClass}
         />
@@ -191,4 +255,10 @@ class CreateGame extends Component {
   }
 }
 
-export default CreateGame;
+CreateGame.propTypes = {
+  submitGame: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
+
+export default withRouter(CreateGame);

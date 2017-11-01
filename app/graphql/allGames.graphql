@@ -1,8 +1,8 @@
 query AllGames {
   games {
     _id
-    name
-    description
-    img
+    title
+    shortDescription
+    thumbnail
   }
 }

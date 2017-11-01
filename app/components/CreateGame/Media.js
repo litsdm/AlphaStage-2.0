@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
 
-const Media = ({ handleChange, validatedInputClass }) => {
+const Media = ({ trailer, handleChange, validatedInputClass }) => {
   const chooseImage = (type) => () => {
     const options = {
       cover: coverImageOptions,
@@ -83,7 +83,14 @@ const Media = ({ handleChange, validatedInputClass }) => {
           <p className={styles.InputDescription}>
             Provide a link to YouTube
           </p>
-          <input type="text" id="trailer" name="trailer" className={styles.Input} />
+          <input
+            type="text"
+            id="trailer"
+            name="trailer"
+            value={trailer}
+            className={styles.Input}
+            onChange={handleChange}
+          />
         </div>
       </div>
     </div>
@@ -91,6 +98,7 @@ const Media = ({ handleChange, validatedInputClass }) => {
 };
 
 Media.propTypes = {
+  trailer: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   validatedInputClass: PropTypes.func.isRequired
 };
