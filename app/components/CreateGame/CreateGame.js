@@ -1,7 +1,9 @@
 import React, { Component } from 'react'; //eslint-disable-line
 import { EditorState, convertToRaw } from 'draft-js';
+import { withRouter } from 'react-router-dom';
 import shortid from 'shortid';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -36,7 +38,7 @@ class CreateGame extends Component {
   }
 
   submit = () => {
-    const { submitGame, user } = this.props;
+    const { submitGame, user, history } = this.props;
     const {
       coverImage,
       editorState,
@@ -74,7 +76,27 @@ class CreateGame extends Component {
 
     if (!this.validate()) return;
 
-    submitGame(game);
+    submitGame(game)
+      .then(({ data }) => (
+        swal({
+          title: 'Success!',
+          text: 'Your game was succesfully created.',
+          icon: 'success',
+          buttons: {
+            goHome: {
+              text: 'Go home',
+              value: '/'
+            },
+            viewPage: {
+              text: 'Go to game page',
+              value: `/games/${data.createGame._id}`
+            }
+          }
+        })
+         .then(route => history.push(route))
+         .catch(err => console.log(err))
+      ))
+      .catch(err => console.log(err));
   }
 
   validate = () => {
@@ -235,7 +257,8 @@ class CreateGame extends Component {
 
 CreateGame.propTypes = {
   submitGame: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
-export default CreateGame;
+export default withRouter(CreateGame);
