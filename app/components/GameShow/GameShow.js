@@ -25,7 +25,6 @@ class GameShow extends Component {
     const rect = element.getBoundingClientRect();
     const position = rect.top + document.body.scrollTop;
 
-
     const newWidth = position <= 52
       ? 100
       : (
@@ -35,6 +34,8 @@ class GameShow extends Component {
           ) / OFFSET_DIFFERENCE
         ) + INITIAL_PERCENTAGE
       );
+
+    console.log(position, newWidth);
 
     element.style.width = `${newWidth}%`;
   }

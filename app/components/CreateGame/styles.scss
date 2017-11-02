@@ -217,3 +217,15 @@
 .Invalid {
   box-shadow: 0 0 3pt 1pt #FF1111;
 }
+
+.DraftRoot {
+  color: black;
+  width: 550px;
+  padding: 12px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.DraftContent {
+  height: 200px;
+}

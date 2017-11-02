@@ -9,7 +9,7 @@
 }
 
 .ContentCard {
-  background-color: #2F3136;
+  background-color: #36393E;
   border-radius: 4px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   width: 90%;
@@ -31,6 +31,7 @@
 .Title {
   font-size: 42px;
   font-weight: bold;
+  padding: 24px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -56,4 +57,9 @@
   i {
     font-size: 1.5rem;
   }
+}
+
+.Row {
+  display: flex;
+  padding: 0 24px;
 }

@@ -37,6 +37,13 @@ class CreateGame extends Component {
     windowsBuild: ''
   }
 
+  componentDidMount() {
+    const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
+    const editorContent = document.getElementsByClassName('public-DraftEditor-content')[0];
+    editorRoot.classList += ` ${styles.DraftRoot}`;
+    editorContent.classList += ` ${styles.DraftContent}`;
+  }
+
   submit = () => {
     const { submitGame, user, history } = this.props;
     const {
