@@ -42,7 +42,7 @@ class App extends Component {
           ? (
             <div>
               <SideBar user={user} logout={logout} updateUserPic={updateUserPic} />
-              <div className="content-container">
+              <div id="content-container" className="content-container">
                 <TopBar history={this.props.history} />
                 <div className="content">
                   {this.props.children}

@@ -14,19 +14,19 @@ export const profilePictureOptions = {
 };
 
 export const coverImageOptions = {
-  imageDim: [980, 400],
-  imageMin: [980, 400],
+  imageDim: [1280, 720],
+  imageMin: [1280, 720],
   transformations: {
     crop: {
-      aspectRatio: 49 / 20,
+      aspectRatio: 16 / 9,
       force: true,
     },
   },
 };
 
 export const thumbnailOptions = {
-  imageDim: [325, 150],
-  imageMin: [325, 150],
+  imageDim: [650, 300],
+  imageMin: [650, 300],
   transformations: {
     crop: {
       aspectRatio: 13 / 6,

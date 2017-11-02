@@ -1,13 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './Header';
+import ContentCard from './ContentCard';
 
-const GameShow = ({ game }) => (
-  <div>
-    <Header coverImage={game.coverImage} title={game.title} />
-  </div>
-);
+const INITIAL_OFFSET = 427;
+const OFFSET_DIFFERENCE = 375;
+const PERCENTAGE_DIFFERENCE = 10;
+const INITIAL_PERCENTAGE = 90;
+
+class GameShow extends Component {
+  componentDidMount() {
+    const contentContainer = document.getElementById('content-container');
+    contentContainer.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    const contentContainer = document.getElementById('content-container');
+    contentContainer.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const element = document.getElementById('contentCard');
+    const rect = element.getBoundingClientRect();
+    const position = rect.top + document.body.scrollTop;
+
+
+    const newWidth = position <= 52
+      ? 100
+      : (
+        (
+          (
+            (INITIAL_OFFSET - position) * PERCENTAGE_DIFFERENCE
+          ) / OFFSET_DIFFERENCE
+        ) + INITIAL_PERCENTAGE
+      );
+
+    element.style.width = `${newWidth}%`;
+  }
+
+  render() {
+    const { game } = this.props;
+    return (
+      <div>
+        <Header coverImage={game.coverImage} title={game.title} />
+        <ContentCard />
+      </div>
+    );
+  }
+}
 
 GameShow.propTypes = {
   game: PropTypes.object.isRequired

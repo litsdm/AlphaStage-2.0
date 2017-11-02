@@ -20,7 +20,7 @@ a {
 .content-container {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 220px;
-  width: auto; height: auto;
+  width: auto;
   transition: all 0.2s ease-out;
   overflow-x: hidden;
   overflow-y: scroll;
