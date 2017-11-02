@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styles from './styles.scss';
 
-import Header from './Header';
 import ContentCard from './ContentCard';
 
 const INITIAL_OFFSET = 427;
@@ -43,8 +43,8 @@ class GameShow extends Component {
     const { game } = this.props;
     return (
       <div>
-        <Header coverImage={game.coverImage} title={game.title} />
-        <ContentCard />
+        <div className={styles.Header} style={{ backgroundImage: `url(${game.coverImage})` }} />
+        <ContentCard game={game} />
       </div>
     );
   }

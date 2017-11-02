@@ -1,5 +1,5 @@
 .Header {
-  -webkit-mask-image: -webkit-linear-gradient(top, black 40%, transparent 95%);
+  -webkit-mask-image: -webkit-linear-gradient(top, black 70%, transparent 100%);
   background-repeat: no-repeat;
   background-attachment: center;
   background-size: 100% 100%;
@@ -8,17 +8,29 @@
   z-index: -1;
 }
 
-.HeaderContent {
-  bottom: 15px;
-  left: 15px;
-  position: absolute;
-  display: none;
+.ContentCard {
+  background-color: #2F3136;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  width: 90%;
+  height: 100%;
+  margin: auto;
+  margin-top: -125px;
+  z-index: 1;
+}
+
+.ContentHeader {
+  padding: 12px;
+}
+
+.Content {
+  background-color: #36393E;
+  height: 750px;
 }
 
 .Title {
-  font-size: 64px;
+  font-size: 42px;
   font-weight: bold;
-  margin: 16px 0;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -44,14 +56,4 @@
   i {
     font-size: 1.5rem;
   }
-}
-
-.ContentCard {
-  background-color: #2B2C31;
-  border-radius: 4px;
-  width: 90%;
-  height: 750px;
-  margin: auto;
-  margin-top: -125px;
-  z-index: 1;
 }

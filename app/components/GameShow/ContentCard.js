@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from './styles.scss';
 
-class ContentCard extends Component {
-  render() {
-    return (
-      <div id="contentCard" className={styles.ContentCard}>
-        <p>Card</p>
-      </div>
-    );
-  }
-}
+const ContentCard = ({ game }) => (
+  <div id="contentCard" className={styles.ContentCard}>
+    <div className={styles.ContentHeader}>
+      <p className={styles.Title}>{game.title}</p>
+    </div>
+    <div className={styles.Content}>
+
+    </div>
+  </div>
+);
 
 export default ContentCard;
