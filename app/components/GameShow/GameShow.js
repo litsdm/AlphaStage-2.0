@@ -12,7 +12,10 @@ const INITIAL_PERCENTAGE = 90;
 class GameShow extends Component {
   componentDidMount() {
     const contentContainer = document.getElementById('content-container');
+    const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
+
     contentContainer.addEventListener('scroll', this.handleScroll);
+    editorRoot.classList += ` ${styles.DraftRoot}`;
   }
 
   componentWillUnmount() {

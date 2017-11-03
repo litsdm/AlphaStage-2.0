@@ -3,6 +3,8 @@ import { EditorState, convertFromRaw, Editor } from 'draft-js';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
+import InfoCard from './InfoCard';
+
 const ContentCard = ({ game }) => {
   const editorState = () => {
     const contentState = convertFromRaw(JSON.parse(game.descriptionState));
@@ -11,12 +13,17 @@ const ContentCard = ({ game }) => {
 
   return (
     <div id="contentCard" className={styles.ContentCard}>
-      <p className={styles.Title}>{game.title}</p>
       <div className={styles.Row}>
-        <Editor
-          editorState={editorState()}
-          readOnly
-        />
+        <div className={styles.LeftColumn}>
+          <p className={styles.Title}>{game.title}</p>
+          <Editor
+            editorState={editorState()}
+            readOnly
+          />
+        </div>
+        <div className={styles.RightColumn}>
+          <InfoCard />
+        </div>
       </div>
     </div>
   );
