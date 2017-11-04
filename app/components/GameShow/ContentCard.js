@@ -22,7 +22,7 @@ const ContentCard = ({ game }) => {
           />
         </div>
         <div className={styles.RightColumn}>
-          <InfoCard />
+          <InfoCard game={game} />
         </div>
       </div>
     </div>

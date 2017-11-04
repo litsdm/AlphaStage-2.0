@@ -38,8 +38,6 @@ class GameShow extends Component {
         ) + INITIAL_PERCENTAGE
       );
 
-    console.log(position, newWidth);
-
     element.style.width = `${newWidth}%`;
   }
 

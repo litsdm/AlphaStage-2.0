@@ -1,10 +1,11 @@
 .Info {
   border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin-left: 12px;
 }
 
 .Header {
-  background-color: rgb(47, 49, 54);
+  background-color: #2B2C31;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   padding: 24px;
@@ -33,4 +34,25 @@
   i {
     font-size: 1.5rem;
   }
+}
+
+.Body {
+  background-color: #2f3136;
+  padding: 12px;
+}
+
+.Row {
+  display: flex;
+}
+
+.Subtitle {
+  align-self: center;
+  flex: 1 1 45%;
+  font-size: 12px;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.Subvalue {
+  flex: 1 1 55%;
 }
