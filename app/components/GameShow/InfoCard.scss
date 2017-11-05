@@ -38,11 +38,12 @@
 
 .Body {
   background-color: #2f3136;
-  padding: 12px;
+  padding: 24px 12px;
 }
 
 .Row {
   display: flex;
+  margin-bottom: 24px;
 }
 
 .Subtitle {
@@ -55,4 +56,18 @@
 
 .Subvalue {
   flex: 1 1 55%;
+}
+
+.Tags {
+  margin-top: 6px;
+  max-width: 283px;
+  overflow-x: scroll;
+
+  a {
+    background: #2098f3;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 0 6px;
+    margin-right: 6px;
+  }
 }
