@@ -1,8 +1,17 @@
 query FullGame($id: String) {
   game(_id: $id) {
-    title,
+    coverImage,
+    descriptionState,
+    developerIds,
+    genre,
+    macBuild,
+    releaseStatus,
+    screenshots,
     shortDescription,
+    tags,
+    title,
     thumbnail,
-    coverImage
+    trailer,
+    windowsBuild,
   }
 }

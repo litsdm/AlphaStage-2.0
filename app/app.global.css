@@ -20,7 +20,7 @@ a {
 .content-container {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 220px;
-  width: auto; height: auto;
+  width: auto;
   transition: all 0.2s ease-out;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -52,16 +52,4 @@ button:focus {
 
 p {
   margin: 0;
-}
-
-.DraftEditor-root {
-  color: black;
-  width: 550px;
-  padding: 12px;
-  height: 200px;
-  overflow-y: scroll;
-}
-
-.public-DraftEditor-content {
-  height: 200px;
 }

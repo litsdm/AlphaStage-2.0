@@ -1,0 +1,32 @@
+.AdditionalDetails {
+  padding: 24px;
+  text-align: center;
+}
+
+.Title {
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 100;
+}
+
+.Row {
+  display: flex;
+  padding: 24px;
+  text-align: left;
+}
+
+.Subtitle {
+  flex: 1 1 30%;
+}
+
+.Values {
+  flex: 1 1 70%;
+  display: flex;
+  flex-wrap: wrap;
+
+  p {
+    font-weight: 100;
+    margin-right: 48px;
+    opacity: 0.7;
+  }
+}

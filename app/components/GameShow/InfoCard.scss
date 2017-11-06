@@ -1,0 +1,91 @@
+.Info {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-left: 12px;
+}
+
+.Header {
+  background-color: #2B2C31;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.5s ease;
+
+  &.Expanded {
+    height: 100px;
+    position: relative;
+  }
+}
+
+.ButtonPlay {
+  background: linear-gradient(hsl(194, 90%, 54%), hsl(208, 90%, 54%));
+  border-radius: 24px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1.4px;
+  padding: 8px 26px;
+  transition: all .1s ease-out;
+  text-transform: uppercase;
+
+  &:hover {
+    background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1px;
+    margin-top: -1px;
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+
+  &.Expanded {
+    left: 50%;
+    position: absolute;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    transition: none;
+  }
+}
+
+.Body {
+  background-color: #2f3136;
+  padding: 24px 12px;
+
+  &.Expanded {
+    padding-top: 36px;
+  }
+}
+
+.Row {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.Subtitle {
+  align-self: center;
+  flex: 1 1 45%;
+  font-size: 12px;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.Subvalue {
+  flex: 1 1 55%;
+}
+
+.Tags {
+  margin-top: 6px;
+  max-width: 283px;
+  overflow-x: scroll;
+
+  a {
+    background: #2098f3;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 0 6px;
+    margin-right: 6px;
+  }
+}
