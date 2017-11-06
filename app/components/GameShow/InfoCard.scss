@@ -10,6 +10,12 @@
   border-top-right-radius: 4px;
   padding: 24px;
   text-align: center;
+  transition: all 0.5s ease;
+
+  &.Expanded {
+    height: 100px;
+    position: relative;
+  }
 }
 
 .ButtonPlay {
@@ -34,11 +40,23 @@
   i {
     font-size: 1.5rem;
   }
+
+  &.Expanded {
+    left: 50%;
+    position: absolute;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    transition: none;
+  }
 }
 
 .Body {
   background-color: #2f3136;
   padding: 24px 12px;
+
+  &.Expanded {
+    padding-top: 36px;
+  }
 }
 
 .Row {

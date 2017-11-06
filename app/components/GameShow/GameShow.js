@@ -10,6 +10,10 @@ const PERCENTAGE_DIFFERENCE = 10;
 const INITIAL_PERCENTAGE = 90;
 
 class GameShow extends Component {
+  state = {
+    isExpanded: false
+  };
+
   componentDidMount() {
     const contentContainer = document.getElementById('content-container');
     const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
@@ -24,9 +28,16 @@ class GameShow extends Component {
   }
 
   handleScroll = () => {
+    const { isExpanded } = this.state;
     const element = document.getElementById('contentCard');
     const rect = element.getBoundingClientRect();
     const position = rect.top + document.body.scrollTop;
+
+    if (position > 52 && isExpanded) {
+      this.setState({ isExpanded: false });
+    } else if (position <= 52 && !isExpanded) {
+      this.setState({ isExpanded: true });
+    }
 
     const newWidth = position <= 52
       ? 100
@@ -42,11 +53,12 @@ class GameShow extends Component {
   }
 
   render() {
+    const { isExpanded } = this.state;
     const { game } = this.props;
     return (
       <div>
         <div className={styles.Header} style={{ backgroundImage: `url(${game.coverImage})` }} />
-        <ContentCard game={game} />
+        <ContentCard game={game} isExpanded={isExpanded} />
       </div>
     );
   }
