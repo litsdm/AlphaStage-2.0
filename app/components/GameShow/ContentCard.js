@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 import InfoCard from './InfoCard';
+import AdditionalDetails from './AdditionalDetails';
 
 const ContentCard = ({ game, isExpanded }) => {
   const editorState = () => {
@@ -25,6 +26,7 @@ const ContentCard = ({ game, isExpanded }) => {
           <InfoCard game={game} isExpanded={isExpanded} />
         </div>
       </div>
+      <AdditionalDetails />
     </div>
   );
 };
