@@ -56,14 +56,18 @@ class CreateGame extends Component {
       editorState,
       fieldId,
       genre,
+      languages,
       macBuild,
+      publisher,
       releaseStatus,
       screenshots,
       shortDescription,
+      spaceRequired,
       tags,
       title,
       thumbnail,
       trailer,
+      website,
       windowsBuild
     } = this.state;
 
@@ -75,14 +79,18 @@ class CreateGame extends Component {
       descriptionState: JSON.stringify(convertToRaw(currentContent)),
       developerIds: [user._id],
       genre,
+      languages,
       macBuild,
+      publisher,
       releaseStatus,
       screenshots,
       shortDescription,
+      spaceRequired,
       tags,
       title,
       thumbnail,
       trailer,
+      website,
       windowsBuild
     };
 
