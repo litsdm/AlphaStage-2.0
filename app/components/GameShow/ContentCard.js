@@ -6,7 +6,7 @@ import styles from './styles.scss';
 import InfoCard from './InfoCard';
 import AdditionalDetails from './AdditionalDetails';
 
-const ContentCard = ({ game, isExpanded }) => {
+const ContentCard = ({ game }) => {
   const editorState = () => {
     const contentState = convertFromRaw(JSON.parse(game.descriptionState));
     return EditorState.createWithContent(contentState);
@@ -23,7 +23,7 @@ const ContentCard = ({ game, isExpanded }) => {
           />
         </div>
         <div className={styles.RightColumn}>
-          <InfoCard game={game} isExpanded={isExpanded} />
+          <InfoCard game={game} />
         </div>
       </div>
       <AdditionalDetails />
@@ -32,8 +32,7 @@ const ContentCard = ({ game, isExpanded }) => {
 };
 
 ContentCard.propTypes = {
-  game: PropTypes.object.isRequired,
-  isExpanded: PropTypes.bool.isRequired
+  game: PropTypes.object.isRequired
 };
 
 export default ContentCard;
