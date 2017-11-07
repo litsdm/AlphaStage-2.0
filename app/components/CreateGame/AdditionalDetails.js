@@ -6,16 +6,17 @@ import styles from './styles.scss';
 import Tag from '../TagsInput/Tag';
 
 const allLanguages = [
-  'Afrikanns', 'Albanian', 'Arabic', 'Armenian', 'Basque', 'Bengali', 'Bulgarian',
-  'Catalan', 'Cambodian', 'Chinese (Mandarin)', 'Croation', 'Czech', 'Danish',
-  'Dutch', 'English', 'Estonian', 'Fiji', 'Finnish', 'French', 'Georgian', 'German',
-  'Greek', 'Gujarati', 'Hebrew', 'Hindi', 'Hungarian', 'Icelandic', 'Indonesian',
-  'Irish', 'Italian', 'Japanese', 'Javanese', 'Korean', 'Latin', 'Latvian', 'Lithuanian',
-  'Macedonian', 'Malay', 'Malayalam', 'Maltese', 'Maori', 'Marathi', 'Mongolian',
-  'Nepali', 'Norwegian', 'Persian', 'Polish', 'Portuguese', 'Punjabi', 'Quechua',
-  'Romanian', 'Russian', 'Samoan', 'Serbian', 'Slovak', 'Slovenian', 'Spanish',
-  'Swahili', 'Swedish', 'Tamil', 'Tatar', 'Telugu', 'Thai', 'Tibetan', 'Tonga',
-  'Turkish', 'Ukranian', 'Urdu', 'Uzbek', 'Vietnamese', 'Welsh', 'Xhosa'
+  'Add a Language...', 'Afrikanns', 'Albanian', 'Arabic', 'Armenian', 'Basque',
+  'Bengali', 'Bulgarian', 'Catalan', 'Cambodian', 'Chinese (Mandarin)', 'Croation',
+  'Czech', 'Danish', 'Dutch', 'English', 'Estonian', 'Fiji', 'Finnish', 'French',
+  'Georgian', 'German', 'Greek', 'Gujarati', 'Hebrew', 'Hindi', 'Hungarian',
+  'Icelandic', 'Indonesian', 'Irish', 'Italian', 'Japanese', 'Javanese', 'Korean',
+  'Latin', 'Latvian', 'Lithuanian', 'Macedonian', 'Malay', 'Malayalam', 'Maltese',
+  'Maori', 'Marathi', 'Mongolian', 'Nepali', 'Norwegian', 'Persian', 'Polish',
+  'Portuguese', 'Punjabi', 'Quechua', 'Romanian', 'Russian', 'Samoan', 'Serbian',
+  'Slovak', 'Slovenian', 'Spanish', 'Swahili', 'Swedish', 'Tamil', 'Tatar', 'Telugu',
+  'Thai', 'Tibetan', 'Tonga', 'Turkish', 'Ukranian', 'Urdu', 'Uzbek', 'Vietnamese',
+  'Welsh', 'Xhosa'
 ];
 
 const AdditionalDetails = ({ languages, publisher, spaceRequired, website, handleChange }) => {
@@ -32,7 +33,7 @@ const AdditionalDetails = ({ languages, publisher, spaceRequired, website, handl
       if (newLanguage === language) alreadyExists = true;
     });
 
-    if (alreadyExists) return;
+    if (alreadyExists || newLanguage === 'Add a Language...') return;
 
     const value = [...languages, newLanguage];
     handleChange({ target: { name: 'languages', value } });
@@ -57,7 +58,7 @@ const AdditionalDetails = ({ languages, publisher, spaceRequired, website, handl
       <div className={styles.ColumnRight}>
         <div className={styles.InputContainer}>
           <label htmlFor="languages" className={styles.Tag}>Languages</label>
-          <div>
+          <div className={styles.Languages}>
             {renderLanguageTags()}
           </div>
           <select
