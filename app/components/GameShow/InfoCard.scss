@@ -8,14 +8,11 @@
   background-color: #2B2C31;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  height: 100px;
   padding: 24px;
+  position: relative;
   text-align: center;
   transition: all 0.5s ease;
-
-  &.Expanded {
-    height: 100px;
-    position: relative;
-  }
 }
 
 .ButtonPlay {
@@ -25,10 +22,14 @@
   color: #fff;
   font-size: 18px;
   font-weight: bold;
+  left: 50%;
   letter-spacing: 1.4px;
   padding: 8px 26px;
-  transition: all .1s ease-out;
+  position: absolute;
   text-transform: uppercase;
+  top: 100%;
+  transition: all .1s ease-out;
+  transform: translate(-50%, -50%);
 
   &:hover {
     background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
@@ -40,23 +41,12 @@
   i {
     font-size: 1.5rem;
   }
-
-  &.Expanded {
-    left: 50%;
-    position: absolute;
-    top: 100%;
-    transform: translate(-50%, -50%);
-    transition: none;
-  }
 }
 
 .Body {
   background-color: #2f3136;
   padding: 24px 12px;
-
-  &.Expanded {
-    padding-top: 36px;
-  }
+  padding-top: 36px;
 }
 
 .Row {

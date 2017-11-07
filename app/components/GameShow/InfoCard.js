@@ -4,11 +4,7 @@ import { Link } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import styles from './InfoCard.scss';
 
-const InfoCard = ({ game, isExpanded }) => {
-  const expandedStyle = (style) => (
-    isExpanded ? [style, styles.Expanded].join(' ') : style
-  );
-
+const InfoCard = ({ game }) => {
   const renderTags = () => (
     game.tags.map(tag => <Link key={uuid()} to="/">{tag}</Link>)
   );
@@ -16,14 +12,14 @@ const InfoCard = ({ game, isExpanded }) => {
   return (
     <div className={styles.Info}>
       <div
-        className={expandedStyle(styles.Header)}
-        style={isExpanded ? { background: `url(${game.thumbnail})`, backgroundSize: '100% 100%' } : {}}
+        className={styles.Header}
+        style={{ background: `url(${game.thumbnail})`, backgroundSize: '100% 100%' }}
       >
-        <button className={expandedStyle(styles.ButtonPlay)}>
+        <button className={styles.ButtonPlay}>
           <i className="fa fa-gamepad" /> Play
         </button>
       </div>
-      <div className={expandedStyle(styles.Body)}>
+      <div className={styles.Body}>
         <div className={styles.Row}>
           <p className={styles.Subtitle}>Release Status</p>
           <p className={styles.Subvalue}>{game.releaseStatus}</p>
@@ -42,8 +38,7 @@ const InfoCard = ({ game, isExpanded }) => {
 };
 
 InfoCard.propTypes = {
-  game: PropTypes.object.isRequired,
-  isExpanded: PropTypes.bool.isRequired
+  game: PropTypes.object.isRequired
 };
 
 export default InfoCard;

@@ -9,7 +9,7 @@ const AdditionalDetails = () => (
     <DetailsRow subtitle={'Languages'} values={['English', 'Spanish', 'Japanese']} />
     <DetailsRow subtitle={'Publisher'} values={['Alpha Stage Studios']} />
     <DetailsRow subtitle={'Space Required'} values={['20 GB']} />
-    <DetailsRow subtitle={'Version'} values={['0.0.1']} />
+    <DetailsRow subtitle={'Version'} values={['0.0.1']} last />
   </div>
 );
 
