@@ -1,0 +1,28 @@
+.ButtonPlay {
+  background: linear-gradient(hsl(194, 90%, 54%), hsl(208, 90%, 54%));
+  border-radius: 24px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  left: 50%;
+  letter-spacing: 1.4px;
+  min-width: 160px;
+  padding: 8px 26px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 100%;
+  transition: all .1s ease-out;
+  transform: translate(-50%, -50%);
+
+  &:hover {
+    background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1px;
+    margin-top: -1px;
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}

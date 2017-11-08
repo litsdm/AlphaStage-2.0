@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import styles from './InfoCard.scss';
 
+import GameButton from '../GameButton/ButtonContainer';
+
 const InfoCard = ({ game }) => {
   const renderTags = () => (
     game.tags.map(tag => <Link key={uuid()} to="/">{tag}</Link>)
@@ -15,9 +17,7 @@ const InfoCard = ({ game }) => {
         className={styles.Header}
         style={{ background: `url(${game.thumbnail})`, backgroundSize: '100% 100%' }}
       >
-        <button className={styles.ButtonPlay}>
-          <i className="fa fa-gamepad" /> Play
-        </button>
+        <GameButton game={game} />
       </div>
       <div className={styles.Body}>
         <div className={styles.Row}>
