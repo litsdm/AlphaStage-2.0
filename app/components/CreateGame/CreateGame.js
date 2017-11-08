@@ -10,6 +10,7 @@ import Basic from './Basic';
 import Media from './Media';
 import Details from './Details';
 import Uploads from './Uploads';
+import AdditionalDetails from './AdditionalDetails';
 
 let _invalidFields = {};
 let focusElement = null;
@@ -23,10 +24,13 @@ class CreateGame extends Component {
     fileId: shortid.generate(),
     genre: 'Action',
     invalidFields: {},
+    languages: [],
     macBuild: '',
+    publisher: '',
     releaseStatus: 'Released',
     screenshots: [],
     shortDescription: '',
+    spaceRequired: '',
     tags: [],
     title: '',
     thumbnail: '',
@@ -34,6 +38,7 @@ class CreateGame extends Component {
     uploadError: '',
     uploadingMacBuild: false,
     uploadingWindowsBuild: false,
+    website: '',
     windowsBuild: ''
   }
 
@@ -51,14 +56,18 @@ class CreateGame extends Component {
       editorState,
       fieldId,
       genre,
+      languages,
       macBuild,
+      publisher,
       releaseStatus,
       screenshots,
       shortDescription,
+      spaceRequired,
       tags,
       title,
       thumbnail,
       trailer,
+      website,
       windowsBuild
     } = this.state;
 
@@ -70,14 +79,18 @@ class CreateGame extends Component {
       descriptionState: JSON.stringify(convertToRaw(currentContent)),
       developerIds: [user._id],
       genre,
+      languages,
       macBuild,
+      publisher,
       releaseStatus,
       screenshots,
       shortDescription,
+      spaceRequired,
       tags,
       title,
       thumbnail,
       trailer,
+      website,
       windowsBuild
     };
 
@@ -196,10 +209,13 @@ class CreateGame extends Component {
       coverImage,
       fileId,
       genre,
+      languages,
       macBuild,
+      publisher,
       releaseStatus,
       screenshots,
       shortDescription,
+      spaceRequired,
       tags,
       title,
       thumbnail,
@@ -207,6 +223,7 @@ class CreateGame extends Component {
       uploadError,
       uploadingMacBuild,
       uploadingWindowsBuild,
+      website,
       windowsBuild
     } = this.state;
 
@@ -251,6 +268,14 @@ class CreateGame extends Component {
           fileId={fileId}
           uploadError={uploadError}
           validatedInputClass={this.validatedInputClass}
+        />
+        <div className={styles.Divider} />
+        <AdditionalDetails
+          languages={languages}
+          publisher={publisher}
+          spaceRequired={spaceRequired}
+          website={website}
+          handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
