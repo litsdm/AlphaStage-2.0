@@ -45,6 +45,7 @@ const Uploads = (props) => {
     const file = target.files[0];
 
     if (file == null) return;
+    if (uploadError) handleBuildChange()
 
     getSignedRequest(file, target.name);
   };
