@@ -5,6 +5,7 @@ import uuid from 'uuid/v4';
 import styles from './InfoCard.scss';
 
 import GameButton from '../GameButton/ButtonContainer';
+import ProgressBar from '../ProgressBar';
 
 const InfoCard = ({ game }) => {
   const renderTags = () => (
@@ -20,6 +21,7 @@ const InfoCard = ({ game }) => {
         <GameButton game={game} />
       </div>
       <div className={styles.Body}>
+        <ProgressBar progress={100} display />
         <div className={styles.Row}>
           <p className={styles.Subtitle}>Release Status</p>
           <p className={styles.Subvalue}>{game.releaseStatus}</p>
