@@ -11,6 +11,7 @@
  * @flow
  */
 import { app, BrowserWindow, ipcMain } from 'electron';
+import electronDl, { download } from 'electron-dl';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -70,8 +71,17 @@ app.on('ready', async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
+  const appDataPath = app.getPath('appData');
   ipcMain.on('download-game', (e, args) => {
-    console.log(`Downloading ${args.title}...`);
+    download(mainWindow, args.url, {
+      directory: `${appDataPath}/ASLibrary/${args.title}`,
+      onProgress: (progress) => console.log(progress)
+    }).then(dl => {
+      const savePath = dl.getSavePath().split(' ').join('\\ ');
+      console.log(savePath);
+
+      return dl;
+    }).catch(console.error);
   });
 
   // @TODO: Use 'ready-to-show' event

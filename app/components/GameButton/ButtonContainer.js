@@ -23,10 +23,13 @@ class ButtonContainer extends Component {
   handleInstallClick = () => {
     const { game } = this.props;
 
+    const url = process.platform === 'darwin' ? game.macBuild : game.windowsBuild;
+
     const args = {
       id: game._id,
       title: game.title,
-      thumbnail: game.thumbnail
+      thumbnail: game.thumbnail,
+      url
     };
 
     ipcRenderer.send('download-game', args);
