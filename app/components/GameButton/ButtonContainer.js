@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 import fs from 'fs';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
@@ -20,18 +20,49 @@ class ButtonContainer extends Component {
     if (fs.existsSync(path)) this.setState({ isInstalled: true });
   }
 
+  handleInstallClick = () => {
+    const { game } = this.props;
+
+    const args = {
+      id: game._id,
+      title: game.title,
+      thumbnail: game.thumbnail
+    };
+
+    ipcRenderer.send('download-game', args);
+  }
+
+  handlePlayClick = () => {
+    console.log('Playing!');
+  }
+
   buttonConfig = () => {
     const { isInstalled } = this.state;
 
     return isInstalled
-      ? { iconClass: 'fa fa-gamepad', text: 'Play', btnClass: styles.ButtonPlay }
-      : { iconClass: 'fa fa-download', text: 'Install', btnClass: styles.ButtonPlay };
+      ? {
+        iconClass: 'fa fa-gamepad',
+        text: 'Play',
+        btnClass: styles.ButtonPlay,
+        handleClick: this.handlePlayClick
+      }
+      : {
+        iconClass: 'fa fa-download',
+        text: 'Install',
+        btnClass: styles.ButtonPlay,
+        handleClick: this.handleInstallClick
+      };
   }
 
   render() {
-    const { text, iconClass, btnClass } = this.buttonConfig();
+    const { text, iconClass, btnClass, handleClick } = this.buttonConfig();
     return (
-      <Button text={text} iconClass={iconClass} btnClass={btnClass} />
+      <Button
+        text={text}
+        iconClass={iconClass}
+        btnClass={btnClass}
+        handleClick={handleClick}
+      />
     );
   }
 }
