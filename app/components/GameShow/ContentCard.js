@@ -6,7 +6,7 @@ import styles from './styles.scss';
 import InfoCard from './InfoCard';
 import AdditionalDetails from './AdditionalDetails';
 
-const ContentCard = ({ game }) => {
+const ContentCard = ({ game, progress }) => {
   const editorState = () => {
     const contentState = convertFromRaw(JSON.parse(game.descriptionState));
     return EditorState.createWithContent(contentState);
@@ -23,7 +23,7 @@ const ContentCard = ({ game }) => {
           />
         </div>
         <div className={styles.RightColumn}>
-          <InfoCard game={game} />
+          <InfoCard game={game} progress={progress} />
         </div>
       </div>
       <AdditionalDetails />
@@ -32,7 +32,12 @@ const ContentCard = ({ game }) => {
 };
 
 ContentCard.propTypes = {
-  game: PropTypes.object.isRequired
+  game: PropTypes.object.isRequired,
+  progress: PropTypes.number
+};
+
+ContentCard.defaultProps = {
+  progress: 0
 };
 
 export default ContentCard;

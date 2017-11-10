@@ -1,0 +1,32 @@
+.ProgressBar {
+  align-items: center;
+  display: flex;
+  margin-bottom: 12px;
+
+  p {
+    font-size: 12px;
+    opacity: 0.7;
+  }
+}
+
+.Bar {
+  background-color: #404040;
+  border-radius: 24px;
+  height: 3px;
+  margin-right: 12px;
+  width: 100%
+}
+
+.Fill {
+  background: repeating-linear-gradient(
+    135deg,
+    #2091f3,
+    #2091f3 5px,
+    #20c2f3 5px,
+    #20c2f3 10px
+  );
+  border-radius: 24px;
+  height: 3px;
+  max-width: 100%;
+  width: 0;
+}
