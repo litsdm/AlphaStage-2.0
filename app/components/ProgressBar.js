@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './ProgressBar.scss';
 
 const ProgressBar = ({ progress, display }) => {
-  const progressWidth = progress > 0 && progress < 1 ? progress * 100 : progress;
+  const progressWidth = progress > 0 && progress <= 1 ? progress * 100 : progress;
 
   return (
     <div className={styles.ProgressBar}>

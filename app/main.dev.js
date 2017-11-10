@@ -75,7 +75,7 @@ app.on('ready', async () => {
   ipcMain.on('download-game', (e, args) => {
     download(mainWindow, args.url, {
       directory: `${appDataPath}/ASLibrary/${args.title}`,
-      onProgress: (progress) => console.log(progress)
+      onProgress: (progress) => e.sender.send('download-progress', progress)
     }).then(dl => {
       const savePath = dl.getSavePath().split(' ').join('\\ ');
       console.log(savePath);
