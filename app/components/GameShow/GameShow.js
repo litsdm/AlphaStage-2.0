@@ -49,19 +49,29 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game } = this.props;
+    const { game, isDownloading } = this.props;
     const { progress } = this.state;
+
     return (
       <div>
         <div className={styles.Header} style={{ backgroundImage: `url(${game.coverImage})` }} />
-        <ContentCard game={game} progress={progress} />
+        <ContentCard
+          game={game}
+          progress={progress}
+          isDownloading={isDownloading}
+        />
       </div>
     );
   }
 }
 
 GameShow.propTypes = {
-  game: PropTypes.object.isRequired
+  game: PropTypes.object.isRequired,
+  isDownloading: PropTypes.bool,
+};
+
+GameShow.defaultProps = {
+  isDownloading: false,
 };
 
 export default GameShow;

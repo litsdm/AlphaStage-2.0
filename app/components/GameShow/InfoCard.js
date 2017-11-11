@@ -7,7 +7,7 @@ import styles from './InfoCard.scss';
 import GameButton from '../GameButton/ButtonContainer';
 import ProgressBar from '../ProgressBar';
 
-const InfoCard = ({ game, progress }) => {
+const InfoCard = ({ game, progress, isDownloading }) => {
   const renderTags = () => (
     game.tags.map(tag => <Link key={uuid()} to="/">{tag}</Link>)
   );
@@ -21,7 +21,7 @@ const InfoCard = ({ game, progress }) => {
         <GameButton game={game} />
       </div>
       <div className={styles.Body}>
-        <ProgressBar progress={progress} display />
+        <ProgressBar progress={progress} display={isDownloading} />
         <div className={styles.Row}>
           <p className={styles.Subtitle}>Release Status</p>
           <p className={styles.Subvalue}>{game.releaseStatus}</p>
@@ -41,11 +41,13 @@ const InfoCard = ({ game, progress }) => {
 
 InfoCard.propTypes = {
   game: PropTypes.object.isRequired,
-  progress: PropTypes.number
+  progress: PropTypes.number,
+  isDownloading: PropTypes.bool
 };
 
 InfoCard.defaultProps = {
-  progress: 0
+  progress: 0,
+  isDownloading: false
 };
 
 export default InfoCard;
