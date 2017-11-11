@@ -29,6 +29,13 @@
 }
 
 .ButtonDisabled {
+  background: linear-gradient(#9f9f9f, #909090);
+  cursor: auto;
   min-width: 220px;
-  background-color: #9f9f9f;
+
+  &:hover {
+    background: linear-gradient(#9f9f9f, #909090);
+    margin-bottom: 0;
+    margin-top: 0;
+  }
 }
