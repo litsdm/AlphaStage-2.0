@@ -14,7 +14,8 @@ import { startInstall, finishDownload } from '../actions/game';
 
 const mapStateToProps = ({ game }) => (
   {
-    ...game
+    ...game,
+    downloadId: game.id
   }
 );
 
@@ -34,7 +35,16 @@ const withGame = graphql(fullGameQuery, {
   options: (props) => ({ variables: { id: props.match.params.id } })
 });
 
-const GamePage = ({ game, loading, isDownloading, startInstalling, downloadFinish }) => {
+const GamePage = (props) => {
+  const {
+    game,
+    loading,
+    isDownloading,
+    startInstalling,
+    downloadFinish,
+    downloadId
+  } = props;
+
   ipcRenderer.on('download-finish', (event, args) => {
     startInstalling();
     const { savePath, url } = args;
@@ -49,11 +59,11 @@ const GamePage = ({ game, loading, isDownloading, startInstalling, downloadFinis
   const unzipMac = (savePath, unzipTo) => {
     exec(`unzip ${savePath} -d ${unzipTo}`, (error) => {
       if (error) { throw error; }
+      downloadFinish();
 
       // Delete .zip after unzipping
       exec(`rm -rf ${savePath}`, (err) => {
         if (err) { throw err; }
-        downloadFinish();
       });
     });
   };
@@ -64,6 +74,7 @@ const GamePage = ({ game, loading, isDownloading, startInstalling, downloadFinis
     : <GameShow
       game={game}
       isDownloading={isDownloading}
+      downloadId={downloadId}
     />
   );
 };
@@ -73,7 +84,8 @@ GamePage.propTypes = {
   game: PropTypes.object,
   isDownloading: PropTypes.bool,
   startInstalling: PropTypes.func.isRequired,
-  downloadFinish: PropTypes.func.isRequired
+  downloadFinish: PropTypes.func.isRequired,
+  downloadId: PropTypes.string.isRequired
 };
 
 GamePage.defaultProps = {
