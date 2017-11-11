@@ -9,6 +9,7 @@ const games = (state = initialState, { type, id }) => {
 
     case 'START_INSTALL':
       return {
+        ...state,
         isDownloading: false,
         isInstalling: true
       };

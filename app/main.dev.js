@@ -78,8 +78,15 @@ app.on('ready', async () => {
       onProgress: (progress) => e.sender.send('download-progress', progress)
     }).then(dl => {
       const savePath = dl.getSavePath().split(' ').join('\\ ');
-      console.log(savePath);
 
+      const res = {
+        title: args.title,
+        thumbnail: args.thumbnail,
+        url: args.url,
+        savePath
+      };
+
+      e.sender.send('download-finish', res);
       return dl;
     }).catch(console.error);
   });
