@@ -11,6 +11,12 @@ export const startInstall = () => (
   }
 );
 
+export const finishInstall = () => (
+  {
+    type: 'FINISH_INSTALL'
+  }
+);
+
 export const finishDownload = () => (
   {
     type: 'FINISH_DOWNLOAD'

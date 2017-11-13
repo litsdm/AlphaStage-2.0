@@ -10,7 +10,7 @@ import Loader from '../components/Loader';
 
 import fullGameQuery from '../graphql/fullGame.graphql';
 
-import { startInstall, finishDownload } from '../actions/game';
+import { startInstall, finishInstall } from '../actions/game';
 
 const mapStateToProps = ({ game }) => (
   {
@@ -21,7 +21,7 @@ const mapStateToProps = ({ game }) => (
 
 const mapDispatchToProps = dispatch => ({
   startInstalling: () => dispatch(startInstall()),
-  completeInstall: () => dispatch(finishDownload())
+  completeInstall: () => dispatch(finishInstall())
 });
 
 const withGame = graphql(fullGameQuery, {
@@ -41,7 +41,7 @@ const GamePage = (props) => {
     loading,
     isDownloading,
     startInstalling,
-    completeDownload,
+    completeInstall,
     downloadId
   } = props;
 
@@ -59,7 +59,7 @@ const GamePage = (props) => {
   const unzipMac = (savePath, unzipTo) => {
     exec(`unzip ${savePath} -d ${unzipTo}`, (error) => {
       if (error) { throw error; }
-      completeDownload();
+      completeInstall();
 
       // Delete .zip after unzipping
       exec(`rm -rf ${savePath}`, (err) => {
@@ -84,7 +84,7 @@ GamePage.propTypes = {
   game: PropTypes.object,
   isDownloading: PropTypes.bool,
   startInstalling: PropTypes.func.isRequired,
-  completeDownload: PropTypes.func.isRequired,
+  completeInstall: PropTypes.func.isRequired,
   downloadId: PropTypes.string.isRequired
 };
 

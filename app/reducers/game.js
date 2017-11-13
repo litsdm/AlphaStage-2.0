@@ -14,12 +14,15 @@ const games = (state = initialState, { type, id }) => {
         isInstalling: true
       };
 
-    case 'FINISH_DOWNLOAD':
+    case 'FINISH_INSTALL':
       return {
         ...state,
         isInstalling: false,
         isFinished: true,
       };
+
+    case 'FINISH_DOWNLOAD':
+      return initialState;
 
     default:
       return state;

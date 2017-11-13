@@ -5,7 +5,7 @@ import fs from 'fs';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
-import { startDownload } from '../../actions/game';
+import { startDownload, finishDownload } from '../../actions/game';
 
 import Button from './Button';
 
@@ -19,12 +19,13 @@ const mapStateToProps = ({ game }) => (
 );
 
 const mapDispatchToProps = dispatch => ({
-  startDownloading: (id) => dispatch(startDownload(id))
+  startDownloading: (id) => dispatch(startDownload(id)),
+  completeDownload: () => dispatch(finishDownload())
 });
 
 class ButtonContainer extends Component {
   state = {
-    isInstalled: this.props.isFinished && this.props.downloadId === this.props.game._id,
+    isInstalled: false
   }
 
   componentWillMount() {
@@ -32,6 +33,17 @@ class ButtonContainer extends Component {
     const path = `${app.getPath('appData')}/ASLibrary/${game.title}`;
 
     if (fs.existsSync(path)) this.setState({ isInstalled: true });
+  }
+
+  componentDidUpdate() {
+    const { isFinished, downloadId, game, completeDownload } = this.props;
+
+    // This would only be called once because we reset the download state in
+    // completeDownload() that is why we disable the line.
+    if (isFinished && downloadId === game._id) {
+      this.setState({ isInstalled: true }); // eslint-disable-line
+      completeDownload();
+    }
   }
 
   handleInstallClick = () => {
@@ -55,10 +67,10 @@ class ButtonContainer extends Component {
   }
 
   buttonConfig = () => {
-    const { game, isDownloading, isInstalling, downloadId } = this.props;
+    const { game, isDownloading, isInstalling, downloadId, isFinished } = this.props;
     const { isInstalled } = this.state;
 
-    if (downloadId && downloadId === game._id) {
+    if (downloadId && downloadId === game._id && !isFinished) {
       if (isDownloading) {
         return {
           iconClass: 'fa fa-spinner fa-spin',
@@ -95,6 +107,7 @@ class ButtonContainer extends Component {
 
   render() {
     const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig();
+
     return (
       <Button
         text={text}
@@ -110,6 +123,7 @@ class ButtonContainer extends Component {
 ButtonContainer.propTypes = {
   game: PropTypes.object.isRequired,
   startDownloading: PropTypes.func.isRequired,
+  completeDownload: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool,
   isInstalling: PropTypes.bool,
   downloadId: PropTypes.string,
