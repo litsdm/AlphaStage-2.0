@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 
 class ButtonContainer extends Component {
   state = {
-    isInstalled: false,
+    isInstalled: this.props.isFinished && this.props.downloadId === this.props.game._id,
   }
 
   componentWillMount() {
@@ -112,13 +112,15 @@ ButtonContainer.propTypes = {
   startDownloading: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool,
   isInstalling: PropTypes.bool,
-  downloadId: PropTypes.string
+  downloadId: PropTypes.string,
+  isFinished: PropTypes.bool
 };
 
 ButtonContainer.defaultProps = {
   isDownloading: false,
   isInstalling: false,
-  downloadId: ''
+  downloadId: '',
+  isFinished: false
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonContainer);

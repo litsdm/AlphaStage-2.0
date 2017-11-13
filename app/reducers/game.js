@@ -1,4 +1,4 @@
-const initialState = { id: '', isDownloading: false, isInstalling: false };
+const initialState = { id: '', isDownloading: false, isInstalling: false, isFinished: false };
 const games = (state = initialState, { type, id }) => {
   switch (type) {
     case 'START_DOWNLOAD':
@@ -15,7 +15,11 @@ const games = (state = initialState, { type, id }) => {
       };
 
     case 'FINISH_DOWNLOAD':
-      return initialState;
+      return {
+        ...state,
+        isInstalling: false,
+        isFinished: true,
+      };
 
     default:
       return state;
