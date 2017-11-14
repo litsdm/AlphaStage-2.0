@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import { exec } from 'child_process';
+import DecompressZip from 'decompress-zip';
 import PropTypes from 'prop-types';
 
 import GameShow from '../components/GameShow/GameShow';
@@ -54,6 +55,7 @@ const GamePage = (props) => {
     const unzipTo = savePath.substring(0, savePath.length - filename.length);
 
     if (process.platform === 'darwin') unzipMac(savePath, unzipTo);
+    else unzipWin(savePath, unzipTo);
   });
 
   const unzipMac = (savePath, unzipTo) => {
@@ -64,6 +66,20 @@ const GamePage = (props) => {
       // Delete .zip after unzipping
       exec(`rm -rf ${savePath}`, (err) => {
         if (err) { throw err; }
+      });
+    });
+  };
+
+  const unzipWin = (savePath, unzipTo) => {
+    const unzipper = new DecompressZip(savePath);
+
+    unzipper.extract({ path: unzipTo });
+
+    // Delete .zip after unzipping
+    unzipper.on('extract', () => {
+      completeInstall();
+      exec(`DEL ${savePath}`, (error) => {
+        if (error) { throw error; }
       });
     });
   };
