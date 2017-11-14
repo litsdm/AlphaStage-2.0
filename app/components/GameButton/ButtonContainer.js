@@ -67,6 +67,13 @@ class ButtonContainer extends Component {
   }
 
   buttonConfig = (key) => {
+    const sharedDisabledConfig = {
+      iconClass: 'fa fa-spinner fa-spin',
+      btnClass: styles.ButtonDisabled,
+      handleClick: null,
+      isDisabled: true
+    };
+
     const configs = {
       play: {
         iconClass: 'fa fa-gamepad',
@@ -81,18 +88,18 @@ class ButtonContainer extends Component {
         handleClick: this.handleInstallClick
       },
       downloading: {
-        iconClass: 'fa fa-spinner fa-spin',
-        text: 'Downloading',
-        btnClass: styles.ButtonDisabled,
-        handleClick: null,
-        isDisabled: true
+        ...sharedDisabledConfig,
+        text: 'Downloading'
       },
       installing: {
-        iconClass: 'fa fa-spinner fa-spin',
-        text: 'Installing',
-        btnClass: styles.ButtonDisabled,
-        handleClick: null,
-        isDisabled: true
+        ...sharedDisabledConfig,
+        text: 'Installing'
+      },
+      unavailable: {
+        ...sharedDisabledConfig,
+        iconClass: '',
+        text: `Unavailable on ${process.platform === 'darwin' ? 'mac' : 'Windows'}`,
+        btnClass: `${styles.ButtonUnavailable} ${process.platform === 'darwin' ? '' : styles.win}`
       }
     };
 
@@ -102,6 +109,12 @@ class ButtonContainer extends Component {
   buttonConfigKey = () => {
     const { game, isDownloading, isInstalling, downloadId, isFinished } = this.props;
     const { isInstalled } = this.state;
+
+    if (process.platform === 'darwin') {
+      if (!game.macBuild) return 'unavailable';
+    } else if (process.platform === 'win32') {
+      if (!game.windowsBuild) return 'unavailable';
+    }
 
     if (downloadId && downloadId === game._id && !isFinished) {
       if (isDownloading) return 'downloading';
