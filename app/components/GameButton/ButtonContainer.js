@@ -66,47 +66,54 @@ class ButtonContainer extends Component {
     console.log('Playing!');
   }
 
-  buttonConfig = () => {
+  buttonConfig = (key) => {
+    const configs = {
+      play: {
+        iconClass: 'fa fa-gamepad',
+        text: 'Play',
+        btnClass: styles.ButtonPlay,
+        handleClick: this.handlePlayClick
+      },
+      install: {
+        iconClass: 'fa fa-download',
+        text: 'Install',
+        btnClass: styles.ButtonPlay,
+        handleClick: this.handleInstallClick
+      },
+      downloading: {
+        iconClass: 'fa fa-spinner fa-spin',
+        text: 'Downloading',
+        btnClass: styles.ButtonDisabled,
+        handleClick: null,
+        isDisabled: true
+      },
+      installing: {
+        iconClass: 'fa fa-spinner fa-spin',
+        text: 'Installing',
+        btnClass: styles.ButtonDisabled,
+        handleClick: null,
+        isDisabled: true
+      }
+    };
+
+    return configs[key];
+  }
+
+  buttonConfigKey = () => {
     const { game, isDownloading, isInstalling, downloadId, isFinished } = this.props;
     const { isInstalled } = this.state;
 
     if (downloadId && downloadId === game._id && !isFinished) {
-      if (isDownloading) {
-        return {
-          iconClass: 'fa fa-spinner fa-spin',
-          text: 'Downloading',
-          btnClass: styles.ButtonDisabled,
-          handleClick: null,
-          isDisabled: true
-        };
-      } else if (isInstalling) {
-        return {
-          iconClass: 'fa fa-spinner fa-spin',
-          text: 'Installing',
-          btnClass: styles.ButtonDisabled,
-          handleClick: null,
-          isDisabled: true
-        };
-      }
+      if (isDownloading) return 'downloading';
+      else if (isInstalling) return 'installing';
     } else {
-      return isInstalled
-        ? {
-          iconClass: 'fa fa-gamepad',
-          text: 'Play',
-          btnClass: styles.ButtonPlay,
-          handleClick: this.handlePlayClick
-        }
-        : {
-          iconClass: 'fa fa-download',
-          text: 'Install',
-          btnClass: styles.ButtonPlay,
-          handleClick: this.handleInstallClick
-        };
+      return isInstalled ? 'play' : 'install';
     }
   }
 
   render() {
-    const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig();
+    const key = this.buttonConfigKey();
+    const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig(key);
 
     return (
       <Button
