@@ -1,4 +1,6 @@
-.ButtonPlay {
+.ButtonPlay,
+.ButtonDisabled,
+.ButtonUnavailable {
   background: linear-gradient(hsl(194, 90%, 54%), hsl(208, 90%, 54%));
   border-radius: 24px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
@@ -24,5 +26,30 @@
 
   i {
     font-size: 1rem;
+  }
+}
+
+.ButtonDisabled,
+.ButtonUnavailable {
+  background: linear-gradient(#9f9f9f, #909090);
+  cursor: auto;
+  min-width: 220px;
+
+  &:hover {
+    background: linear-gradient(#9f9f9f, #909090);
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+.ButtonUnavailable {
+  font-size: 12px;
+
+  .win {
+    min-width: 260px;
+  }
+
+  i {
+    display: none;
   }
 }

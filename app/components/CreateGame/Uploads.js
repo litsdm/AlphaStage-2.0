@@ -23,6 +23,7 @@ const Uploads = (props) => {
     const fileName = `${name}-${fileId}.${file.type.split('/')[1]}`;
     let buildUrl = '';
 
+    if (uploadError) handleChange({ target: { name: 'uploadError', value: '' } });
     handleChange({ target: { name: uploadingName, value: true } });
 
     callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
@@ -45,7 +46,6 @@ const Uploads = (props) => {
     const file = target.files[0];
 
     if (file == null) return;
-    if (uploadError) handleBuildChange()
 
     getSignedRequest(file, target.name);
   };

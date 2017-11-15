@@ -16,18 +16,33 @@ class GameShow extends Component {
   };
 
   componentDidMount() {
+    const { game, downloadId } = this.props;
     const contentContainer = document.getElementById('content-container');
     const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
 
     contentContainer.addEventListener('scroll', this.handleScroll);
     editorRoot.classList += ` ${styles.DraftRoot}`;
 
-    ipcRenderer.on('download-progress', (e, progress) => this.setState({ progress }));
+    if (game._id === downloadId) this.setDownloadListener();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { downloadId } = this.props;
+    if (prevProps.downloadId !== downloadId) this.setDownloadListener();
   }
 
   componentWillUnmount() {
     const contentContainer = document.getElementById('content-container');
     contentContainer.removeEventListener('scroll', this.handleScroll);
+    ipcRenderer.removeAllListeners(['download-progress']);
+  }
+
+  setDownloadListener = () => {
+    const { game, downloadId } = this.props;
+
+    ipcRenderer.on('download-progress', (e, progress) => {
+      if (game._id === downloadId) this.setState({ progress });
+    });
   }
 
   handleScroll = () => {
@@ -49,19 +64,31 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game } = this.props;
+    const { game, isDownloading, downloadId } = this.props;
     const { progress } = this.state;
+
     return (
       <div>
         <div className={styles.Header} style={{ backgroundImage: `url(${game.coverImage})` }} />
-        <ContentCard game={game} progress={progress} />
+        <ContentCard
+          game={game}
+          progress={progress}
+          isDownloading={isDownloading}
+          downloadId={downloadId}
+        />
       </div>
     );
   }
 }
 
 GameShow.propTypes = {
-  game: PropTypes.object.isRequired
+  game: PropTypes.object.isRequired,
+  downloadId: PropTypes.string.isRequired,
+  isDownloading: PropTypes.bool,
+};
+
+GameShow.defaultProps = {
+  isDownloading: false,
 };
 
 export default GameShow;

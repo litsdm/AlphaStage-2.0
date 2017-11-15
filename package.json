@@ -186,6 +186,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "decompress-zip": "^0.3.0",
     "devtron": "^1.4.0",
     "draft-js": "^0.10.4",
     "electron-debug": "^1.2.0",
