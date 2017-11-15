@@ -53,3 +53,11 @@ button:focus {
 p {
   margin: 0;
 }
+
+.slick-prev {
+  left: -15px;
+}
+
+.slick-next {
+  right: -15px;
+}
