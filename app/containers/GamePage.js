@@ -1,9 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-import { ipcRenderer } from 'electron';
-import { exec } from 'child_process';
-import DecompressZip from 'decompress-zip';
 import PropTypes from 'prop-types';
 
 import GameShow from '../components/GameShow/GameShow';
@@ -11,19 +8,12 @@ import Loader from '../components/Loader';
 
 import fullGameQuery from '../graphql/fullGame.graphql';
 
-import { startInstall, finishInstall } from '../actions/game';
-
 const mapStateToProps = ({ game }) => (
   {
     ...game,
     downloadId: game.id
   }
 );
-
-const mapDispatchToProps = dispatch => ({
-  startInstalling: () => dispatch(startInstall()),
-  completeInstall: () => dispatch(finishInstall())
-});
 
 const withGame = graphql(fullGameQuery, {
   props: ({ data }) => {
@@ -41,48 +31,8 @@ const GamePage = (props) => {
     game,
     loading,
     isDownloading,
-    startInstalling,
-    completeInstall,
     downloadId
   } = props;
-
-  ipcRenderer.on('download-finish', (event, args) => {
-    startInstalling();
-    const { savePath, url } = args;
-
-    const brokenUrl = url.split('/');
-    const filename = brokenUrl[brokenUrl.length - 1];
-    const unzipTo = savePath.substring(0, savePath.length - filename.length);
-
-    if (process.platform === 'darwin') unzipMac(savePath, unzipTo);
-    else unzipWin(savePath, unzipTo);
-  });
-
-  const unzipMac = (savePath, unzipTo) => {
-    exec(`unzip ${savePath} -d ${unzipTo}`, (error) => {
-      if (error) { throw error; }
-      completeInstall();
-
-      // Delete .zip after unzipping
-      exec(`rm -rf ${savePath}`, (err) => {
-        if (err) { throw err; }
-      });
-    });
-  };
-
-  const unzipWin = (savePath, unzipTo) => {
-    const unzipper = new DecompressZip(savePath);
-
-    unzipper.extract({ path: unzipTo });
-
-    // Delete .zip after unzipping
-    unzipper.on('extract', () => {
-      completeInstall();
-      exec(`DEL ${savePath}`, (error) => {
-        if (error) { throw error; }
-      });
-    });
-  };
 
   return (
     loading
@@ -99,8 +49,6 @@ GamePage.propTypes = {
   loading: PropTypes.bool,
   game: PropTypes.object,
   isDownloading: PropTypes.bool,
-  startInstalling: PropTypes.func.isRequired,
-  completeInstall: PropTypes.func.isRequired,
   downloadId: PropTypes.string.isRequired
 };
 
@@ -110,7 +58,7 @@ GamePage.defaultProps = {
   isDownloading: false,
 };
 
-const GamePageWithProps = connect(mapStateToProps, mapDispatchToProps)(GamePage);
+const GamePageWithProps = connect(mapStateToProps, null)(GamePage);
 const GamePageWithData = withGame(GamePageWithProps);
 
 export default GamePageWithData;
