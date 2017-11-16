@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { remote, ipcRenderer } from 'electron';
 import { connect } from 'react-redux';
+import { exec } from 'child_process';
 import fs from 'fs';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
@@ -63,7 +64,30 @@ class ButtonContainer extends Component {
   }
 
   handlePlayClick = () => {
-    console.log('Playing!');
+    const { game } = this.props;
+    const path = `${app.getPath('appData')}/ASLibrary/${game.title}`;
+    const file = this.localGameFile(path);
+    const localPath = `${path}/${file}`.split(' ').join('\\ ');
+
+    const openCommand = process.platform === 'darwin'
+      ? `open -a ${localPath} --wait-apps`
+      : localPath;
+
+    exec(openCommand, (error) => {
+      if (error) throw error;
+
+      // Game was closed
+    });
+  }
+
+  localGameFile = (path) => {
+    const regexp = process.platform === 'darwin' ? /^.*\.(app)$/ : /^.*\.(exe)$/;
+    let gameFile = '';
+    fs.readdirSync(path).forEach(file => {
+      if (regexp.test(file)) gameFile = file;
+    });
+
+    return gameFile;
   }
 
   buttonConfig = (key) => {
