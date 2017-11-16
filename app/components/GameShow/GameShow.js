@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
+import Header from './Header';
 import ContentCard from './ContentCard';
 
 const INITIAL_OFFSET = 427;
@@ -69,7 +70,7 @@ class GameShow extends Component {
 
     return (
       <div>
-        <div className={styles.Header} style={{ backgroundImage: `url(${game.coverImage})` }} />
+        <Header coverImage={game.coverImage} />
         <ContentCard
           game={game}
           progress={progress}

@@ -1,0 +1,46 @@
+.Header {
+  -webkit-mask-image: -webkit-linear-gradient(top, black 70%, transparent 100%);
+  background-repeat: no-repeat;
+  background-attachment: center;
+  background-size: 100% 100%;
+  cursor: pointer;
+  height: 500px;
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    .Overlay {
+      opacity: 0.2;
+    }
+
+    .ButtonPlay {
+      opacity: 1;
+    }
+  }
+}
+
+.Overlay {
+  background-color: #000;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: all 0.3s ease;
+  width: 100%;
+  z-index: 1;
+}
+
+.ButtonPlay {
+  color: #fff;
+  font-size: 6rem;
+  left: 50%;
+  opacity: 0.4;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
