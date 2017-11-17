@@ -55,10 +55,18 @@ p {
 }
 
 .slick-prev {
-  left: -25px;
+  left: -15px;
 }
 
 .slick-next {
+  right: -15px;
+}
+
+.gameshow .slick-prev {
+  left: -25px;
+}
+
+.gameshow .slick-next {
   right: -25px;
 }
 
