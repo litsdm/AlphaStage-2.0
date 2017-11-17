@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
+import Slider from 'react-slick';
+import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
 import Header from './Header';
@@ -65,6 +67,27 @@ class GameShow extends Component {
     element.style.width = `${newWidth}%`;
   }
 
+  renderSlider = () => {
+    const { game } = this.props;
+    const screenshots = game.screenshots.map(screenshot => (
+      <img key={uuid()} className={styles.Screenshot} src={screenshot} alt="Game screenshot" />
+    ));
+
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    };
+
+    return (
+      <Slider {...settings}>
+        {screenshots}
+      </Slider>
+    );
+  }
+
   render() {
     const { game, isDownloading, downloadId } = this.props;
     const { progress } = this.state;
@@ -72,7 +95,7 @@ class GameShow extends Component {
     const galleryModalId = `gallery-${game._id}`;
 
     return (
-      <div>
+      <div className="gameshow">
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
@@ -80,8 +103,8 @@ class GameShow extends Component {
           isDownloading={isDownloading}
           downloadId={downloadId}
         />
-        <Modal title="Waddup" isGallery id={galleryModalId}>
-          <p>hola</p>
+        <Modal isGallery id={galleryModalId}>
+          {this.renderSlider()}
         </Modal>
       </div>
     );

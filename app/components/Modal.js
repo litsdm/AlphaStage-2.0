@@ -23,7 +23,7 @@ const Modal = ({ title, isGallery, children, id }) => {
 
   return (
     <div id={id} className={styles.Modal}>
-      <div className={styles.Content} style={isGallery ? { padding: '0', background: 'none' } : {}}>
+      <div className={styles.Content} style={isGallery ? { padding: '30px', borderRadius: '4px' } : {}}>
         {title ? renderHeader() : null}
         {children}
       </div>

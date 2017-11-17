@@ -55,9 +55,18 @@ p {
 }
 
 .slick-prev {
-  left: -15px;
+  left: -25px;
 }
 
 .slick-next {
-  right: -15px;
+  right: -25px;
+}
+
+.slick-dots li button:before,
+.slick-dots li.slick-active button:before {
+  color: white;
+}
+
+.gameshow .slick-slide.slick-active {
+  width: 100% !important;
 }
