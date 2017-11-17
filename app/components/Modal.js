@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Modal.scss';
 
-const Modal = ({ title, isGallery, children }) => {
+const Modal = ({ title, isGallery, children, id }) => {
   window.onclick = ({ target }) => {
-    if (target.id === 'modal') closeModal();
+    if (target.id === id) closeModal();
   };
 
   const closeModal = () => {
-    const modal = document.getElementById('modal');
+    const modal = document.getElementById(id);
     modal.style.display = 'none';
   };
 
@@ -22,7 +22,7 @@ const Modal = ({ title, isGallery, children }) => {
   );
 
   return (
-    <div id="modal" className={styles.Modal}>
+    <div id={id} className={styles.Modal}>
       <div className={styles.Content} style={isGallery ? { padding: '0', background: 'none' } : {}}>
         {title ? renderHeader() : null}
         {children}
@@ -33,6 +33,7 @@ const Modal = ({ title, isGallery, children }) => {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string,
   isGallery: PropTypes.bool
 };

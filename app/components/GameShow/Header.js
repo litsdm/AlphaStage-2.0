@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Header.scss';
 
-const Header = ({ coverImage }) => {
+const Header = ({ coverImage, modalId }) => {
   const openModal = () => {
-    document.getElementById('modal').style.display = 'block';
+    document.getElementById(modalId).style.display = 'block';
   };
 
   return (
@@ -24,7 +24,8 @@ const Header = ({ coverImage }) => {
 };
 
 Header.propTypes = {
-  coverImage: PropTypes.string.isRequired
+  coverImage: PropTypes.string.isRequired,
+  modalId: PropTypes.string.isRequired
 };
 
 export default Header;

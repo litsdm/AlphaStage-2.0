@@ -69,16 +69,18 @@ class GameShow extends Component {
     const { game, isDownloading, downloadId } = this.props;
     const { progress } = this.state;
 
+    const galleryModalId = `gallery-${game._id}`;
+
     return (
       <div>
-        <Header coverImage={game.coverImage} />
+        <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
           progress={progress}
           isDownloading={isDownloading}
           downloadId={downloadId}
         />
-        <Modal title="Waddup" isGallery>
+        <Modal title="Waddup" isGallery id={galleryModalId}>
           <p>hola</p>
         </Modal>
       </div>
