@@ -77,4 +77,5 @@ p {
 
 .gameshow .slick-slide.slick-active {
   width: 100% !important;
+  height: 405px;
 }

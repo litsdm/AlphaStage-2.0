@@ -1,15 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import YTPlayer from 'youtube-player';
 import styles from './Modal.scss';
 
-const Modal = ({ title, isGallery, children, id }) => {
+let player;
+
+const Modal = ({ title, isGallery, trailerId, children, id }) => {
   window.onclick = ({ target }) => {
     if (target.id === id) closeModal();
   };
 
   const closeModal = () => {
     const modal = document.getElementById(id);
+    if (trailerId) stopVideo();
     modal.style.display = 'none';
+  };
+
+  const stopVideo = () => {
+    if (!player) player = YTPlayer(trailerId);
+    player.stopVideo();
   };
 
   const renderHeader = () => (
@@ -35,12 +44,14 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string,
-  isGallery: PropTypes.bool
+  isGallery: PropTypes.bool,
+  trailerId: PropTypes.string,
 };
 
 Modal.defaultProps = {
   title: '',
-  isGallery: false
+  isGallery: false,
+  trailerId: ''
 };
 
 export default Modal;

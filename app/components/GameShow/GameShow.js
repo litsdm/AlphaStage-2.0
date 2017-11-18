@@ -73,6 +73,19 @@ class GameShow extends Component {
       <img key={uuid()} className={styles.Screenshot} src={screenshot} alt="Game screenshot" />
     ));
 
+    const trailer = game.trailer
+    ? (
+      <iframe
+        id={`trailer-${game._id}`}
+        title={game.title}
+        src={`${game.trailer}?enablejsapi=1`}
+        frameBorder="0"
+        width="100%"
+        height="405px"
+      />
+    )
+    : null;
+
     const settings = {
       dots: true,
       infinite: true,
@@ -83,6 +96,7 @@ class GameShow extends Component {
 
     return (
       <Slider {...settings}>
+        {trailer}
         {screenshots}
       </Slider>
     );
@@ -103,7 +117,7 @@ class GameShow extends Component {
           isDownloading={isDownloading}
           downloadId={downloadId}
         />
-        <Modal isGallery id={galleryModalId}>
+        <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
         </Modal>
       </div>
