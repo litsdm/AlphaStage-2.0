@@ -72,6 +72,7 @@ class CreateGame extends Component {
     } = this.state;
 
     const currentContent = editorState.getCurrentContent();
+    const formattedTrailer = trailer ? this.formatTrailerUrl(trailer) : '';
 
     const game = {
       buildsId: fieldId,
@@ -89,7 +90,7 @@ class CreateGame extends Component {
       tags,
       title,
       thumbnail,
-      trailer,
+      trailer: formattedTrailer,
       website,
       windowsBuild
     };
@@ -125,6 +126,7 @@ class CreateGame extends Component {
 
     this.checkRequiredFields();
     this.checkBuilds();
+    this.checkTrailerUrl();
 
     this.setState({ invalidFields: _invalidFields });
     this.focusOnInvalidField();
@@ -148,6 +150,13 @@ class CreateGame extends Component {
     if (availableWin && !windowsBuild) this.markError('windowsBuild');
     if (availableMac && !macBuild) this.markError('macBuild');
     if (!availableMac && !availableWin) this.markError('platforms');
+  }
+
+  checkTrailerUrl = () => {
+    const { trailer } = this.state;
+
+    if (!trailer || trailer.includes('youtube') || trailer.includes('youtu.be')) return;
+    this.markError('trailer');
   }
 
   markError = (fieldId) => {
@@ -176,6 +185,13 @@ class CreateGame extends Component {
   validatedInputClass = (classList, fieldId) => {
     const { invalidFields } = this.state;
     return invalidFields[fieldId] ? `${classList} ${styles.Invalid}` : classList;
+  }
+
+  formatTrailerUrl = (trailer) => {
+    if (trailer.includes('embed')) return trailer;
+
+    const parts = trailer.includes('v=') ? trailer.split('v=') : trailer.split('/');
+    return `https://www.youtube.com/embed/${parts.pop()}`;
   }
 
   handleChange = ({ target }) => {

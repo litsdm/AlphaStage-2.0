@@ -88,7 +88,7 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
             id="trailer"
             name="trailer"
             value={trailer}
-            className={styles.Input}
+            className={validatedInputClass(styles.Input, 'trailer')}
             onChange={handleChange}
           />
         </div>
