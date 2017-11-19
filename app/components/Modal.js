@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import YTPlayer from 'youtube-player';
 import styles from './Modal.scss';
 
-let player;
-
 const Modal = ({ title, isGallery, trailerId, children, id }) => {
   window.onclick = ({ target }) => {
     if (target.id === id) closeModal();
@@ -16,6 +14,7 @@ const Modal = ({ title, isGallery, trailerId, children, id }) => {
     modal.style.display = 'none';
   };
 
+  let player;
   const stopVideo = () => {
     if (!player) player = YTPlayer(trailerId);
     player.stopVideo();
