@@ -19,7 +19,9 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
 
     parseImageUpload(options[type])
       .then(({ filesUploaded }) => {
-        const value = type === 'screenshots' ? filesUploaded : filesUploaded[0].url;
+        const value = type === 'screenshots'
+          ? filesUploaded.map(file => file.url)
+          : filesUploaded[0].url;
         const event = {
           target: {
             name: names[type],
