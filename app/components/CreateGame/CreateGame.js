@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import { removeFile } from '../../helpers/parseImageUpload';
+import callApi from '../../helpers/apiCaller';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -80,6 +82,30 @@ class CreateGame extends Component {
       localStorage.removeItem('createGameState');
     }
   }
+
+  cancel = () => {
+    const { history } = this.props;
+    const { coverImage, macBuild, thumbnail, screenshots, windowsBuild } = this.state;
+
+    if (coverImage) removeFile(this.lastSegment(coverImage));
+    if (thumbnail) removeFile(this.lastSegment(thumbnail));
+    if (screenshots.lenght > 0) {
+      screenshots.map(screenshot => removeFile(this.lastSegment(screenshot)));
+    }
+    if (windowsBuild) {
+      callApi('delete-s3', { filename: this.lastSegment(windowsBuild) }, 'POST');
+    }
+    if (macBuild) {
+      callApi('delete-s3', { filename: this.lastSegment(macBuild) }, 'POST');
+    }
+
+    // Set didSubmit so state is not saved
+    this.setState({ didSubmit: true }, () => {
+      history.push('/');
+    });
+  }
+
+  lastSegment = (url) => url.split('/').pop();
 
   createGameFromState = () => {
     const { user } = this.props;
@@ -336,7 +362,7 @@ class CreateGame extends Component {
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
-          <button className={styles.CancelButton}>Cancel</button>
+          <button className={styles.CancelButton} onClick={this.cancel}>Cancel</button>
           {this.renderSubmitButton()}
         </div>
       </div>
