@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
 
-const Media = ({ trailer, handleChange, validatedInputClass }) => {
+const Media = (props) => {
+  const {
+    trailer,
+    coverImage,
+    thumbnail,
+    screenshots,
+    handleChange,
+    validatedInputClass
+  } = props;
   const chooseImage = (type) => () => {
     const options = {
       cover: coverImageOptions,
@@ -34,6 +43,17 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
       .catch(err => console.log(err));
   };
 
+  const renderScreenshots = () => (
+    screenshots.map(screenshot => (
+      <img
+        key={uuid()}
+        className={styles.ImgPreview}
+        src={screenshot}
+        alt="preview of your game's screenshot"
+      />
+    ))
+  );
+
   return (
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
@@ -43,42 +63,63 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
         <div className={styles.InputContainer}>
           <label htmlFor="coverImg" className={styles.Tag}>Cover Image</label>
           <p className={styles.InputDescription}>
-            {'This image will be used as the header in your game\'s page. (Aspect ratio: 980x400)'}
+            {'This image will be used as the header in your game\'s page. (Aspect ratio: 1280x720)'}
           </p>
-          <button
-            id="coverImage"
-            className={validatedInputClass(styles.FormButton, 'coverImage')}
-            onClick={chooseImage('cover')}
-          >
-            Add cover image
-          </button>
+          <div className={styles.PreviewWrapper}>
+            <button
+              id="coverImage"
+              className={validatedInputClass(styles.FormButton, 'coverImage')}
+              onClick={chooseImage('cover')}
+            >
+              Add cover image
+            </button>
+            {
+              coverImage
+                ? <img className={styles.ImgPreview} src={coverImage} alt="preview of your game's cover" />
+                : null
+            }
+          </div>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="thumbnail" className={styles.Tag}>Thumbnail</label>
           <p className={styles.InputDescription}>
             This image will be used to display your game throughout Alpha Stage.
-            (Aspect ratio: 325x150)
+            (Aspect ratio: 650x300)
           </p>
-          <button
-            id="thumbnail"
-            className={validatedInputClass(styles.FormButton, 'coverImage')}
-            onClick={chooseImage('thumb')}
-          >
+          <div className={styles.PreviewWrapper}>
+            <button
+              id="thumbnail"
+              className={validatedInputClass(styles.FormButton, 'coverImage')}
+              onClick={chooseImage('thumb')}
+            >
               Add Thumbnail
             </button>
+            {
+              thumbnail
+               ? <img className={styles.ImgPreview} src={thumbnail} alt="preview of your game's thumbnail" />
+               : null
+            }
+          </div>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="screenshots" className={styles.Tag}>Screenshots</label>
           <p className={styles.InputDescription}>
             Adding screenshots is optional but highly recommended
           </p>
-          <button
-            id="screenshots"
-            className={styles.FormButton}
-            onClick={chooseImage('screenshots')}
-          >
+          <div className={styles.PreviewWrapper}>
+            <button
+              id="screenshots"
+              className={styles.FormButton}
+              onClick={chooseImage('screenshots')}
+            >
               Add Screenshots
             </button>
+            {
+              screenshots.length > 0
+                ? <div className={styles.ScreensPreview}>{renderScreenshots()}</div>
+                : null
+            }
+          </div>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="trailer" className={styles.Tag}>Trailer</label>
@@ -102,7 +143,10 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
 Media.propTypes = {
   trailer: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  validatedInputClass: PropTypes.func.isRequired
+  validatedInputClass: PropTypes.func.isRequired,
+  coverImage: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  screenshots: PropTypes.array.isRequired
 };
 
 export default Media;
