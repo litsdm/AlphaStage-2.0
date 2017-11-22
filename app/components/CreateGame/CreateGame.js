@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; //eslint-disable-line
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { withRouter } from 'react-router-dom';
 import shortid from 'shortid';
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ class CreateGame extends Component {
     availableMac: false,
     availableWin: true,
     coverImage: '',
+    didSubmit: false,
     editorState: EditorState.createEmpty(),
     fileId: shortid.generate(),
     genre: 'Action',
@@ -47,10 +48,41 @@ class CreateGame extends Component {
     const editorContent = document.getElementsByClassName('public-DraftEditor-content')[0];
     editorRoot.classList += ` ${styles.DraftRoot}`;
     editorContent.classList += ` ${styles.DraftContent}`;
+
+    this.loadState();
   }
 
-  submit = () => {
-    const { submitGame, user, history } = this.props;
+  componentWillUnmount() {
+    this.saveState();
+  }
+
+  saveState = () => {
+    if (this.state.didSubmit) return;
+    const currentContent = this.state.editorState.getCurrentContent();
+    const state = {
+      ...this.state,
+      editorState: JSON.stringify(convertToRaw(currentContent))
+    };
+    localStorage.setItem('createGameState', JSON.stringify(state));
+  }
+
+  loadState = () => {
+    const cachedState = localStorage.getItem('createGameState');
+    if (cachedState) {
+      const parsedState = JSON.parse(cachedState);
+      const contentState = convertFromRaw(JSON.parse(parsedState.editorState));
+      const state = {
+        ...parsedState,
+        editorState: EditorState.createWithContent(contentState)
+      };
+
+      this.setState(state);
+      localStorage.removeItem('createGameState');
+    }
+  }
+
+  createGameFromState = () => {
+    const { user } = this.props;
     const {
       coverImage,
       editorState,
@@ -95,28 +127,37 @@ class CreateGame extends Component {
       windowsBuild
     };
 
+    return game;
+  }
+
+  submit = () => {
+    const { submitGame, history } = this.props;
+    const game = this.createGameFromState();
     if (!this.validate()) return;
 
     submitGame(game)
-      .then(({ data }) => (
-        swal({
-          title: 'Success!',
-          text: 'Your game was succesfully created.',
-          icon: 'success',
-          buttons: {
-            goHome: {
-              text: 'Go home',
-              value: '/'
-            },
-            viewPage: {
-              text: 'Go to game page',
-              value: `/games/${data.createGame._id}`
+      .then(({ data }) => {
+        this.setState({ didSubmit: true });
+        return (
+          swal({
+            title: 'Success!',
+            text: 'Your game was succesfully created.',
+            icon: 'success',
+            buttons: {
+              goHome: {
+                text: 'Go home',
+                value: '/'
+              },
+              viewPage: {
+                text: 'Go to game page',
+                value: `/games/${data.createGame._id}`
+              }
             }
-          }
-        })
-         .then(route => history.push(route))
-         .catch(err => console.log(err))
-      ))
+          })
+           .then(route => history.push(route))
+           .catch(err => console.log(err))
+        );
+      })
       .catch(err => console.log(err));
   }
 
