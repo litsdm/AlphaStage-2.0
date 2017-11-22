@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid/v4';
-import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
+import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions, removeFile } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
 import previewStyles from './PreviewImage.scss';
 
@@ -16,6 +16,7 @@ const Media = (props) => {
     handleChange,
     validatedInputClass
   } = props;
+
   const chooseImage = (type) => () => {
     const options = {
       cover: coverImageOptions,
@@ -46,9 +47,29 @@ const Media = (props) => {
       .catch(err => console.log(err));
   };
 
+  const removeImage = (src, name, index) => {
+    const parts = src.split('/');
+    const handle = parts[parts.length - 1];
+
+    const value = name === 'screenshots'
+      ? [...screenshots.slice(0, index), ...screenshots.slice(index + 1)]
+      : '';
+
+    handleChange({ target: { name, value } });
+
+    removeFile(handle);
+  };
+
   const renderScreenshots = () => (
-    screenshots.map(screenshot => <PreviewImage key={uuid()} src={screenshot} />
-    )
+    screenshots.map((screenshot, i) => (
+      <PreviewImage
+        key={uuid()}
+        src={screenshot}
+        name="screenshots"
+        index={i}
+        removeImage={removeImage}
+      />
+    ))
   );
 
   return (
@@ -70,7 +91,7 @@ const Media = (props) => {
             >
               Add cover image
             </button>
-            <PreviewImage src={coverImage} />
+            <PreviewImage name="coverImage" src={coverImage} removeImage={removeImage} />
           </div>
         </div>
         <div className={styles.InputContainer}>
@@ -87,7 +108,7 @@ const Media = (props) => {
             >
               Add Thumbnail
             </button>
-            <PreviewImage src={thumbnail} />
+            <PreviewImage name="thumbnail" src={thumbnail} removeImage={removeImage} />
           </div>
         </div>
         <div className={styles.InputContainer}>
