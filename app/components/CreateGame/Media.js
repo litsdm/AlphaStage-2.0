@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import uuid from 'uuid/v4';
 import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
+import previewStyles from './PreviewImage.scss';
+
+import PreviewImage from './PreviewImage';
 
 const Media = (props) => {
   const {
@@ -44,14 +47,8 @@ const Media = (props) => {
   };
 
   const renderScreenshots = () => (
-    screenshots.map(screenshot => (
-      <img
-        key={uuid()}
-        className={styles.ImgPreview}
-        src={screenshot}
-        alt="preview of your game's screenshot"
-      />
-    ))
+    screenshots.map(screenshot => <PreviewImage key={uuid()} src={screenshot} />
+    )
   );
 
   return (
@@ -65,7 +62,7 @@ const Media = (props) => {
           <p className={styles.InputDescription}>
             {'This image will be used as the header in your game\'s page. (Aspect ratio: 1280x720)'}
           </p>
-          <div className={styles.PreviewWrapper}>
+          <div className={previewStyles.PreviewWrapper}>
             <button
               id="coverImage"
               className={validatedInputClass(styles.FormButton, 'coverImage')}
@@ -73,11 +70,7 @@ const Media = (props) => {
             >
               Add cover image
             </button>
-            {
-              coverImage
-                ? <img className={styles.ImgPreview} src={coverImage} alt="preview of your game's cover" />
-                : null
-            }
+            <PreviewImage src={coverImage} />
           </div>
         </div>
         <div className={styles.InputContainer}>
@@ -86,7 +79,7 @@ const Media = (props) => {
             This image will be used to display your game throughout Alpha Stage.
             (Aspect ratio: 650x300)
           </p>
-          <div className={styles.PreviewWrapper}>
+          <div className={previewStyles.PreviewWrapper}>
             <button
               id="thumbnail"
               className={validatedInputClass(styles.FormButton, 'coverImage')}
@@ -94,11 +87,7 @@ const Media = (props) => {
             >
               Add Thumbnail
             </button>
-            {
-              thumbnail
-               ? <img className={styles.ImgPreview} src={thumbnail} alt="preview of your game's thumbnail" />
-               : null
-            }
+            <PreviewImage src={thumbnail} />
           </div>
         </div>
         <div className={styles.InputContainer}>
@@ -106,7 +95,7 @@ const Media = (props) => {
           <p className={styles.InputDescription}>
             Adding screenshots is optional but highly recommended
           </p>
-          <div className={styles.PreviewWrapper}>
+          <div className={previewStyles.PreviewWrapper}>
             <button
               id="screenshots"
               className={styles.FormButton}
@@ -116,7 +105,7 @@ const Media = (props) => {
             </button>
             {
               screenshots.length > 0
-                ? <div className={styles.ScreensPreview}>{renderScreenshots()}</div>
+                ? <div className={previewStyles.ScreensPreview}>{renderScreenshots()}</div>
                 : null
             }
           </div>

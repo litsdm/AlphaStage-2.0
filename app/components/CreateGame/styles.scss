@@ -242,24 +242,3 @@
   opacity: 0.7;
   margin-top: 12px;
 }
-
-.PreviewWrapper {
-  display: flex;
-  align-items: center;
-}
-
-.ImgPreview {
-  height: 42px;
-  margin-top: 12px;
-  margin-left: 12px;
-}
-
-.ScreenPreview {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 12px;
-
-  .ImgPreview {
-    margin-top: 0;
-  }
-}
