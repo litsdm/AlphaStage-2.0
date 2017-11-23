@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
+import Slider from 'react-slick';
+import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
+import Header from './Header';
 import ContentCard from './ContentCard';
+import Modal from '../Modal';
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -12,7 +16,7 @@ const INITIAL_PERCENTAGE = 90;
 
 class GameShow extends Component {
   state = {
-    progress: 0
+    progress: 0,
   };
 
   componentDidMount() {
@@ -63,19 +67,59 @@ class GameShow extends Component {
     element.style.width = `${newWidth}%`;
   }
 
+  renderSlider = () => {
+    const { game } = this.props;
+    const screenshots = game.screenshots.map(screenshot => (
+      <img key={uuid()} className={styles.Screenshot} src={screenshot} alt="Game screenshot" />
+    ));
+
+    const trailer = game.trailer
+      ? (
+        <iframe
+          id={`trailer-${game._id}`}
+          title={game.title}
+          src={`${game.trailer}?enablejsapi=1`}
+          frameBorder="0"
+          width="100%"
+          height="405px"
+        />
+      )
+      : null;
+
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    };
+
+    return (
+      <Slider {...settings}>
+        {trailer}
+        {screenshots}
+      </Slider>
+    );
+  }
+
   render() {
     const { game, isDownloading, downloadId } = this.props;
     const { progress } = this.state;
 
+    const galleryModalId = `gallery-${game._id}`;
+
     return (
-      <div>
-        <div className={styles.Header} style={{ backgroundImage: `url(${game.coverImage})` }} />
+      <div className="gameshow">
+        <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
           progress={progress}
           isDownloading={isDownloading}
           downloadId={downloadId}
         />
+        <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
+          {this.renderSlider()}
+        </Modal>
       </div>
     );
   }

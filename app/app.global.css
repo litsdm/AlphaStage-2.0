@@ -4,12 +4,15 @@
 @import "~slick-carousel/slick/slick-theme.css";
 
 body {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  margin: 0;
-  font-family: "Open Sans";
-  background-color: #36393E;
   color: white;
+  background-color: #36393E;
+  bottom: 0;
+  font-family: "Open Sans";
+  left: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 a {
@@ -18,12 +21,15 @@ a {
 }
 
 .content-container {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 220px;
-  width: auto;
-  transition: all 0.2s ease-out;
+  bottom: 0;
+  left: 220px;
   overflow-x: hidden;
   overflow-y: scroll;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: all 0.2s ease-out;
+  width: auto;
 }
 
 .content {
@@ -42,12 +48,12 @@ button:focus {
 
 #toast-container > div {
   -moz-box-shadow: 0 0 12px #000000;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   -webkit-box-shadow: 0 0 12px #000000;
   box-shadow: 0 0 12px #000000;
-  opacity: 1;
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  filter: alpha(opacity=100);
   cursor: pointer;
+  filter: alpha(opacity=100);
+  opacity: 1;
 }
 
 p {
@@ -60,4 +66,22 @@ p {
 
 .slick-next {
   right: -15px;
+}
+
+.gameshow .slick-prev {
+  left: -25px;
+}
+
+.gameshow .slick-next {
+  right: -25px;
+}
+
+.slick-dots li button:before,
+.slick-dots li.slick-active button:before {
+  color: white;
+}
+
+.gameshow .slick-slide.slick-active {
+  height: 405px;
+  width: 100% !important;
 }
