@@ -31,7 +31,12 @@ const ContentCard = ({ game, progress, isDownloading, downloadId }) => {
           />
         </div>
       </div>
-      <AdditionalDetails />
+      <AdditionalDetails
+        languages={game.languages}
+        publisher={game.publisher}
+        spaceRequired={game.spaceRequired}
+        website={game.website}
+      />
     </div>
   );
 };

@@ -5,14 +5,18 @@ query FullGame($id: String) {
     descriptionState,
     developerIds,
     genre,
+    languages,
     macBuild,
+    publisher,
     releaseStatus,
     screenshots,
     shortDescription,
+    spaceRequired,
     tags,
     title,
     thumbnail,
     trailer,
+    website,
     windowsBuild,
   }
 }
