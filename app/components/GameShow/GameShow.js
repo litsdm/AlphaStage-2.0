@@ -74,17 +74,17 @@ class GameShow extends Component {
     ));
 
     const trailer = game.trailer
-    ? (
-      <iframe
-        id={`trailer-${game._id}`}
-        title={game.title}
-        src={`${game.trailer}?enablejsapi=1`}
-        frameBorder="0"
-        width="100%"
-        height="405px"
-      />
-    )
-    : null;
+      ? (
+        <iframe
+          id={`trailer-${game._id}`}
+          title={game.title}
+          src={`${game.trailer}?enablejsapi=1`}
+          frameBorder="0"
+          width="100%"
+          height="405px"
+        />
+      )
+      : null;
 
     const settings = {
       dots: true,
