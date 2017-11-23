@@ -1,9 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions } from '../../helpers/parseImageUpload';
+import uuid from 'uuid/v4';
+import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions, removeFile } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
+import previewStyles from './PreviewImage.scss';
 
-const Media = ({ trailer, handleChange, validatedInputClass }) => {
+import PreviewImage from './PreviewImage';
+
+const Media = (props) => {
+  const {
+    trailer,
+    coverImage,
+    thumbnail,
+    screenshots,
+    handleChange,
+    validatedInputClass
+  } = props;
+
   const chooseImage = (type) => () => {
     const options = {
       cover: coverImageOptions,
@@ -19,7 +32,9 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
 
     parseImageUpload(options[type])
       .then(({ filesUploaded }) => {
-        const value = type === 'screenshots' ? filesUploaded : filesUploaded[0].url;
+        const value = type === 'screenshots'
+          ? filesUploaded.map(file => file.url)
+          : filesUploaded[0].url;
         const event = {
           target: {
             name: names[type],
@@ -32,6 +47,31 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
       .catch(err => console.log(err));
   };
 
+  const removeImage = (src, name, index) => {
+    const parts = src.split('/');
+    const handle = parts[parts.length - 1];
+
+    const value = name === 'screenshots'
+      ? [...screenshots.slice(0, index), ...screenshots.slice(index + 1)]
+      : '';
+
+    handleChange({ target: { name, value } });
+
+    removeFile(handle);
+  };
+
+  const renderScreenshots = () => (
+    screenshots.map((screenshot, i) => (
+      <PreviewImage
+        key={uuid()}
+        src={screenshot}
+        name="screenshots"
+        index={i}
+        removeImage={removeImage}
+      />
+    ))
+  );
+
   return (
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
@@ -41,42 +81,55 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
         <div className={styles.InputContainer}>
           <label htmlFor="coverImg" className={styles.Tag}>Cover Image</label>
           <p className={styles.InputDescription}>
-            {'This image will be used as the header in your game\'s page. (Aspect ratio: 980x400)'}
+            {'This image will be used as the header in your game\'s page. (Aspect ratio: 1280x720)'}
           </p>
-          <button
-            id="coverImage"
-            className={validatedInputClass(styles.FormButton, 'coverImage')}
-            onClick={chooseImage('cover')}
-          >
-            Add cover image
-          </button>
+          <div className={previewStyles.PreviewWrapper}>
+            <button
+              id="coverImage"
+              className={validatedInputClass(styles.FormButton, 'coverImage')}
+              onClick={chooseImage('cover')}
+            >
+              Add cover image
+            </button>
+            <PreviewImage name="coverImage" src={coverImage} removeImage={removeImage} />
+          </div>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="thumbnail" className={styles.Tag}>Thumbnail</label>
           <p className={styles.InputDescription}>
             This image will be used to display your game throughout Alpha Stage.
-            (Aspect ratio: 325x150)
+            (Aspect ratio: 650x300)
           </p>
-          <button
-            id="thumbnail"
-            className={validatedInputClass(styles.FormButton, 'coverImage')}
-            onClick={chooseImage('thumb')}
-          >
+          <div className={previewStyles.PreviewWrapper}>
+            <button
+              id="thumbnail"
+              className={validatedInputClass(styles.FormButton, 'coverImage')}
+              onClick={chooseImage('thumb')}
+            >
               Add Thumbnail
             </button>
+            <PreviewImage name="thumbnail" src={thumbnail} removeImage={removeImage} />
+          </div>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="screenshots" className={styles.Tag}>Screenshots</label>
           <p className={styles.InputDescription}>
             Adding screenshots is optional but highly recommended
           </p>
-          <button
-            id="screenshots"
-            className={styles.FormButton}
-            onClick={chooseImage('screenshots')}
-          >
+          <div className={previewStyles.PreviewWrapper}>
+            <button
+              id="screenshots"
+              className={styles.FormButton}
+              onClick={chooseImage('screenshots')}
+            >
               Add Screenshots
             </button>
+            {
+              screenshots.length > 0
+                ? <div className={previewStyles.ScreensPreview}>{renderScreenshots()}</div>
+                : null
+            }
+          </div>
         </div>
         <div className={styles.InputContainer}>
           <label htmlFor="trailer" className={styles.Tag}>Trailer</label>
@@ -88,7 +141,7 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
             id="trailer"
             name="trailer"
             value={trailer}
-            className={styles.Input}
+            className={validatedInputClass(styles.Input, 'trailer')}
             onChange={handleChange}
           />
         </div>
@@ -100,7 +153,10 @@ const Media = ({ trailer, handleChange, validatedInputClass }) => {
 Media.propTypes = {
   trailer: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  validatedInputClass: PropTypes.func.isRequired
+  validatedInputClass: PropTypes.func.isRequired,
+  coverImage: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  screenshots: PropTypes.array.isRequired
 };
 
 export default Media;

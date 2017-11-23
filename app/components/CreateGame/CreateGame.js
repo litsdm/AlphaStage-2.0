@@ -1,9 +1,11 @@
 import React, { Component } from 'react'; //eslint-disable-line
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { withRouter } from 'react-router-dom';
 import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import { removeFile } from '../../helpers/parseImageUpload';
+import callApi from '../../helpers/apiCaller';
 import styles from './styles.scss';
 
 import Basic from './Basic';
@@ -20,6 +22,7 @@ class CreateGame extends Component {
     availableMac: false,
     availableWin: true,
     coverImage: '',
+    didSubmit: false,
     editorState: EditorState.createEmpty(),
     fileId: shortid.generate(),
     genre: 'Action',
@@ -47,10 +50,65 @@ class CreateGame extends Component {
     const editorContent = document.getElementsByClassName('public-DraftEditor-content')[0];
     editorRoot.classList += ` ${styles.DraftRoot}`;
     editorContent.classList += ` ${styles.DraftContent}`;
+
+    this.loadState();
   }
 
-  submit = () => {
-    const { submitGame, user, history } = this.props;
+  componentWillUnmount() {
+    this.saveState();
+  }
+
+  saveState = () => {
+    if (this.state.didSubmit) return;
+    const currentContent = this.state.editorState.getCurrentContent();
+    const state = {
+      ...this.state,
+      editorState: JSON.stringify(convertToRaw(currentContent))
+    };
+    localStorage.setItem('createGameState', JSON.stringify(state));
+  }
+
+  loadState = () => {
+    const cachedState = localStorage.getItem('createGameState');
+    if (cachedState) {
+      const parsedState = JSON.parse(cachedState);
+      const contentState = convertFromRaw(JSON.parse(parsedState.editorState));
+      const state = {
+        ...parsedState,
+        editorState: EditorState.createWithContent(contentState)
+      };
+
+      this.setState(state);
+      localStorage.removeItem('createGameState');
+    }
+  }
+
+  cancel = () => {
+    const { history } = this.props;
+    const { coverImage, macBuild, thumbnail, screenshots, windowsBuild } = this.state;
+
+    if (coverImage) removeFile(this.lastSegment(coverImage));
+    if (thumbnail) removeFile(this.lastSegment(thumbnail));
+    if (screenshots.lenght > 0) {
+      screenshots.map(screenshot => removeFile(this.lastSegment(screenshot)));
+    }
+    if (windowsBuild) {
+      callApi('delete-s3', { filename: this.lastSegment(windowsBuild) }, 'POST');
+    }
+    if (macBuild) {
+      callApi('delete-s3', { filename: this.lastSegment(macBuild) }, 'POST');
+    }
+
+    // Set didSubmit so state is not saved
+    this.setState({ didSubmit: true }, () => {
+      history.push('/');
+    });
+  }
+
+  lastSegment = (url) => url.split('/').pop();
+
+  createGameFromState = () => {
+    const { user } = this.props;
     const {
       coverImage,
       editorState,
@@ -72,6 +130,7 @@ class CreateGame extends Component {
     } = this.state;
 
     const currentContent = editorState.getCurrentContent();
+    const formattedTrailer = trailer ? this.formatTrailerUrl(trailer) : '';
 
     const game = {
       buildsId: fieldId,
@@ -89,33 +148,42 @@ class CreateGame extends Component {
       tags,
       title,
       thumbnail,
-      trailer,
+      trailer: formattedTrailer,
       website,
       windowsBuild
     };
 
+    return game;
+  }
+
+  submit = () => {
+    const { submitGame, history } = this.props;
+    const game = this.createGameFromState();
     if (!this.validate()) return;
 
     submitGame(game)
-      .then(({ data }) => (
-        swal({
-          title: 'Success!',
-          text: 'Your game was succesfully created.',
-          icon: 'success',
-          buttons: {
-            goHome: {
-              text: 'Go home',
-              value: '/'
-            },
-            viewPage: {
-              text: 'Go to game page',
-              value: `/games/${data.createGame._id}`
+      .then(({ data }) => {
+        this.setState({ didSubmit: true });
+        return (
+          swal({
+            title: 'Success!',
+            text: 'Your game was succesfully created.',
+            icon: 'success',
+            buttons: {
+              goHome: {
+                text: 'Go home',
+                value: '/'
+              },
+              viewPage: {
+                text: 'Go to game page',
+                value: `/games/${data.createGame._id}`
+              }
             }
-          }
-        })
-         .then(route => history.push(route))
-         .catch(err => console.log(err))
-      ))
+          })
+           .then(route => history.push(route))
+           .catch(err => console.log(err))
+        );
+      })
       .catch(err => console.log(err));
   }
 
@@ -125,6 +193,7 @@ class CreateGame extends Component {
 
     this.checkRequiredFields();
     this.checkBuilds();
+    this.checkTrailerUrl();
 
     this.setState({ invalidFields: _invalidFields });
     this.focusOnInvalidField();
@@ -148,6 +217,13 @@ class CreateGame extends Component {
     if (availableWin && !windowsBuild) this.markError('windowsBuild');
     if (availableMac && !macBuild) this.markError('macBuild');
     if (!availableMac && !availableWin) this.markError('platforms');
+  }
+
+  checkTrailerUrl = () => {
+    const { trailer } = this.state;
+
+    if (!trailer || trailer.includes('youtube') || trailer.includes('youtu.be')) return;
+    this.markError('trailer');
   }
 
   markError = (fieldId) => {
@@ -176,6 +252,13 @@ class CreateGame extends Component {
   validatedInputClass = (classList, fieldId) => {
     const { invalidFields } = this.state;
     return invalidFields[fieldId] ? `${classList} ${styles.Invalid}` : classList;
+  }
+
+  formatTrailerUrl = (trailer) => {
+    if (trailer.includes('embed')) return trailer;
+
+    const parts = trailer.includes('v=') ? trailer.split('v=') : trailer.split('/');
+    return `https://www.youtube.com/embed/${parts.pop()}`;
   }
 
   handleChange = ({ target }) => {
@@ -279,7 +362,7 @@ class CreateGame extends Component {
         />
         <div className={styles.Divider} />
         <div className={styles.OptionsContainer}>
-          <button className={styles.CancelButton}>Cancel</button>
+          <button className={styles.CancelButton} onClick={this.cancel}>Cancel</button>
           {this.renderSubmitButton()}
         </div>
       </div>
