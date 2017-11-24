@@ -5,6 +5,10 @@ import styles from './Menu.scss';
 const Menu = () => (
   <div className={styles.Menu}>
     <Link to="/games/new" className={styles.Button}>Create Game</Link>
+    <NavLink to="/dashboard" exact className={styles.Item} activeClassName={styles.active}>
+      <div className={styles.Indicator} />
+      Dashboard
+    </NavLink>
     <NavLink to="/" exact className={styles.Item} activeClassName={styles.active}>
       <div className={styles.Indicator} />
       Browse
