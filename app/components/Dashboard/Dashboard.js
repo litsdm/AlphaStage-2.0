@@ -17,6 +17,14 @@ class Dashboard extends Component {
         <div className={styles.Header} style={{ backgroundImage: `url(${selectedGame.coverImage})` }}>
           <div className={styles.Overlay} />
           <p className={styles.Title}>{selectedGame.title}</p>
+          <div className={styles.ConfigButtons}>
+            <button>
+              <i className="fa fa-pencil" />
+            </button>
+            <button>
+              <i className="fa fa-cog" />
+            </button>
+          </div>
         </div>
       </div>
     );
