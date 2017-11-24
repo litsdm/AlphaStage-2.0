@@ -1,0 +1,11 @@
+query UserGames($id: String) {
+  user(_id: $id) {
+    games {
+      _id,
+      coverImage,
+      developerIds,
+      title,
+      thumbnail,
+    }
+  }
+}
