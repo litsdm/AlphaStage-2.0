@@ -6,12 +6,17 @@ import Dropdown from './Dropdown';
 
 class Dashboard extends Component {
   state = {
-    selectedIndex: 0
+    selectedIndex: 0,
+    displayDropdown: false
+  }
+
+  handleDropdownToggle = () => {
+    this.setState({ displayDropdown: !this.state.displayDropdown });
   }
 
   render() {
     const { games } = this.props;
-    const { selectedIndex } = this.state;
+    const { selectedIndex, displayDropdown } = this.state;
     const selectedGame = games[selectedIndex];
 
     return (
@@ -20,11 +25,11 @@ class Dashboard extends Component {
           <div className={styles.Overlay} />
           <div className={styles.TitleContainer}>
             <p className={styles.Title}>{selectedGame.title}</p>
-            <button>
-              <i className="fa fa-angle-down" />
+            <button onClick={this.handleDropdownToggle}>
+              <i className={`fa ${displayDropdown ? 'fa-times' : 'fa-chevron-down'}`} />
             </button>
           </div>
-          <Dropdown games={games} selectedIndex={selectedIndex} />
+          <Dropdown games={games} selectedIndex={selectedIndex} display={displayDropdown} />
           <div className={styles.ConfigButtons}>
             <button>
               <i className="fa fa-pencil" />

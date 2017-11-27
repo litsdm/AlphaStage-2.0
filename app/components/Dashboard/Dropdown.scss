@@ -1,9 +1,16 @@
 .Dropdown {
   background-color: #2F3136;
+  border-radius: 4px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  display: none;
   margin-left: 18px;
   position: fixed;
   top: 230px;
+  transition: all 1s ease;
+
+  &.show {
+    display: block;
+  }
 }
 
 .Head {

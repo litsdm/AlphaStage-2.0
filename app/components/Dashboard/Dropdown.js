@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import uuid from 'uuid/v4';
 import styles from './Dropdown.scss';
 
-const Dropdown = ({ games, selectedIndex }) => {
+const Dropdown = ({ games, selectedIndex, display }) => {
   const renderRows = () => (
     games.map((game, i) => (
       <div key={uuid()} className={styles.Row}>
@@ -15,7 +15,7 @@ const Dropdown = ({ games, selectedIndex }) => {
   );
 
   return (
-    <div className={styles.Dropdown}>
+    <div className={`${styles.Dropdown} ${display ? styles.show : ''}`}>
       <p className={styles.Head}>Switch Game</p>
       <div className={styles.Content}>
         {renderRows()}
@@ -26,12 +26,14 @@ const Dropdown = ({ games, selectedIndex }) => {
 
 Dropdown.propTypes = {
   games: PropTypes.array,
-  selectedIndex: PropTypes.number
+  selectedIndex: PropTypes.number,
+  display: PropTypes.bool
 };
 
 Dropdown.defaultProps = {
   games: [],
-  selectedIndex: 0
+  selectedIndex: 0,
+  display: false
 };
 
 export default Dropdown;
