@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styles from './Header.scss';
 
 import Dropdown from './Dropdown';
@@ -48,12 +49,12 @@ const Header = (props) => {
         </button>
       </div>
       <div className={styles.ConfigButtons}>
-        <button>
+        <Link to={`/games/edit/${currentGame._id}`}>
           <i className="fa fa-pencil" />
-        </button>
-        <button>
+        </Link>
+        <Link to="/">
           <i className="fa fa-cog" />
-        </button>
+        </Link>
       </div>
     </div>
   );

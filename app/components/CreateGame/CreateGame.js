@@ -59,7 +59,7 @@ class CreateGame extends Component {
   }
 
   saveState = () => {
-    if (this.state.didSubmit) return;
+    if (this.state.didSubmit || this.props.edit) return;
     const currentContent = this.state.editorState.getCurrentContent();
     const state = {
       ...this.state,
@@ -69,18 +69,36 @@ class CreateGame extends Component {
   }
 
   loadState = () => {
+    const { edit, game } = this.props;
     const cachedState = localStorage.getItem('createGameState');
-    if (cachedState) {
+    let state;
+
+    if (edit) {
+      console.log(game.buildsId);
+      state = {
+        ...this.state,
+        ...game,
+        availableMac: game.macBuild !== '',
+        availableWin: game.windowsBuild !== '',
+        editorState: this.editorStateFromJson(game.descriptionState),
+        fileId: game.buildsId
+      };
+    } else if (cachedState) {
       const parsedState = JSON.parse(cachedState);
-      const contentState = convertFromRaw(JSON.parse(parsedState.editorState));
-      const state = {
+      state = {
         ...parsedState,
-        editorState: EditorState.createWithContent(contentState)
+        editorState: this.editorStateFromJson(parsedState.editorState)
       };
 
-      this.setState(state);
       localStorage.removeItem('createGameState');
-    }
+    } else return;
+
+    this.setState(state);
+  }
+
+  editorStateFromJson = (savedState) => {
+    const contentState = convertFromRaw(JSON.parse(savedState));
+    return EditorState.createWithContent(contentState);
   }
 
   cancel = () => {
@@ -373,7 +391,14 @@ class CreateGame extends Component {
 CreateGame.propTypes = {
   submitGame: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  edit: PropTypes.bool,
+  game: PropTypes.object
+};
+
+CreateGame.defaultProps = {
+  edit: false,
+  game: {}
 };
 
 export default withRouter(CreateGame);

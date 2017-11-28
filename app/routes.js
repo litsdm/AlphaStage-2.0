@@ -14,6 +14,7 @@ const Routes = ({ history }) => (
     <Switch>
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/games/new" component={CreateGamePage} />
+      <Route path="/games/edit/:id" component={CreateGamePage} />
       <Route path="/games/:id" component={GamePage} />
       <Route path="/" component={BrowsePage} />
     </Switch>

@@ -1,6 +1,7 @@
 query FullGame($id: String) {
   game(_id: $id) {
     _id,
+    buildsId,
     coverImage,
     descriptionState,
     developerIds,
