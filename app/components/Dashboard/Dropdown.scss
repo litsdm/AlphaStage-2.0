@@ -27,9 +27,12 @@
 
 .Row {
   align-items: center;
+  color: white;
   cursor: pointer;
   display: flex;
+  font-size: 18px;
   padding: 6px 12px;
+  width: 100%;
 
   &:hover {
     background-color: #2091f3;

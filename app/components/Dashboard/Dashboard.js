@@ -14,6 +14,13 @@ class Dashboard extends Component {
     this.setState({ displayDropdown: !this.state.displayDropdown });
   }
 
+  handleGameSelect = (index) => () => {
+    this.setState({
+      selectedIndex: index,
+      displayDropdown: false
+    });
+  }
+
   render() {
     const { games } = this.props;
     const { selectedIndex, displayDropdown } = this.state;
@@ -29,7 +36,12 @@ class Dashboard extends Component {
               <i className={`fa ${displayDropdown ? 'fa-times' : 'fa-chevron-down'}`} />
             </button>
           </div>
-          <Dropdown games={games} selectedIndex={selectedIndex} display={displayDropdown} />
+          <Dropdown
+            games={games}
+            selectedIndex={selectedIndex}
+            display={displayDropdown}
+            selectGame={this.handleGameSelect}
+          />
           <div className={styles.ConfigButtons}>
             <button>
               <i className="fa fa-pencil" />
