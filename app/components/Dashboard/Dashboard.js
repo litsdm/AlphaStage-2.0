@@ -7,23 +7,28 @@ import Dropdown from './Dropdown';
 class Dashboard extends Component {
   state = {
     selectedIndex: 0,
-    displayDropdown: false
+    displayDropdown: false,
+    tabIndex: 0
   }
 
-  handleDropdownToggle = () => {
+  toggleDropdown = () => {
     this.setState({ displayDropdown: !this.state.displayDropdown });
   }
 
-  handleGameSelect = (index) => () => {
+  selectGame = (index) => () => {
     this.setState({
       selectedIndex: index,
       displayDropdown: false
     });
   }
 
+  selectTab = (tabIndex) => () => {
+    this.setState({ tabIndex });
+  }
+
   render() {
     const { games } = this.props;
-    const { selectedIndex, displayDropdown } = this.state;
+    const { selectedIndex, displayDropdown, tabIndex } = this.state;
     const selectedGame = games[selectedIndex];
 
     return (
@@ -32,7 +37,7 @@ class Dashboard extends Component {
           <div className={styles.Overlay} />
           <div className={styles.TitleContainer}>
             <p className={styles.Title}>{selectedGame.title}</p>
-            <button onClick={this.handleDropdownToggle}>
+            <button onClick={this.toggleDropdown}>
               <i className={`fa ${displayDropdown ? 'fa-times' : 'fa-chevron-down'}`} />
             </button>
           </div>
@@ -40,8 +45,24 @@ class Dashboard extends Component {
             games={games}
             selectedIndex={selectedIndex}
             display={displayDropdown}
-            selectGame={this.handleGameSelect}
+            selectGame={this.selectGame}
           />
+          <div className={styles.Menu}>
+            <button
+              className={`${styles.Tab} ${tabIndex === 0 ? styles.active : ''}`}
+              onClick={this.selectTab(0)}
+            >
+              Overview
+              <div className={styles.Indicator} />
+            </button>
+            <button
+              className={`${styles.Tab} ${tabIndex === 1 ? styles.active : ''}`}
+              onClick={this.selectTab(1)}
+            >
+              Feedback
+              <div className={styles.Indicator} />
+            </button>
+          </div>
           <div className={styles.ConfigButtons}>
             <button>
               <i className="fa fa-pencil" />

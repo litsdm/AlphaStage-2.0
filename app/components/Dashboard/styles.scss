@@ -42,6 +42,44 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
+.Menu {
+  bottom: 0;
+  display: flex;
+  left: 24px;
+  position: absolute;
+}
+
+.Tab {
+  align-items: center;
+  color: #bbb;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  margin-right: 18px;
+  padding: 0;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &.active {
+    color: #fff;
+
+    div {
+      opacity: 1;
+    }
+  }
+}
+
+.Indicator {
+  background-color: #2091f3;
+  height: 3px;
+  width: 48px;
+  margin-top: 6px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
 .ConfigButtons {
   align-items: center;
   bottom: 24px;
