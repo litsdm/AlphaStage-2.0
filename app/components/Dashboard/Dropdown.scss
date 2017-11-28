@@ -13,6 +13,11 @@
   }
 }
 
+.Content {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
 .Head {
   background-color: #2B2C31;
   border-top-left-radius: 4px;
@@ -20,17 +25,15 @@
   padding: 12px;
 }
 
-.Content {
-  padding: 0 12px;
-}
-
 .Row {
   align-items: center;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
   cursor: pointer;
   display: flex;
-  margin: 12px 0;
+  padding: 6px 12px;
+
+  &:hover {
+    background-color: #2091f3;
+  }
 
   img {
     height: 42px;
