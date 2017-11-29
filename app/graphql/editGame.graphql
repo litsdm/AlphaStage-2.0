@@ -1,0 +1,23 @@
+mutation EditGame($input: GameInput!) {
+  editGame(game: $input) {
+    _id,
+    buildsId,
+    coverImage,
+    descriptionState,
+    developerIds,
+    genre,
+    languages,
+    macBuild,
+    publisher,
+    releaseStatus,
+    screenshots,
+    shortDescription,
+    spaceRequired,
+    tags,
+    title,
+    thumbnail,
+    trailer,
+    website,
+    windowsBuild,
+  }
+}

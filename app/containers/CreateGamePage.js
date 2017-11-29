@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import createGame from '../graphql/createGame.graphql';
+import editGame from '../graphql/editGame.graphql';
 import fullGameQuery from '../graphql/fullGame.graphql';
 
 import CreateGame from '../components/CreateGame/CreateGame';
@@ -20,6 +21,11 @@ const withMutation = compose(
       submitGame: (input) => mutate({ variables: { input } }),
     }),
   }),
+  graphql(editGame, {
+    props: ({ mutate }) => ({
+      saveGame: (input) => mutate({ variables: { input } }),
+    }),
+  }),
   graphql(fullGameQuery, {
     props: ({ ownProps, data: { game, loading, error } }) => {
       if (!ownProps.match.params.id) return;
@@ -33,12 +39,13 @@ const withMutation = compose(
   })
 );
 
-const CreateGamePage = ({ submitGame, user, match, game, loading }) => (
+const CreateGamePage = ({ submitGame, saveGame, user, match, game, loading }) => (
   loading
     ? null
     : (
       <CreateGame
         submitGame={submitGame}
+        saveGame={saveGame}
         user={user}
         edit={typeof match.params.id !== 'undefined' && match.params.id !== null}
         game={game}
@@ -48,6 +55,7 @@ const CreateGamePage = ({ submitGame, user, match, game, loading }) => (
 
 CreateGamePage.propTypes = {
   submitGame: PropTypes.func.isRequired,
+  saveGame: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   loading: PropTypes.bool,

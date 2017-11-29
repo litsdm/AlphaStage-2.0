@@ -204,6 +204,13 @@ class CreateGame extends Component {
       .catch(err => console.log(err));
   }
 
+  save = () => {
+    const { saveGame, history } = this.props;
+    const game = this.createGameFromState();
+    game._id = this.props.game._id;
+    saveGame(game).then(() => history.push('/dashboard')).catch(err => console.log(err));
+  }
+
   validate = () => {
     _invalidFields = {};
     focusElement = null;
@@ -291,14 +298,17 @@ class CreateGame extends Component {
   }
 
   renderSubmitButton = () => {
+    const { edit } = this.props;
     const { uploadingMacBuild, uploadingWindowsBuild } = this.state;
+    const text = edit ? 'Save' : 'Create Game';
+    const onClick = edit ? this.save : this.submit;
     return uploadingMacBuild || uploadingWindowsBuild
       ? (
-        <button className={styles.FormButtonDisabled} disabled onClick={this.submit}>
-          Create Game
+        <button className={styles.FormButtonDisabled} disabled onClick={onClick}>
+          {text}
         </button>
       )
-      : <button className={styles.FormButton} onClick={this.submit}>Create Game</button>;
+      : <button className={styles.FormButton} onClick={onClick}>{text}</button>;
   }
 
   render() {
@@ -389,6 +399,7 @@ class CreateGame extends Component {
 
 CreateGame.propTypes = {
   submitGame: PropTypes.func.isRequired,
+  saveGame: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   edit: PropTypes.bool,
