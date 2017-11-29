@@ -101,8 +101,13 @@ class CreateGame extends Component {
   }
 
   cancel = () => {
-    const { history } = this.props;
+    const { history, edit } = this.props;
     const { coverImage, macBuild, thumbnail, screenshots, windowsBuild } = this.state;
+
+    if (edit) {
+      history.push('/dashboard');
+      return;
+    }
 
     if (coverImage) removeFile(this.lastSegment(coverImage));
     if (thumbnail) removeFile(this.lastSegment(thumbnail));
@@ -188,8 +193,8 @@ class CreateGame extends Component {
             icon: 'success',
             buttons: {
               goHome: {
-                text: 'Go home',
-                value: '/'
+                text: 'Go to dashboard',
+                value: '/dashboard'
               },
               viewPage: {
                 text: 'Go to game page',
@@ -336,6 +341,7 @@ class CreateGame extends Component {
       website,
       windowsBuild
     } = this.state;
+    const { edit } = this.props;
 
     const platforms = { availableWin, availableMac };
 
@@ -357,6 +363,7 @@ class CreateGame extends Component {
           trailer={trailer}
           handleChange={this.handleChange}
           validatedInputClass={this.validatedInputClass}
+          edit={edit}
         />
         <div className={styles.Divider} />
         <Details
@@ -378,6 +385,7 @@ class CreateGame extends Component {
           fileId={fileId}
           uploadError={uploadError}
           validatedInputClass={this.validatedInputClass}
+          edit={edit}
         />
         <div className={styles.Divider} />
         <AdditionalDetails

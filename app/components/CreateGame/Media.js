@@ -14,7 +14,8 @@ const Media = (props) => {
     thumbnail,
     screenshots,
     handleChange,
-    validatedInputClass
+    validatedInputClass,
+    edit
   } = props;
 
   const chooseImage = (type) => () => {
@@ -76,6 +77,9 @@ const Media = (props) => {
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
         <p className={styles.Title}>Media</p>
+        <p className={styles.Description}>
+          {edit ? ' Note: If you update any image on edit it will be saved even if you click the cancel button or don\'t click save. This will be fixed in a later version.' : ''}
+        </p>
       </div>
       <div className={styles.ColumnRight}>
         <div className={styles.InputContainer}>
@@ -156,7 +160,12 @@ Media.propTypes = {
   validatedInputClass: PropTypes.func.isRequired,
   coverImage: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
-  screenshots: PropTypes.array.isRequired
+  screenshots: PropTypes.array.isRequired,
+  edit: PropTypes.bool
+};
+
+Media.defaultProps = {
+  edit: false
 };
 
 export default Media;
