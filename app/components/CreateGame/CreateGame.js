@@ -59,7 +59,7 @@ class CreateGame extends Component {
   }
 
   saveState = () => {
-    if (this.state.didSubmit) return;
+    if (this.state.didSubmit || this.props.edit) return;
     const currentContent = this.state.editorState.getCurrentContent();
     const state = {
       ...this.state,
@@ -69,23 +69,45 @@ class CreateGame extends Component {
   }
 
   loadState = () => {
+    const { edit, game } = this.props;
     const cachedState = localStorage.getItem('createGameState');
-    if (cachedState) {
+    let state;
+
+    if (edit) {
+      state = {
+        ...this.state,
+        ...game,
+        availableMac: game.macBuild !== '',
+        availableWin: game.windowsBuild !== '',
+        editorState: this.editorStateFromJson(game.descriptionState),
+        fileId: game.buildsId || ''
+      };
+    } else if (cachedState) {
       const parsedState = JSON.parse(cachedState);
-      const contentState = convertFromRaw(JSON.parse(parsedState.editorState));
-      const state = {
+      state = {
         ...parsedState,
-        editorState: EditorState.createWithContent(contentState)
+        editorState: this.editorStateFromJson(parsedState.editorState)
       };
 
-      this.setState(state);
       localStorage.removeItem('createGameState');
-    }
+    } else return;
+
+    this.setState(state);
+  }
+
+  editorStateFromJson = (savedState) => {
+    const contentState = convertFromRaw(JSON.parse(savedState));
+    return EditorState.createWithContent(contentState);
   }
 
   cancel = () => {
-    const { history } = this.props;
+    const { history, edit } = this.props;
     const { coverImage, macBuild, thumbnail, screenshots, windowsBuild } = this.state;
+
+    if (edit) {
+      history.push('/dashboard');
+      return;
+    }
 
     if (coverImage) removeFile(this.lastSegment(coverImage));
     if (thumbnail) removeFile(this.lastSegment(thumbnail));
@@ -171,8 +193,8 @@ class CreateGame extends Component {
             icon: 'success',
             buttons: {
               goHome: {
-                text: 'Go home',
-                value: '/'
+                text: 'Go to dashboard',
+                value: '/dashboard'
               },
               viewPage: {
                 text: 'Go to game page',
@@ -185,6 +207,13 @@ class CreateGame extends Component {
         );
       })
       .catch(err => console.log(err));
+  }
+
+  save = () => {
+    const { saveGame, history } = this.props;
+    const game = this.createGameFromState();
+    game._id = this.props.game._id;
+    saveGame(game).then(() => history.push('/dashboard')).catch(err => console.log(err));
   }
 
   validate = () => {
@@ -274,14 +303,17 @@ class CreateGame extends Component {
   }
 
   renderSubmitButton = () => {
+    const { edit } = this.props;
     const { uploadingMacBuild, uploadingWindowsBuild } = this.state;
+    const text = edit ? 'Save' : 'Create Game';
+    const onClick = edit ? this.save : this.submit;
     return uploadingMacBuild || uploadingWindowsBuild
       ? (
-        <button className={styles.FormButtonDisabled} disabled onClick={this.submit}>
-          Create Game
+        <button className={styles.FormButtonDisabled} disabled onClick={onClick}>
+          {text}
         </button>
       )
-      : <button className={styles.FormButton} onClick={this.submit}>Create Game</button>;
+      : <button className={styles.FormButton} onClick={onClick}>{text}</button>;
   }
 
   render() {
@@ -309,6 +341,7 @@ class CreateGame extends Component {
       website,
       windowsBuild
     } = this.state;
+    const { edit } = this.props;
 
     const platforms = { availableWin, availableMac };
 
@@ -330,6 +363,7 @@ class CreateGame extends Component {
           trailer={trailer}
           handleChange={this.handleChange}
           validatedInputClass={this.validatedInputClass}
+          edit={edit}
         />
         <div className={styles.Divider} />
         <Details
@@ -351,13 +385,14 @@ class CreateGame extends Component {
           fileId={fileId}
           uploadError={uploadError}
           validatedInputClass={this.validatedInputClass}
+          edit={edit}
         />
         <div className={styles.Divider} />
         <AdditionalDetails
-          languages={languages}
-          publisher={publisher}
-          spaceRequired={spaceRequired}
-          website={website}
+          languages={languages || undefined}
+          publisher={publisher || undefined}
+          spaceRequired={spaceRequired || undefined}
+          website={website || undefined}
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
@@ -372,8 +407,16 @@ class CreateGame extends Component {
 
 CreateGame.propTypes = {
   submitGame: PropTypes.func.isRequired,
+  saveGame: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  edit: PropTypes.bool,
+  game: PropTypes.object
+};
+
+CreateGame.defaultProps = {
+  edit: false,
+  game: {}
 };
 
 export default withRouter(CreateGame);

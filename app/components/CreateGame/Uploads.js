@@ -8,6 +8,7 @@ const Uploads = (props) => {
   const {
     platforms,
     fileId,
+    edit,
     handleChange,
     handleBuildChange,
     macBuild,
@@ -97,6 +98,10 @@ const Uploads = (props) => {
     <div className={styles.Row}>
       <div className={styles.ColumnLeft}>
         <p className={styles.Title}>Uploads</p>
+        <p className={styles.Description}>
+          To update your build just click on <q>Add Build</q> again and select the new one.
+          {edit ? ' Note: If you update your build on edit it will be saved even if you click the cancel button or don\'t click save. This will be fixed in a later version.' : ''}
+        </p>
       </div>
       <div className={styles.ColumnRight}>
         {renderPlatformButton('windowsBuild', availableWin, uploadingWindowsBuild, windowsBuild)}
@@ -116,7 +121,12 @@ Uploads.propTypes = {
   uploadingMacBuild: PropTypes.bool.isRequired,
   uploadingWindowsBuild: PropTypes.bool.isRequired,
   validatedInputClass: PropTypes.func.isRequired,
-  windowsBuild: PropTypes.string.isRequired
+  windowsBuild: PropTypes.string.isRequired,
+  edit: PropTypes.bool
+};
+
+Uploads.defaultProps = {
+  edit: false
 };
 
 export default Uploads;

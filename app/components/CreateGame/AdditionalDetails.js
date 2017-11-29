@@ -109,11 +109,18 @@ const AdditionalDetails = ({ languages, publisher, spaceRequired, website, handl
 };
 
 AdditionalDetails.propTypes = {
-  languages: PropTypes.array.isRequired,
-  publisher: PropTypes.string.isRequired,
-  spaceRequired: PropTypes.string.isRequired,
-  website: PropTypes.string.isRequired,
+  languages: PropTypes.array,
+  publisher: PropTypes.string,
+  spaceRequired: PropTypes.string,
+  website: PropTypes.string,
   handleChange: PropTypes.func.isRequired
+};
+
+AdditionalDetails.defaultProps = {
+  languages: [],
+  publisher: '',
+  spaceRequired: '',
+  website: ''
 };
 
 export default AdditionalDetails;
