@@ -74,14 +74,13 @@ class CreateGame extends Component {
     let state;
 
     if (edit) {
-      console.log(game.buildsId);
       state = {
         ...this.state,
         ...game,
         availableMac: game.macBuild !== '',
         availableWin: game.windowsBuild !== '',
         editorState: this.editorStateFromJson(game.descriptionState),
-        fileId: game.buildsId
+        fileId: game.buildsId || ''
       };
     } else if (cachedState) {
       const parsedState = JSON.parse(cachedState);
@@ -372,10 +371,10 @@ class CreateGame extends Component {
         />
         <div className={styles.Divider} />
         <AdditionalDetails
-          languages={languages}
-          publisher={publisher}
-          spaceRequired={spaceRequired}
-          website={website}
+          languages={languages || undefined}
+          publisher={publisher || undefined}
+          spaceRequired={spaceRequired || undefined}
+          website={website || undefined}
           handleChange={this.handleChange}
         />
         <div className={styles.Divider} />
