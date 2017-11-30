@@ -26,7 +26,8 @@ const mapDispatchToProps = dispatch => ({
 
 class ButtonContainer extends Component {
   state = {
-    isInstalled: false
+    isInstalled: false,
+    uninstalling: false,
   }
 
   componentWillMount() {
@@ -64,10 +65,7 @@ class ButtonContainer extends Component {
   }
 
   handlePlayClick = () => {
-    const { game } = this.props;
-    const path = `${app.getPath('appData')}/ASLibrary/${game.title}`;
-    const file = this.localGameFile(path);
-    const localPath = `${path}/${file}`.split(' ').join('\\ ');
+    const localPath = this.gamePath();
 
     const openCommand = process.platform === 'darwin'
       ? `open -a ${localPath} --wait-apps`
@@ -78,6 +76,33 @@ class ButtonContainer extends Component {
 
       // Game was closed
     });
+  }
+
+  handleUninstall = () => {
+    const { game } = this.props;
+    const path = `${app.getPath('appData')}/ASLibrary/${game.title}`.split(' ').join('\\ ');
+    const execCommand = process.platform === 'darwin'
+      ? `rm -rf ${path}`
+      : `DEL ${path}`;
+
+    this.setState({ uninstalling: true });
+
+    exec(execCommand, (err) => {
+      if (err) throw err;
+
+      this.setState({
+        isInstalled: false,
+        uninstalling: false
+      });
+    });
+  };
+
+  gamePath = () => {
+    const { game } = this.props;
+    const path = `${app.getPath('appData')}/ASLibrary/${game.title}`;
+    const file = this.localGameFile(path);
+
+    return `${path}/${file}`.split(' ').join('\\ ');
   }
 
   localGameFile = (path) => {
@@ -124,6 +149,10 @@ class ButtonContainer extends Component {
         iconClass: '',
         text: `Unavailable on ${process.platform === 'darwin' ? 'mac' : 'Windows'}`,
         btnClass: `${styles.ButtonUnavailable} ${process.platform === 'darwin' ? '' : styles.win}`
+      },
+      uninstalling: {
+        ...sharedDisabledConfig,
+        text: 'Uninstalling'
       }
     };
 
@@ -132,13 +161,15 @@ class ButtonContainer extends Component {
 
   buttonConfigKey = () => {
     const { game, isDownloading, isInstalling, downloadId, isFinished } = this.props;
-    const { isInstalled } = this.state;
+    const { isInstalled, uninstalling } = this.state;
 
     if (process.platform === 'darwin') {
       if (!game.macBuild) return 'unavailable';
     } else if (process.platform === 'win32') {
       if (!game.windowsBuild) return 'unavailable';
     }
+
+    if (uninstalling) return 'uninstalling';
 
     if (downloadId && downloadId === game._id && !isFinished) {
       if (isDownloading) return 'downloading';
@@ -151,15 +182,27 @@ class ButtonContainer extends Component {
   render() {
     const key = this.buttonConfigKey();
     const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig(key);
+    const { isInstalled, uninstalling } = this.state;
 
     return (
-      <Button
-        text={text}
-        iconClass={iconClass}
-        btnClass={btnClass}
-        handleClick={handleClick}
-        isDisabled={isDisabled}
-      />
+      <div>
+        <Button
+          text={text}
+          iconClass={iconClass}
+          btnClass={btnClass}
+          handleClick={handleClick}
+          isDisabled={isDisabled}
+        />
+        {
+          isInstalled && !uninstalling
+          ? (
+            <button className={styles.Uninstall} onClick={this.handleUninstall}>
+              <i className="fa fa-trash-o" />
+            </button>
+          )
+          : null
+        }
+      </div>
     );
   }
 }

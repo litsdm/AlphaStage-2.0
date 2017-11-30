@@ -3,7 +3,7 @@
 .ButtonUnavailable {
   background: linear-gradient(hsl(194, 90%, 54%), hsl(208, 90%, 54%));
   border-radius: 24px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   color: #fff;
   font-size: 16px;
   font-weight: bold;
@@ -19,7 +19,7 @@
 
   &:hover {
     background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     margin-bottom: 1px;
     margin-top: -1px;
   }
@@ -37,6 +37,7 @@
 
   &:hover {
     background: linear-gradient(#9f9f9f, #909090);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     margin-bottom: 0;
     margin-top: 0;
   }
@@ -51,5 +52,23 @@
 
   i {
     display: none;
+  }
+}
+
+.Uninstall {
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  font-size: 16px;
+  padding: 9px 12px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  transform: translate(-50%, -50%);
+
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-bottom: 1px;
+    margin-top: -1px;
   }
 }
