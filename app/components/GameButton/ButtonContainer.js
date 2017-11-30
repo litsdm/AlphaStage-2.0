@@ -151,15 +151,27 @@ class ButtonContainer extends Component {
   render() {
     const key = this.buttonConfigKey();
     const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig(key);
+    const { isInstalled } = this.state;
 
     return (
-      <Button
-        text={text}
-        iconClass={iconClass}
-        btnClass={btnClass}
-        handleClick={handleClick}
-        isDisabled={isDisabled}
-      />
+      <div>
+        <Button
+          text={text}
+          iconClass={iconClass}
+          btnClass={btnClass}
+          handleClick={handleClick}
+          isDisabled={isDisabled}
+        />
+        {
+          isInstalled
+          ? (
+            <button className={styles.Uninstall}>
+              <i className="fa fa-trash-o" />
+            </button>
+          )
+          : null
+        }
+      </div>
     );
   }
 }
