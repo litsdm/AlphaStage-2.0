@@ -183,6 +183,7 @@ class ButtonContainer extends Component {
     const key = this.buttonConfigKey();
     const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig(key);
     const { isInstalled, uninstalling } = this.state;
+    const { isInstalling } = this.props;
 
     return (
       <div>
@@ -194,7 +195,7 @@ class ButtonContainer extends Component {
           isDisabled={isDisabled}
         />
         {
-          isInstalled && !uninstalling
+          isInstalled && !uninstalling && !isInstalling
           ? (
             <button className={styles.Uninstall} onClick={this.handleUninstall}>
               <i className="fa fa-trash-o" />
