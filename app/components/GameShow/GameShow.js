@@ -20,9 +20,11 @@ class GameShow extends Component {
   };
 
   componentDidMount() {
-    const { game, downloadId } = this.props;
+    const { game, downloadId, incrementMetric } = this.props;
     const contentContainer = document.getElementById('content-container');
     const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
+
+    incrementMetric(game._id, 'pageViews');
 
     contentContainer.addEventListener('scroll', this.handleScroll);
     editorRoot.classList += ` ${styles.DraftRoot}`;
@@ -128,7 +130,8 @@ class GameShow extends Component {
 GameShow.propTypes = {
   game: PropTypes.object.isRequired,
   downloadId: PropTypes.string.isRequired,
-  isDownloading: PropTypes.bool,
+  incrementMetric: PropTypes.func.isRequired,
+  isDownloading: PropTypes.bool
 };
 
 GameShow.defaultProps = {

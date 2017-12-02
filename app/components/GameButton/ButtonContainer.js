@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import { remote, ipcRenderer } from 'electron';
 import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
 import { exec } from 'child_process';
 import fs from 'fs';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 import { startDownload, finishDownload } from '../../actions/game';
+import addToMetric from '../../graphql/addToMetric.graphql';
 
 import Button from './Button';
 
 const { app } = remote;
+
+const withMutation = graphql(addToMetric, {
+  props: ({ mutate }) => ({
+    incrementMetric: (gameId, metric) => mutate({ variables: { gameId, metric } }),
+  }),
+});
 
 const mapStateToProps = ({ game }) => (
   {
@@ -49,7 +57,7 @@ class ButtonContainer extends Component {
   }
 
   handleInstallClick = () => {
-    const { game, startDownloading } = this.props;
+    const { game, startDownloading, incrementMetric } = this.props;
 
     const url = process.platform === 'darwin' ? game.macBuild : game.windowsBuild;
 
@@ -60,16 +68,21 @@ class ButtonContainer extends Component {
       url
     };
 
+    incrementMetric(game._id, 'downloads');
+
     ipcRenderer.send('download-game', args);
     startDownloading(game._id);
   }
 
   handlePlayClick = () => {
+    const { game, incrementMetric } = this.props;
     const localPath = this.gamePath();
 
     const openCommand = process.platform === 'darwin'
       ? `open -a ${localPath} --wait-apps`
       : localPath;
+
+    incrementMetric(game._id, 'plays');
 
     exec(openCommand, (error) => {
       if (error) throw error;
@@ -79,12 +92,13 @@ class ButtonContainer extends Component {
   }
 
   handleUninstall = () => {
-    const { game } = this.props;
+    const { game, incrementMetric } = this.props;
     const path = `${app.getPath('appData')}/ASLibrary/${game.title}`.split(' ').join('\\ ');
     const execCommand = process.platform === 'darwin'
       ? `rm -rf ${path}`
       : `DEL ${path}`;
 
+    incrementMetric(game._id, 'uninstalls');
     this.setState({ uninstalling: true });
 
     exec(execCommand, (err) => {
@@ -212,6 +226,7 @@ ButtonContainer.propTypes = {
   game: PropTypes.object.isRequired,
   startDownloading: PropTypes.func.isRequired,
   completeDownload: PropTypes.func.isRequired,
+  incrementMetric: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool,
   isInstalling: PropTypes.bool,
   downloadId: PropTypes.string,
@@ -225,4 +240,6 @@ ButtonContainer.defaultProps = {
   isFinished: false
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonContainer);
+const ButtonWithMutation = withMutation(ButtonContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonWithMutation);

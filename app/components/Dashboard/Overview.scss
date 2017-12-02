@@ -1,0 +1,26 @@
+.Overview {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 24px;
+}
+
+.Card {
+  background-color: #2F3136;
+  flex-basis: 28%;
+  margin: 24px;
+  max-width: 372px;
+}
+
+.Title {
+  background-color: #2B2C31;
+  padding: 12px;
+}
+
+.Value {
+  font-size: 32px;
+  font-weight: 100;
+  padding: 24px;
+  text-align: center;
+}

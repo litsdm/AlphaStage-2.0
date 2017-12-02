@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 import Header from './Header';
+import Overview from './Overview';
 
 class Dashboard extends Component {
   state = {
@@ -30,17 +31,33 @@ class Dashboard extends Component {
     const { games } = this.props;
     const { currentIndex, displayDropdown, tabIndex } = this.state;
 
+    const currentGame = games[currentIndex];
+    const { downloads, pageViews, plays, uninstalls } = currentGame;
+
     return (
       <div className={styles.Dashboard}>
         <Header
           games={games}
           currentIndex={currentIndex}
+          currentGame={currentGame}
           displayDropdown={displayDropdown}
           tabIndex={tabIndex}
           toggleDropdown={this.toggleDropdown}
           selectGame={this.selectGame}
           selectTab={this.selectTab}
         />
+        {
+          tabIndex === 0
+          ? (
+            <Overview
+              downloads={downloads || undefined}
+              pageViews={pageViews || undefined}
+              plays={plays || undefined}
+              uninstalls={uninstalls || undefined}
+            />
+          )
+          : null
+        }
       </div>
     );
   }

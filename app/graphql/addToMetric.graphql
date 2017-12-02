@@ -1,0 +1,9 @@
+mutation AddToMetric($gameId: String, $metric: String) {
+  addToMetric(gameId: $gameId, metric: $metric) {
+    _id,
+    downloads,
+    pageViews,
+    plays,
+    uninstalls
+  }
+}
