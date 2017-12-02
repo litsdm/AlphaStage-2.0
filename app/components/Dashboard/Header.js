@@ -11,11 +11,16 @@ const Header = (props) => {
     currentIndex,
     currentGame,
     displayDropdown,
+    modalId,
     tabIndex,
     selectTab,
     toggleDropdown,
     selectGame
   } = props;
+
+  const openSettings = () => {
+    document.getElementById(modalId).style.display = 'block';
+  };
 
   return (
     <div className={styles.Header} style={{ backgroundImage: `url(${currentGame.coverImage})` }}>
@@ -52,9 +57,9 @@ const Header = (props) => {
         <Link to={`/games/edit/${currentGame._id}`}>
           <i className="fa fa-pencil" />
         </Link>
-        <Link to="/">
+        <button onClick={openSettings}>
           <i className="fa fa-cog" />
-        </Link>
+        </button>
       </div>
     </div>
   );
@@ -65,6 +70,7 @@ Header.propTypes = {
   currentIndex: PropTypes.number,
   currentGame: PropTypes.object,
   displayDropdown: PropTypes.bool,
+  modalId: PropTypes.string,
   tabIndex: PropTypes.number,
   selectTab: PropTypes.func.isRequired,
   toggleDropdown: PropTypes.func.isRequired,
@@ -76,6 +82,7 @@ Header.defaultProps = {
   currentIndex: 0,
   currentGame: {},
   displayDropdown: false,
+  modalId: '',
   tabIndex: 0
 };
 
