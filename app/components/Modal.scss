@@ -26,6 +26,30 @@
   padding: 24px;
 }
 
+.SettingsHeader {
+  background-color: #36393E;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: 0 1px 4px #222;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+
+  button {
+    border-top-right-radius: 4px;
+    margin-right: 12px;
+  }
+}
+
+.SettingsTitle {
+  background-color: #2F3136;
+  border-top-left-radius: 4px;
+  font-size: 18px;
+  padding: 12px;
+  width: 204px;
+}
+
 .ButtonClose {
   color: white;
   float: right;
