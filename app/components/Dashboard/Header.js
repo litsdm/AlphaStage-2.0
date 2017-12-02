@@ -9,6 +9,7 @@ const Header = (props) => {
   const {
     games,
     currentIndex,
+    currentGame,
     displayDropdown,
     tabIndex,
     selectTab,
@@ -16,7 +17,6 @@ const Header = (props) => {
     selectGame
   } = props;
 
-  const currentGame = games[currentIndex];
   return (
     <div className={styles.Header} style={{ backgroundImage: `url(${currentGame.coverImage})` }}>
       <div className={styles.Overlay} />
@@ -63,6 +63,7 @@ const Header = (props) => {
 Header.propTypes = {
   games: PropTypes.array,
   currentIndex: PropTypes.number,
+  currentGame: PropTypes.object,
   displayDropdown: PropTypes.bool,
   tabIndex: PropTypes.number,
   selectTab: PropTypes.func.isRequired,
@@ -73,6 +74,7 @@ Header.propTypes = {
 Header.defaultProps = {
   games: [],
   currentIndex: 0,
+  currentGame: {},
   displayDropdown: false,
   tabIndex: 0
 };

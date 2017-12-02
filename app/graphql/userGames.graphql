@@ -4,8 +4,12 @@ query UserGames($id: String) {
       _id,
       coverImage,
       developerIds,
+      downloads,
+      pageViews,
+      plays,
       title,
       thumbnail,
+      uninstalls
     }
   }
 }
