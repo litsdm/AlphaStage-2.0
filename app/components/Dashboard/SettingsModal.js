@@ -8,8 +8,8 @@ import General from './SettingsViews/General';
 class SettingsModal extends Component {
   state = {
     contentIndex: 0,
-    privacyCheck: true,
-    releaseStatus: ''
+    privacyCheck: this.props.game.isPrivate,
+    releaseStatus: this.props.game.releaseStatus
   }
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
@@ -18,7 +18,16 @@ class SettingsModal extends Component {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      this.saveSettings();
+    });
+  }
+
+  saveSettings = () => {
+    const { game, updateGeneral } = this.props;
+    const { privacyCheck, releaseStatus } = this.state;
+
+    updateGeneral(game._id, privacyCheck, releaseStatus);
   }
 
   activeClass = (index) => (
@@ -31,7 +40,7 @@ class SettingsModal extends Component {
     const { privacyCheck, releaseStatus } = this.state;
     return [
       <General
-        releaseStatus={releaseStatus}
+        releaseStatus={releaseStatus || ''}
         privacyCheck={privacyCheck}
         handleChange={this.changeInput}
       />
@@ -65,7 +74,9 @@ class SettingsModal extends Component {
 }
 
 SettingsModal.propTypes = {
-  id: PropTypes.string
+  id: PropTypes.string,
+  game: PropTypes.object.isRequired,
+  updateGeneral: PropTypes.func.isRequired
 };
 
 SettingsModal.defaultProps = {

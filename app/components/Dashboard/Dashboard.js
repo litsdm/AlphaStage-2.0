@@ -29,7 +29,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { games } = this.props;
+    const { games, updateGeneral } = this.props;
     const { currentIndex, displayDropdown, tabIndex } = this.state;
 
     const currentGame = games[currentIndex];
@@ -61,14 +61,15 @@ class Dashboard extends Component {
           )
           : null
         }
-        <SettingsModal id={modalId} />
+        <SettingsModal id={modalId} game={currentGame} updateGeneral={updateGeneral} />
       </div>
     );
   }
 }
 
 Dashboard.propTypes = {
-  games: PropTypes.array
+  games: PropTypes.array,
+  updateGeneral: PropTypes.func.isRequired
 };
 
 Dashboard.defaultProps = {

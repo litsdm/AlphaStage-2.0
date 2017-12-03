@@ -1,0 +1,7 @@
+mutation UpdateGeneralSettings($gameId: String, $isPrivate: Boolean, $releaseStatus: String) {
+  updateGeneralSettings(gameId: $gameId, isPrivate: $isPrivate, releaseStatus: $releaseStatus) {
+    _id,
+    isPrivate,
+    releaseStatus
+  }
+}
