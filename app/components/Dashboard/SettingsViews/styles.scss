@@ -1,0 +1,118 @@
+.Title {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.Setting {
+  margin: 12px 0;
+  margin-bottom: 24px;
+}
+
+.STitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.SliderContainer {
+ display: flex;
+ margin-top: 12px;
+
+ label {
+   cursor: pointer;
+   margin-right: 12px;
+ }
+}
+
+.Lock,
+.Globe {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+
+  i {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 10px;
+  }
+}
+
+.Lock.active {
+  i {
+    color: #F34541;
+  }
+}
+
+.Globe.active {
+  i {
+    color: #2091f3;
+  }
+}
+
+.Switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+
+  input {
+    display: none;
+  }
+}
+
+.Slider {
+  -webkit-transition: .4s;
+  background-color: #F34541;
+  border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+
+  &:before {
+    -webkit-transition: .4s;
+    background-color: white;
+    border-radius: 50%;
+    bottom: 4px;
+    content: "";
+    height:26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+  }
+}
+
+input:checked + .Slider {
+  background-color: #2091f3;
+}
+
+input:focus + .Slider {
+  box-shadow: 0 0 1px #2091f3;
+}
+
+input:checked + .Slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.Select {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  color: white;
+  display: block;
+  font-size: 16px;
+  height: 35px;
+  margin-top: 6px;
+  outline: 0;
+  width: 80%;
+}

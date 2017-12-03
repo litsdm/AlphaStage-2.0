@@ -6,6 +6,7 @@ query FullGame($id: String) {
     descriptionState,
     developerIds,
     genre,
+    isPrivate,
     languages,
     macBuild,
     publisher,

@@ -4,6 +4,7 @@ import styles from './styles.scss';
 
 import Header from './Header';
 import Overview from './Overview';
+import SettingsModal from './SettingsModal';
 
 class Dashboard extends Component {
   state = {
@@ -28,11 +29,12 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { games } = this.props;
+    const { games, updateGeneral } = this.props;
     const { currentIndex, displayDropdown, tabIndex } = this.state;
 
     const currentGame = games[currentIndex];
     const { downloads, pageViews, plays, uninstalls } = currentGame;
+    const modalId = `settings-${currentGame._id}`;
 
     return (
       <div className={styles.Dashboard}>
@@ -41,6 +43,7 @@ class Dashboard extends Component {
           currentIndex={currentIndex}
           currentGame={currentGame}
           displayDropdown={displayDropdown}
+          modalId={modalId}
           tabIndex={tabIndex}
           toggleDropdown={this.toggleDropdown}
           selectGame={this.selectGame}
@@ -58,13 +61,15 @@ class Dashboard extends Component {
           )
           : null
         }
+        <SettingsModal id={modalId} game={currentGame} updateGeneral={updateGeneral} />
       </div>
     );
   }
 }
 
 Dashboard.propTypes = {
-  games: PropTypes.array
+  games: PropTypes.array,
+  updateGeneral: PropTypes.func.isRequired
 };
 
 Dashboard.defaultProps = {

@@ -4,9 +4,11 @@ import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
 const releaseOptions = [
-  'Released',
-  'In Development',
-  'In QA'
+  'Released - Game is ready.',
+  'Beta - Some aspects of the game need polishing.',
+  'Alpha - Some of the main features are yet to be added.',
+  'Demo - Only a level or small part of the game.',
+  'Prototype - Just testing out an idea.'
 ];
 
 const Basic = (props) => {
