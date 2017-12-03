@@ -3,13 +3,22 @@ import PropTypes from 'prop-types';
 import styles from './SettingsModal.scss';
 
 import Modal from '../Modal';
+import General from './SettingsViews/General';
 
 class SettingsModal extends Component {
   state = {
-    contentIndex: 0
+    contentIndex: 0,
+    privacyCheck: true,
   }
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
+
+  changeInput = ({ target }) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    this.setState({ [name]: value });
+  }
 
   activeClass = (index) => (
     index === this.state.contentIndex
@@ -17,8 +26,17 @@ class SettingsModal extends Component {
       : ''
   )
 
+  getContent = () => {
+    const { privacyCheck } = this.state;
+    return [
+      <General privacyCheck={privacyCheck} handleChange={this.changeInput} />
+    ];
+  }
+
   render() {
     const { id } = this.props;
+    const { contentIndex } = this.state;
+    const content = this.getContent();
 
     return (
       <Modal isSettings id={id}>
@@ -33,7 +51,7 @@ class SettingsModal extends Component {
             </button>
           </div>
           <div className={styles.Content}>
-            <p>Content 0</p>
+            {content[contentIndex]}
           </div>
         </div>
       </Modal>

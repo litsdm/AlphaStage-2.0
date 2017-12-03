@@ -6,6 +6,7 @@
   align-items: flex-start;
   background-color: #2F3136;
   display: flex;
+  flex-basis: 33%;
   flex-direction: column;
   padding: 12px;
   width: 204px;
@@ -38,7 +39,8 @@
 }
 
 .Content {
-
+  padding: 24px;
+  width: 100%;
 }
 
 .DeleteButton {
