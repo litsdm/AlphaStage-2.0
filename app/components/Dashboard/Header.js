@@ -27,9 +27,6 @@ const Header = (props) => {
       <div className={styles.Overlay} />
       <div className={styles.TitleContainer}>
         <p className={styles.Title}>{currentGame.title}</p>
-        <button onClick={toggleDropdown}>
-          <i className={`fa ${displayDropdown ? 'fa-times' : 'fa-chevron-down'}`} />
-        </button>
       </div>
       <Dropdown
         games={games}
@@ -50,6 +47,10 @@ const Header = (props) => {
           onClick={selectTab(1)}
         >
           Feedback
+          <div className={styles.Indicator} />
+        </button>
+        <button className={`${styles.Tab} ${styles.Drop}`} onClick={toggleDropdown}>
+          Your games <i className={`fa ${displayDropdown ? 'fa-times' : 'fa-chevron-down'}`} />
           <div className={styles.Indicator} />
         </button>
       </div>

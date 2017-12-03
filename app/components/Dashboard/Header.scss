@@ -69,6 +69,15 @@
       opacity: 1;
     }
   }
+
+  &.Drop {
+    flex-direction: row;
+    margin-bottom: 9px;
+
+    i {
+      margin-left: 6px;
+    }
+  }
 }
 
 .Indicator {
