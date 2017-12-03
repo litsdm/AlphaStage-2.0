@@ -7,18 +7,20 @@
 
 .Setting {
   margin: 12px 0;
+  margin-bottom: 24px;
 }
 
 .STitle {
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 
 .SliderContainer {
  display: flex;
+ margin-top: 12px;
 
  label {
    cursor: pointer;
@@ -101,4 +103,16 @@ input:checked + .Slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.Select {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  color: white;
+  display: block;
+  font-size: 16px;
+  height: 35px;
+  margin-top: 6px;
+  outline: 0;
+  width: 80%;
 }

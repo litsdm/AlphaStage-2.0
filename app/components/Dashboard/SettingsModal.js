@@ -9,6 +9,7 @@ class SettingsModal extends Component {
   state = {
     contentIndex: 0,
     privacyCheck: true,
+    releaseStatus: ''
   }
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
@@ -27,9 +28,13 @@ class SettingsModal extends Component {
   )
 
   getContent = () => {
-    const { privacyCheck } = this.state;
+    const { privacyCheck, releaseStatus } = this.state;
     return [
-      <General privacyCheck={privacyCheck} handleChange={this.changeInput} />
+      <General
+        releaseStatus={releaseStatus}
+        privacyCheck={privacyCheck}
+        handleChange={this.changeInput}
+      />
     ];
   }
 
