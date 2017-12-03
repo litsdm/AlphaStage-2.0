@@ -3,9 +3,38 @@
 }
 
 .Menu {
+  align-items: flex-start;
   background-color: #2F3136;
+  display: flex;
+  flex-direction: column;
   padding: 12px;
   width: 204px;
+
+  button {
+    color: #B9BBBE;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 8px 6px;
+    text-align: start;
+    width: 100%;
+
+    &:hover {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &.active {
+      color: #fff;
+      background-color: #2091f3;
+    }
+  }
+}
+
+.Divider {
+  background-color: #444;
+  height: 1px;
+  margin: 12px 0;
+  width: 100%;
 }
 
 .Content {
@@ -13,5 +42,6 @@
 }
 
 .DeleteButton {
-
+  background-color: transparent !important;
+  color: #F34541 !important;
 }

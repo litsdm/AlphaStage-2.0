@@ -11,6 +11,12 @@ class SettingsModal extends Component {
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
 
+  activeClass = (index) => (
+    index === this.state.contentIndex
+      ? styles.active
+      : ''
+  )
+
   render() {
     const { id } = this.props;
 
@@ -18,9 +24,10 @@ class SettingsModal extends Component {
       <Modal isSettings id={id}>
         <div className={styles.Container}>
           <div className={styles.Menu}>
-            <button onClick={this.changeContent(0)}>
+            <button className={this.activeClass(0)} onClick={this.changeContent(0)}>
               General
             </button>
+            <div className={styles.Divider} />
             <button className={styles.DeleteButton}>
               Delete
             </button>
