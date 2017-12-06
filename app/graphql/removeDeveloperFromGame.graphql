@@ -1,0 +1,5 @@
+mutation removeDeveloperFromGame($id: String, $userId: String) {
+  removeDeveloperFromGame(id: $id, userId: $userId) {
+    developerIds
+  }
+}

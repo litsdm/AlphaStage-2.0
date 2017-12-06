@@ -29,7 +29,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { games, updateGeneral } = this.props;
+    const { games, user, updateGeneral, removeDeveloperRef } = this.props;
     const { currentIndex, displayDropdown, tabIndex } = this.state;
 
     const currentGame = games[currentIndex];
@@ -61,7 +61,13 @@ class Dashboard extends Component {
           )
           : null
         }
-        <SettingsModal id={modalId} game={currentGame} updateGeneral={updateGeneral} />
+        <SettingsModal
+          id={modalId}
+          game={currentGame}
+          userId={user._id}
+          updateGeneral={updateGeneral}
+          removeDeveloperRef={removeDeveloperRef}
+        />
       </div>
     );
   }
@@ -69,11 +75,14 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   games: PropTypes.array,
-  updateGeneral: PropTypes.func.isRequired
+  user: PropTypes.object,
+  updateGeneral: PropTypes.func.isRequired,
+  removeDeveloperRef: PropTypes.func.isRequired
 };
 
 Dashboard.defaultProps = {
-  games: []
+  games: [],
+  user: {}
 };
 
 export default Dashboard;

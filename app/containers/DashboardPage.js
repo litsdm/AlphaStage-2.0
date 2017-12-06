@@ -9,6 +9,7 @@ import Loader from '../components/Loader';
 
 import userGamesQuery from '../graphql/userGames.graphql';
 import updateGeneralSettings from '../graphql/updateGeneralSettings.graphql';
+import removeDeveloperFromGame from '../graphql/removeDeveloperFromGame.graphql';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -37,18 +38,31 @@ const withGraphql = compose(
         mutate({ variables: { gameId, isPrivate, releaseStatus } }),
     })
   }),
+  graphql(removeDeveloperFromGame, {
+    props: ({ mutate }) => ({
+      removeDeveloperRef: (id, userId) => mutate({ variables: { id, userId } }),
+    })
+  }),
 );
 
-const DashboardPage = ({ user, games, updateGeneral, loading }) => (
+const DashboardPage = ({ user, games, updateGeneral, loading, removeDeveloperRef }) => (
   loading
     ? <Loader />
-    : <Dashboard user={user} games={games} updateGeneral={updateGeneral} />
+    : (
+      <Dashboard
+        user={user}
+        games={games}
+        updateGeneral={updateGeneral}
+        removeDeveloperRef={removeDeveloperRef}
+      />
+    )
 );
 
 
 DashboardPage.propTypes = {
   user: PropTypes.object.isRequired,
   updateGeneral: PropTypes.func.isRequired,
+  removeDeveloperRef: PropTypes.func.isRequired,
   games: PropTypes.array,
   loading: PropTypes.bool
 };
