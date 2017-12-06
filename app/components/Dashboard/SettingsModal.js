@@ -32,7 +32,7 @@ class SettingsModal extends Component {
   }
 
   checkDelete = () => {
-    const { game, userId, removeDeveloperRef } = this.props;
+    const { id, game, userId, removeDeveloperRef } = this.props;
     swal({
       text: `Deleting your game is irreversible. Enter your game's name (${game.title}) to confirm that you want to permanently delete it.`,
       icon: 'warning',
@@ -50,6 +50,7 @@ class SettingsModal extends Component {
       if (title !== game.title) return;
 
       removeDeveloperRef(game._id, userId);
+      document.getElementById(id).style.display = 'none';
 
       return title;
     })

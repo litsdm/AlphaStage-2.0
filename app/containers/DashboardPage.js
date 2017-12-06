@@ -39,9 +39,19 @@ const withGraphql = compose(
     })
   }),
   graphql(removeDeveloperFromGame, {
-    props: ({ mutate }) => ({
-      removeDeveloperRef: (id, userId) => mutate({ variables: { id, userId } }),
-    })
+    props: ({ mutate }) => {
+      const token = localStorage.getItem('token');
+      const user = jwtDecode(token);
+      return ({
+        removeDeveloperRef: (id, userId) => mutate({
+          refetchQueries: [{
+            query: userGamesQuery,
+            variables: { id: user._id }
+          }],
+          variables: { id, userId }
+        }),
+      });
+    }
   }),
 );
 
