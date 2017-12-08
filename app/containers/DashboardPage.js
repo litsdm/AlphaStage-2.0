@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 
 import userGamesQuery from '../graphql/userGames.graphql';
 import updateGeneralSettings from '../graphql/updateGeneralSettings.graphql';
-import removeDeveloperFromGame from '../graphql/removeDeveloperFromGame.graphql';
+import deleteGame from '../graphql/deleteGame.graphql';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -38,24 +38,24 @@ const withGraphql = compose(
         mutate({ variables: { gameId, isPrivate, releaseStatus } }),
     })
   }),
-  graphql(removeDeveloperFromGame, {
+  graphql(deleteGame, {
     props: ({ mutate }) => {
       const token = localStorage.getItem('token');
       const user = jwtDecode(token);
       return ({
-        removeDeveloperRef: (id, userId) => mutate({
+        delGame: (id) => mutate({
           refetchQueries: [{
             query: userGamesQuery,
             variables: { id: user._id }
           }],
-          variables: { id, userId }
+          variables: { id }
         }),
       });
     }
   }),
 );
 
-const DashboardPage = ({ user, games, updateGeneral, loading, removeDeveloperRef }) => (
+const DashboardPage = ({ user, games, updateGeneral, loading, delGame }) => (
   loading
     ? <Loader />
     : (
@@ -63,7 +63,7 @@ const DashboardPage = ({ user, games, updateGeneral, loading, removeDeveloperRef
         user={user}
         games={games}
         updateGeneral={updateGeneral}
-        removeDeveloperRef={removeDeveloperRef}
+        deleteGame={delGame}
       />
     )
 );
@@ -72,7 +72,7 @@ const DashboardPage = ({ user, games, updateGeneral, loading, removeDeveloperRef
 DashboardPage.propTypes = {
   user: PropTypes.object.isRequired,
   updateGeneral: PropTypes.func.isRequired,
-  removeDeveloperRef: PropTypes.func.isRequired,
+  delGame: PropTypes.func.isRequired,
   games: PropTypes.array,
   loading: PropTypes.bool
 };
