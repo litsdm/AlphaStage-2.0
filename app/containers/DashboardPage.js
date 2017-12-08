@@ -8,6 +8,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import Loader from '../components/Loader';
 
 import userGamesQuery from '../graphql/userGames.graphql';
+import allGamesQuery from '../graphql/allGames.graphql';
 import updateGeneralSettings from '../graphql/updateGeneralSettings.graphql';
 import deleteGame from '../graphql/deleteGame.graphql';
 
@@ -42,12 +43,20 @@ const withGraphql = compose(
     props: ({ mutate }) => {
       const token = localStorage.getItem('token');
       const user = jwtDecode(token);
+      const queriesToRefetch = [
+        {
+          query: userGamesQuery,
+          variables: { id: user._id }
+        },
+        {
+          query: allGamesQuery,
+          variables: { checkInvisible: true }
+        }
+      ];
+
       return ({
         delGame: (id) => mutate({
-          refetchQueries: [{
-            query: userGamesQuery,
-            variables: { id: user._id }
-          }],
+          refetchQueries: queriesToRefetch,
           variables: { id }
         }),
       });
