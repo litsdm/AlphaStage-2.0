@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 import styles from './SettingsModal.scss';
 
 import Modal from '../Modal';
@@ -28,6 +29,32 @@ class SettingsModal extends Component {
     const { privacyCheck, releaseStatus } = this.state;
 
     updateGeneral(game._id, privacyCheck, releaseStatus);
+  }
+
+  checkDelete = () => {
+    const { id, game, deleteGame } = this.props;
+    swal({
+      text: `Deleting your game is irreversible. Enter your game's name (${game.title}) to confirm that you want to permanently delete it.`,
+      icon: 'warning',
+      content: 'input',
+      dangerMode: true,
+      buttons: {
+        cancel: 'Go back',
+        confirm: {
+          text: 'Delete'
+        }
+      }
+    })
+    .then(title => {
+      if (!title) return;
+      if (title !== game.title) return;
+
+      deleteGame(game._id);
+      document.getElementById(id).style.display = 'none';
+
+      return title;
+    })
+    .catch(err => console.log(err));
   }
 
   activeClass = (index) => (
@@ -60,7 +87,7 @@ class SettingsModal extends Component {
               General
             </button>
             <div className={styles.Divider} />
-            <button className={styles.DeleteButton}>
+            <button className={styles.DeleteButton} onClick={this.checkDelete}>
               Delete
             </button>
           </div>
@@ -76,11 +103,13 @@ class SettingsModal extends Component {
 SettingsModal.propTypes = {
   id: PropTypes.string,
   game: PropTypes.object.isRequired,
-  updateGeneral: PropTypes.func.isRequired
+  updateGeneral: PropTypes.func.isRequired,
+  deleteGame: PropTypes.func.isRequired
 };
 
 SettingsModal.defaultProps = {
-  id: ''
+  id: '',
+  userId: ''
 };
 
 export default SettingsModal;

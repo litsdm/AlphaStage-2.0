@@ -13,7 +13,8 @@ const withGames = graphql(allGamesQuery, {
     return {
       games: data.games,
     };
-  }
+  },
+  options: () => ({ variables: { checkInvisible: true } })
 });
 
 const BrowsePage = ({ games, loading }) => (

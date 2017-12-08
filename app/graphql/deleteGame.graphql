@@ -1,0 +1,5 @@
+mutation DeleteGame($id: String) {
+  deleteGame(id: $id) {
+    invisible
+  }
+}

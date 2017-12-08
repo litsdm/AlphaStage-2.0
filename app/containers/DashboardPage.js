@@ -8,7 +8,9 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import Loader from '../components/Loader';
 
 import userGamesQuery from '../graphql/userGames.graphql';
+import allGamesQuery from '../graphql/allGames.graphql';
 import updateGeneralSettings from '../graphql/updateGeneralSettings.graphql';
+import deleteGame from '../graphql/deleteGame.graphql';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -37,18 +39,49 @@ const withGraphql = compose(
         mutate({ variables: { gameId, isPrivate, releaseStatus } }),
     })
   }),
+  graphql(deleteGame, {
+    props: ({ mutate }) => {
+      const token = localStorage.getItem('token');
+      const user = jwtDecode(token);
+      const queriesToRefetch = [
+        {
+          query: userGamesQuery,
+          variables: { id: user._id }
+        },
+        {
+          query: allGamesQuery,
+          variables: { checkInvisible: true }
+        }
+      ];
+
+      return ({
+        delGame: (id) => mutate({
+          refetchQueries: queriesToRefetch,
+          variables: { id }
+        }),
+      });
+    }
+  }),
 );
 
-const DashboardPage = ({ user, games, updateGeneral, loading }) => (
+const DashboardPage = ({ user, games, updateGeneral, loading, delGame }) => (
   loading
     ? <Loader />
-    : <Dashboard user={user} games={games} updateGeneral={updateGeneral} />
+    : (
+      <Dashboard
+        user={user}
+        games={games}
+        updateGeneral={updateGeneral}
+        deleteGame={delGame}
+      />
+    )
 );
 
 
 DashboardPage.propTypes = {
   user: PropTypes.object.isRequired,
   updateGeneral: PropTypes.func.isRequired,
+  delGame: PropTypes.func.isRequired,
   games: PropTypes.array,
   loading: PropTypes.bool
 };
