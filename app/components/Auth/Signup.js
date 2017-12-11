@@ -19,6 +19,10 @@ class Signup extends Component {
     this.setState({ [name]: value });
   }
 
+  handleKeyPress = ({ key }) => {
+    if (key === 'Enter') this.signup();
+  };
+
   signup = () => {
     const { addUser } = this.props;
     const { email, username, password, confirmPassword } = this.state;
@@ -66,6 +70,7 @@ class Signup extends Component {
             className={styles.Input}
             value={email}
             onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
           />
         </div>
         <div className={styles.InputGroup}>
@@ -77,6 +82,7 @@ class Signup extends Component {
             className={styles.Input}
             value={username}
             onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
           />
         </div>
         <div className={styles.InputGroup}>
@@ -88,6 +94,7 @@ class Signup extends Component {
             className={styles.Input}
             value={password}
             onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
           />
         </div>
         <div className={styles.InputGroup}>
@@ -99,6 +106,7 @@ class Signup extends Component {
             className={styles.Input}
             value={confirmPassword}
             onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
           />
         </div>
 
