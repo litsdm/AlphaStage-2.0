@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 const Category = ({ title, image }) => (
-  <Link to="/" className={styles.Category} style={{ backgroundImage: `url('${image}')` }}>
+  <Link
+    to={`/categories/${title.toLowerCase()}`}
+    className={styles.Category}
+    style={image ? { backgroundImage: `url('${image}')` } : {}}
+  >
+    <div className={styles.Overlay} />
     <i className="fa fa-gamepad" />
     <p>{title}</p>
   </Link>
@@ -12,11 +17,12 @@ const Category = ({ title, image }) => (
 
 Category.propTypes = {
   title: PropTypes.string,
-  image: PropTypes.string.isRequired
+  image: PropTypes.string
 };
 
 Category.defaultProps = {
-  title: ''
+  title: '',
+  image: ''
 };
 
 export default Category;
