@@ -30,6 +30,7 @@ class Auth extends Component {
     return (
       <div className={styles.Auth}>
         <Controls />
+        <div className={styles.Draggable} />
         <div className={[styles.AuthBox, isNewUser ? '' : styles.OldUser].join(' ')}>
           {
             isNewUser
