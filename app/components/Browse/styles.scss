@@ -31,6 +31,9 @@
 .Category {
   align-items: center;
   background: linear-gradient(#2B2C31, #2b2b31);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   flex-basis: 33%;
   flex-direction: column;
