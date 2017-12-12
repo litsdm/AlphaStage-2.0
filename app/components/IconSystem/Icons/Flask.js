@@ -1,17 +1,15 @@
 import React from 'react';
 import propTypes from '../iconPropTypes';
 
-const Flask = ({ fill, width, height }) => (
+const Flask = ({ fill, styles }) => (
   <svg
     version="1.1"
     id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
     x="0px"
     y="0px"
-    width={width}
-    height={height}
     viewBox="0 0 428.27 428.27"
-    style={{ enableBackground: 'new 0 0 428.27 428.27' }}
+    style={{ ...styles, enableBackground: 'new 0 0 428.27 428.27' }}
   >
     <g>
       <path

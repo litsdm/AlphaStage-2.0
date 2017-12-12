@@ -1,17 +1,15 @@
 import React from 'react';
 import propTypes from '../iconPropTypes';
 
-const Development = ({ fill, height, width }) => (
+const Development = ({ fill, styles }) => (
   <svg
     version="1.1"
     id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
     x="0px"
     y="0px"
-    width={width}
-    height={height}
     viewBox="0 0 511.733 511.733"
-    style={{ enableBackground: 'new 0 0 511.733 511.733' }}
+    style={{ ...styles, enableBackground: 'new 0 0 511.733 511.733' }}
   >
     <g>
       <g>

@@ -1,17 +1,15 @@
 import React from 'react';
 import propTypes from '../iconPropTypes';
 
-const Heart = ({ fill, width, height }) => (
+const Heart = ({ fill, styles }) => (
   <svg
     version="1.1"
     id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
     x="0px"
     y="0px"
-    width={width}
-    height={height}
     viewBox="0 0 380.45 380.45"
-    style={{ enableBackground: 'new 0 0 380.45 380.45' }}
+    style={{ ...styles, enableBackground: 'new 0 0 380.45 380.45' }}
   >
     <g>
       <path

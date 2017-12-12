@@ -10,16 +10,24 @@ import Gamepad from './Icons/Gamepad';
 import Heart from './Icons/Heart';
 import Map from './Icons/Map';
 
-const Icon = ({ title, width, height, fill }) => {
+const defaultStyles = {
+  opacity: '0.3',
+  position: 'absolute',
+  width: '50px',
+  height: '50px',
+};
+
+const Icon = ({ title, styles, fill }) => {
+  const combinedStyles = { ...defaultStyles, ...styles };
   const icons = {
-    boat: <Boat width={width} height={height} fill={fill} />,
-    chest: <Chest width={width} height={height} fill={fill} />,
-    development: <Development width={width} height={height} fill={fill} />,
-    drivingWheel: <DrivingWheel width={width} height={height} fill={fill} />,
-    flask: <Flask width={width} height={height} fill={fill} />,
-    gamepad: <Gamepad width={width} height={height} fill={fill} />,
-    heart: <Heart width={width} height={height} fill={fill} />,
-    map: <Map width={width} height={height} fill={fill} />
+    boat: <Boat styles={combinedStyles} fill={fill} />,
+    chest: <Chest styles={combinedStyles} fill={fill} />,
+    development: <Development styles={combinedStyles} fill={fill} />,
+    drivingWheel: <DrivingWheel styles={combinedStyles} fill={fill} />,
+    flask: <Flask styles={combinedStyles} fill={fill} />,
+    gamepad: <Gamepad styles={combinedStyles} fill={fill} />,
+    heart: <Heart styles={combinedStyles} fill={fill} />,
+    map: <Map styles={combinedStyles} fill={fill} />
   };
 
   return icons[title];
@@ -27,15 +35,13 @@ const Icon = ({ title, width, height, fill }) => {
 
 Icon.propTypes = {
   title: PropTypes.string,
-  width: PropTypes.string,
-  height: PropTypes.string,
+  styles: PropTypes.object,
   fill: PropTypes.string
 };
 
 Icon.defaultProps = {
   title: '',
-  width: '50px',
-  height: '50px',
+  styles: {},
   fill: '#fff'
 };
 
