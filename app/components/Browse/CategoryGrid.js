@@ -1,4 +1,5 @@
 import React from 'react';
+import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
 import Category from './Category';
@@ -6,37 +7,37 @@ import Category from './Category';
 const categories = [
   {
     title: 'Action',
-    img: 'http://www.dsogaming.com/wp-content/uploads/2017/05/Crysis-3-feature-672x372.jpg'
+    icons: []
   },
   {
     title: 'Adventure',
-    img: 'https://media.playstation.com/is/image/SCEA/the-witcher-3-wild-hunt-blood-and-wine-screen-05-ps4-us-06may16?$MediaCarousel_Original$',
+    icons: ['boat', 'chest', 'map']
   },
   {
     title: 'Indie',
-    img: 'http://www.heart-machine.com/wp-content/uploads/2013/11/HLD_Screenshot_01_camp_1080.png'
+    icons: ['gamepad']
   },
   {
     title: 'Early Stage',
-    img: 'https://i.ytimg.com/vi/JcsLQFXzpr4/maxresdefault.jpg'
+    icons: ['development']
   },
   {
     title: 'RPG',
-    img: 'https://image.shutterstock.com/z/stock-photo-calling-of-the-dragon-magician-summoning-monster-sorcerer-casts-a-spell-illustration-425039560.jpg'
+    icons: ['flask', 'heart']
   },
   {
     title: 'Simulation',
-    img: 'https://media.playstation.com/is/image/SCEA/goat-simulator-screenshot-05-ps4-us-31jul15?$MediaCarousel_Original$'
+    icons: ['drivingWheel']
   },
   {
     title: 'Sports',
-    img: 'https://image.shutterstock.com/z/stock-photo-soccer-player-in-action-on-night-stadium-panorama-background-265884884.jpg'
+    icons: []
   }
 ];
 
 const CategoryGrid = () => {
-  const renderCategories = () => categories.map(({ title, img }) => (
-    <Category title={title} image={img} />
+  const renderCategories = () => categories.map(({ title, icons }) => (
+    <Category key={uuid()} title={title} icons={icons} />
   ));
 
   return (

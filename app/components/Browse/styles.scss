@@ -30,19 +30,20 @@
 
 .Category {
   align-items: center;
-  background: linear-gradient(#2B2C31, #2b2b31);
+  background-color: #2B2C31;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   display: flex;
   flex-basis: 33%;
   flex-direction: column;
-  height: 320px;
+  height: 290px;
   justify-content: center;
   margin-bottom: 24px;
   max-width: 290px;
   position: relative;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s ease;
 
   i {
     font-size: 3rem;
@@ -55,15 +56,8 @@
     font-weight: 100;
     z-index: 1;
   }
-}
 
-.Overlay {
-  -webkit-mask-image: -webkit-linear-gradient(top, transparent 5%, black 100%);
-  background-color: black;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 0;
+  &:hover {
+    background-color: rgba(32,152,243, 0.3);
+  }
 }
