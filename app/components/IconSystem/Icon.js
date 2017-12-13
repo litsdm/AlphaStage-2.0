@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Boat from './Icons/Boat';
 import Chest from './Icons/Chest';
+import Crosshair from './Icons/Crosshair';
 import Development from './Icons/Development';
 import DrivingWheel from './Icons/DrivingWheel';
 import Flask from './Icons/Flask';
@@ -34,6 +35,7 @@ const Icon = ({ title, styles, fill }) => {
   const icons = {
     boat: <Boat styles={combinedStyles} fill={fill} />,
     chest: <Chest styles={combinedStyles} fill={fill} />,
+    crosshair: <Crosshair styles={combinedStyles} fill={fill} />,
     development: <Development styles={combinedStyles} fill={fill} />,
     drivingWheel: <DrivingWheel styles={combinedStyles} fill={fill} />,
     flask: <Flask styles={combinedStyles} fill={fill} />,
@@ -42,7 +44,7 @@ const Icon = ({ title, styles, fill }) => {
     idea: <Idea styles={combinedStyles} fill={fill} />,
     invader: <Invader styles={combinedStyles} fill={fill} />,
     joystick: <Joystick styles={combinedStyles} fill={fill} />,
-    Letter: <Letter styles={combinedStyles} fill={fill} />,
+    letter: <Letter styles={combinedStyles} fill={fill} />,
     map: <Map styles={combinedStyles} fill={fill} />,
     rifle: <Rifle styles={combinedStyles} fill={fill} />,
     rocket: <Rocket styles={combinedStyles} fill={fill} />,

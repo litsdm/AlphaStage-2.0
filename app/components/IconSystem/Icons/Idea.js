@@ -1,7 +1,6 @@
 import React from 'react';
 import propTypes from '../iconPropTypes';
 
-
 const Idea = ({ fill, styles }) => (
   <svg
     version="1.1"
@@ -10,7 +9,7 @@ const Idea = ({ fill, styles }) => (
     x="0px"
     y="0px"
     viewBox="0 0 54 54"
-    style={{ ...styles, enableBackground: 'new 0 0 54 54;' }}
+    style={{ ...styles, enableBackground: 'new 0 0 54 54' }}
   >
     <g>
       <path

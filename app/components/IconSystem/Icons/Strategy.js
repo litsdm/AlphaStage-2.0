@@ -128,3 +128,7 @@ const Strategy = ({ fill, styles }) => (
     <g />
   </svg>
 );
+
+Strategy.propTypes = propTypes;
+
+export default Strategy;

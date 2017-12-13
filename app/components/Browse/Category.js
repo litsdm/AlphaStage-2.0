@@ -81,7 +81,6 @@ const Category = ({ title, icons }) => {
   const renderIcons = () => (
     icons.map(icon => {
       const randomIndex = Math.floor(Math.random() * iconStyles.length);
-      console.log(randomIndex);
       const style = iconStyles[randomIndex];
       iconStyles.splice(randomIndex, 1);
       return <Icon key={uuid()} title={icon} styles={style} />;

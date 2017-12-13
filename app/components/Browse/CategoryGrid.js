@@ -7,7 +7,7 @@ import Category from './Category';
 const categories = [
   {
     title: 'Action',
-    icons: []
+    icons: ['crosshair', 'rifle', 'sniper']
   },
   {
     title: 'Adventure',
@@ -15,23 +15,23 @@ const categories = [
   },
   {
     title: 'Indie',
-    icons: ['gamepad']
+    icons: ['gamepad', 'invader', 'joystick']
   },
   {
     title: 'Early Stage',
-    icons: ['development']
+    icons: ['development', 'idea', 'letter']
   },
   {
     title: 'RPG',
-    icons: ['flask', 'heart']
+    icons: ['flask', 'heart', 'swordShield']
   },
   {
     title: 'Simulation',
-    icons: ['drivingWheel']
+    icons: ['drivingWheel', 'rocket', 'tank']
   },
   {
     title: 'Sports',
-    icons: []
+    icons: ['soccer', 'strategy', 'whistle']
   }
 ];
 

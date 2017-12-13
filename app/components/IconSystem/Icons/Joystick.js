@@ -9,7 +9,7 @@ const Joystick = ({ fill, styles }) => (
     x="0px"
     y="0px"
     viewBox="0 0 416 416"
-    style={{ ...styles, enableBackground: 'new 0 0 416 416;' }}
+    style={{ ...styles, enableBackground: 'new 0 0 416 416' }}
   >
     <path
       fill={fill}
