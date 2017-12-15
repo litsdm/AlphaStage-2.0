@@ -6,22 +6,22 @@ const sharedStyles = {
 
 const smallStyles = [
   {
-    top: '90px',
+    top: '85px',
     left: '85px',
     ...sharedStyles
   },
   {
-    top: '90px',
+    top: '85px',
     right: '85px',
     ...sharedStyles
   },
   {
-    bottom: '90px',
+    bottom: '85px',
     right: '85px',
     ...sharedStyles
   },
   {
-    bottom: '90px',
+    bottom: '85px',
     left: '85px',
     ...sharedStyles
   }
@@ -40,7 +40,7 @@ const iconStyles = [
     right: '30px'
   },
   {
-    right: '15px'
+    right: '10px'
   },
   {
     bottom: '30px',
@@ -54,7 +54,7 @@ const iconStyles = [
     left: '30px'
   },
   {
-    left: '15px'
+    left: '10px'
   }
 ];
 
