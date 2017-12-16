@@ -1,0 +1,12 @@
+query GamesByTags($tags: [String]) {
+  gamesByTags(tags: $tags) {
+    _id,
+    isPrivate,
+    releaseStatus,
+    screenshots,
+    shortDescription,
+    tags,
+    title,
+    thumbnail,
+  }
+}
