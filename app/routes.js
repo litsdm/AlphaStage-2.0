@@ -8,10 +8,12 @@ import BrowsePage from './containers/BrowsePage';
 import GamePage from './containers/GamePage';
 import CreateGamePage from './containers/CreateGamePage';
 import DashboardPage from './containers/DashboardPage';
+import CategoryPage from './containers/CategoryPage';
 
 const Routes = ({ history }) => (
   <App history={history}>
     <Switch>
+      <Route path="/categories/:category" component={CategoryPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/games/new" component={CreateGamePage} />
       <Route path="/games/edit/:id" component={CreateGamePage} />
