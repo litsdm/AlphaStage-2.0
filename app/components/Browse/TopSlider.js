@@ -24,8 +24,8 @@ const TopSlider = ({ games }) => {
   };
 
   return (
-    <div className={styles.SliderWrapper}>
-      <p className={styles.SliderTitle}>Game Recommendations</p>
+    <div className={styles.Wrapper}>
+      <p className={styles.Title}>Game Recommendations</p>
       <div className={styles.Divider} />
       <Slider {...settings}>
         { renderGames() }

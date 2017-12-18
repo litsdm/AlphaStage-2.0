@@ -1,7 +1,7 @@
-// @flow
 import React, { Component } from 'react';
 
 import TopSlider from './TopSlider';
+import CategoryGrid from './CategoryGrid';
 
 import type { Game } from '../../types/dataTypes';
 
@@ -14,6 +14,7 @@ class Browse extends Component {
     return (
       <div>
         <TopSlider games={this.props.games} />
+        <CategoryGrid />
       </div>
     );
   }
