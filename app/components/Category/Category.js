@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import GameGrid from './GameGrid';
 import SideBar from './SideBar';
 
-const Category = ({ games }) => (
+const Category = ({ games, currentTag }) => (
   games.length < 1
     ? (
       <div>
@@ -13,18 +13,20 @@ const Category = ({ games }) => (
     )
     : (
       <div>
-        <SideBar />
+        <SideBar currentTag={currentTag} />
         <GameGrid games={games} />
       </div>
     )
 );
 
 Category.propTypes = {
-  games: PropTypes.array
+  games: PropTypes.array,
+  currentTag: PropTypes.string
 };
 
 Category.defaultProps = {
-  games: []
+  games: [],
+  currentTag: ''
 };
 
 export default Category;

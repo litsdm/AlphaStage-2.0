@@ -18,15 +18,16 @@ const withGames = graphql(gamesByTags, {
   options: (props) => ({ variables: { tags: [props.match.params.category] } })
 });
 
-const CategoryPage = ({ games, loading }) => (
+const CategoryPage = ({ games, loading, match }) => (
   loading
     ? <Loader />
-    : <Category games={games} />
+    : <Category games={games} currentTag={match.params.category} />
 );
 
 CategoryPage.propTypes = {
   loading: PropTypes.bool,
   games: PropTypes.array,
+  match: PropTypes.object.isRequired
 };
 
 CategoryPage.defaultProps = {
