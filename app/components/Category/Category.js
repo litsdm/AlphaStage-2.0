@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 
 import GameGrid from './GameGrid';
 import SideBar from './SideBar';
+import NotFound from './NotFound';
 
 const Category = ({ games, currentTag }) => (
-  games.length < 1
-    ? (
-      <div>
-        <p>No games found</p>
-      </div>
-    )
-    : (
-      <div>
-        <SideBar currentTag={currentTag} />
-        <GameGrid games={games} />
-      </div>
-    )
+  <div style={{ height: '100%' }}>
+    <SideBar currentTag={currentTag} />
+    {
+      games.length < 1
+        ? <NotFound />
+        : <GameGrid games={games} />
+    }
+  </div>
 );
 
 Category.propTypes = {
