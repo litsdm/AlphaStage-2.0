@@ -5,11 +5,18 @@ import styles from './SideBar.scss';
 
 const tags = ['Action', 'Adventure', 'Indie', 'Early Stage', 'RPG', 'Simulation', 'Sports'];
 
-const SideBar = ({ currentTag }) => {
+const SideBar = ({ currentCategory, setCategory }) => {
+  const handleCategoryChange = ({ target }) => {
+    const { name } = target;
+    setCategory(name);
+  };
+
   const renderTags = () => tags.map(tag => (
     <button
       key={uuid()}
-      className={[styles.Tag, tag === currentTag ? styles.active : ''].join(' ')}
+      className={[styles.Tag, tag === currentCategory ? styles.active : ''].join(' ')}
+      onClick={handleCategoryChange}
+      name={tag}
     >
       {tag}
     </button>
@@ -23,11 +30,12 @@ const SideBar = ({ currentTag }) => {
 };
 
 SideBar.propTypes = {
-  currentTag: PropTypes.string
+  currentCategory: PropTypes.string,
+  setCategory: PropTypes.func.isRequired
 };
 
 SideBar.defaultProps = {
-  currentTag: ''
+  currentCategory: ''
 };
 
 export default SideBar;

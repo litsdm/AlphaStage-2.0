@@ -5,9 +5,9 @@ import GameGrid from './GameGrid';
 import SideBar from './SideBar';
 import NotFound from './NotFound';
 
-const Category = ({ games, currentTag }) => (
+const Category = ({ games, currentCategory, setCategory }) => (
   <div style={{ height: '100%' }}>
-    <SideBar currentTag={currentTag} />
+    <SideBar currentCategory={currentCategory} setCategory={setCategory} />
     {
       games.length < 1
         ? <NotFound />
@@ -18,12 +18,13 @@ const Category = ({ games, currentTag }) => (
 
 Category.propTypes = {
   games: PropTypes.array,
-  currentTag: PropTypes.string
+  currentCategory: PropTypes.string,
+  setCategory: PropTypes.func.isRequired
 };
 
 Category.defaultProps = {
   games: [],
-  currentTag: ''
+  currentCategory: ''
 };
 
 export default Category;

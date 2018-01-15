@@ -5,10 +5,12 @@
   flex-direction: column;
   height: auto;
   left: 0;
+  margin-left: 220px;
   padding-top: 52px;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 196px;
+  z-index: 1;
 }
 
 .Tag {
