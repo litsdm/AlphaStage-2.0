@@ -1,0 +1,31 @@
+.SideBar {
+  background-color: rgba(47, 49, 54, 0.6);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  left: 0;
+  margin-left: 220px;
+  padding-top: 52px;
+  position: fixed;
+  top: 0;
+  width: 196px;
+  z-index: 1;
+}
+
+.Tag {
+  color: #bbb;
+  font-size: 16px;
+  padding: 12px;
+  text-align: left;
+
+  &:hover {
+    background: linear-gradient(to right, #2B2C31, #2b2b31, #323439);
+    color: #fff;
+  }
+
+  &.active {
+    background: linear-gradient(to right, #2a97f7, #2091f3, #323439);
+    color: #fff;
+  }
+}

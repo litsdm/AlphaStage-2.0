@@ -1,0 +1,14 @@
+.Grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 24px;
+  padding-left: 220px;
+}
+
+.Thumbnail {
+  display: block;
+  height: 112px;
+  margin-bottom: 24px;
+  width: 230px;
+}

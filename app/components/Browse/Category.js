@@ -18,7 +18,7 @@ const Category = ({ title, icons }) => {
 
   return (
     <Link
-      to={`/categories/${title.toLowerCase()}`}
+      to={`/categories/${title}`}
       className={styles.Category}
     >
       {renderIcons()}
