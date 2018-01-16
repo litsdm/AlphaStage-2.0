@@ -23,7 +23,8 @@ const genres = [
 
 const Details = ({ editorState, tags, genre, handleChange, validatedInputClass }) => {
   const handleAddTag = (tag) => {
-    const value = [...tags, tag];
+    const formattedTag = tag.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+    const value = [...tags, formattedTag];
     handleChange({ target: { name: 'tags', value } });
   };
 
