@@ -39,7 +39,6 @@ class CategoryPage extends Component {
 
   render() {
     const { games, loading, category, setCurrentCategory } = this.props;
-    console.log(category);
 
     return (
       loading
