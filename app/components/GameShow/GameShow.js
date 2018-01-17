@@ -124,7 +124,7 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game, isDownloading, downloadId } = this.props;
+    const { game, isDownloading, downloadId, openGame } = this.props;
     const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
@@ -138,6 +138,7 @@ class GameShow extends Component {
           progress={progress}
           isDownloading={isDownloading}
           downloadId={downloadId}
+          openGame={openGame}
         />
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
@@ -151,6 +152,7 @@ GameShow.propTypes = {
   game: PropTypes.object.isRequired,
   downloadId: PropTypes.string.isRequired,
   incrementMetric: PropTypes.func.isRequired,
+  openGame: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool
 };
 

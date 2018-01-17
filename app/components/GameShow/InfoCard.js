@@ -7,7 +7,7 @@ import styles from './InfoCard.scss';
 import GameButton from '../GameButton/ButtonContainer';
 import ProgressBar from '../ProgressBar';
 
-const InfoCard = ({ game, progress, isDownloading, downloadId }) => {
+const InfoCard = ({ game, progress, isDownloading, downloadId, openGame }) => {
   const renderTags = () => (
     game.tags.map(tag => <Link key={uuid()} to="/">{tag}</Link>)
   );
@@ -18,7 +18,7 @@ const InfoCard = ({ game, progress, isDownloading, downloadId }) => {
         className={styles.Header}
         style={{ background: `url(${game.thumbnail})`, backgroundSize: '100% 100%' }}
       >
-        <GameButton game={game} />
+        <GameButton openGame={openGame} game={game} />
       </div>
       <div className={styles.Body}>
         <ProgressBar progress={progress} display={isDownloading && game._id === downloadId} />
@@ -41,6 +41,7 @@ const InfoCard = ({ game, progress, isDownloading, downloadId }) => {
 
 InfoCard.propTypes = {
   game: PropTypes.object.isRequired,
+  openGame: PropTypes.func.isRequired,
   progress: PropTypes.number,
   isDownloading: PropTypes.bool,
   downloadId: PropTypes.string

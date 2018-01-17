@@ -83,7 +83,7 @@ class DesktopRecorder {
           stopTime: Date.now()
         };
 
-        this.onStopCallback(blobObject);
+        this.onStopCallback('desktop', blobObject);
       });
     }
   }

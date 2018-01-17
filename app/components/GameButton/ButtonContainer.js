@@ -75,20 +75,11 @@ class ButtonContainer extends Component {
   }
 
   handlePlayClick = () => {
-    const { game, incrementMetric } = this.props;
+    const { game, incrementMetric, openGame } = this.props;
     const localPath = this.gamePath();
 
-    const openCommand = process.platform === 'darwin'
-      ? `open -a ${localPath} --wait-apps`
-      : localPath;
-
+    openGame(localPath);
     incrementMetric(game._id, 'plays');
-
-    exec(openCommand, (error) => {
-      if (error) throw error;
-
-      // Game was closed
-    });
   }
 
   handleUninstall = () => {
@@ -227,6 +218,7 @@ ButtonContainer.propTypes = {
   startDownloading: PropTypes.func.isRequired,
   completeDownload: PropTypes.func.isRequired,
   incrementMetric: PropTypes.func.isRequired,
+  openGame: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool,
   isInstalling: PropTypes.bool,
   downloadId: PropTypes.string,

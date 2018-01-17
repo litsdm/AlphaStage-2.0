@@ -16,11 +16,6 @@ let onStopCallback;
 
 const constraints = { audio: true, video: false }; // constraints - only audio needed
 
-navigator.getUserMedia = (navigator.getUserMedia ||
-                          navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia ||
-                          navigator.msGetUserMedia);
-
 export default class MicrophoneRecorder {
   constructor(onStart, onStop, options) {
     onStartCallback = onStart;
@@ -46,7 +41,7 @@ export default class MicrophoneRecorder {
         source.connect(analyser);
         if (onStartCallback) { onStartCallback(); }
       }
-    } else if (navigator.mediaDevices) {
+    } else {
       navigator.mediaDevices.getUserMedia(constraints).then((str) => {
         stream = str;
 
@@ -76,14 +71,14 @@ export default class MicrophoneRecorder {
     }
   }
 
-  static stopRecording() {
+  stopRecording = () => {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
       mediaRecorder.stop();
       audioCtx.suspend();
     }
   }
 
-  static onStop() {
+  onStop = () => {
     const blob = new Blob(chunks, { type: mediaOptions.mimeType });
     chunks = [];
 
@@ -95,6 +90,6 @@ export default class MicrophoneRecorder {
       blobURL: window.URL.createObjectURL(blob)
     };
 
-    if (onStopCallback) onStopCallback(blobObject);
+    if (onStopCallback) onStopCallback('mic', blobObject);
   }
 }
