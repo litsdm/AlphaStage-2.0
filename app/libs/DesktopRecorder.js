@@ -2,6 +2,7 @@ import { desktopCapturer } from 'electron';
 import RecordRTC from 'recordrtc';
 
 let recordRTC;
+let startTime;
 const defaultOptions = {
   mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
   bitsPerSecond: 128000,
@@ -23,6 +24,7 @@ class DesktopRecorder {
     let entireScreen;
 
     // get all recordable screens
+    startTime = Date.now();
     desktopCapturer.getSources({ types: ['window', 'screen'] }, (error, sources) => {
       const lowerCaseName = this.name.toLowerCase();
 
@@ -75,7 +77,13 @@ class DesktopRecorder {
   stopRecording = () => {
     if (recordRTC) {
       recordRTC.stopRecording(() => {
-        this.onStopCallback(recordRTC.getBlob());
+        const blobObject = {
+          blob: recordRTC.getBlob(),
+          startTime,
+          stopTime: Date.now()
+        };
+
+        this.onStopCallback(blobObject);
       });
     }
   }
