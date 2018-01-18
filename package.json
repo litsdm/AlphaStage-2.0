@@ -223,6 +223,7 @@
     "sweetalert": "^2.0.8",
     "toastr": "^2.1.4",
     "uuid": "^3.2.1",
+    "video.js": "^5.19.2",
     "youtube-player": "^5.4.0"
   },
   "devEngines": {

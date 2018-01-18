@@ -10,7 +10,11 @@ import { getStatus } from '../../helpers/dates';
 import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
+<<<<<<< HEAD
 import Banner from '../Dashboard/TestingSessions/Banner';
+=======
+import VideoPlayer from '../VideoPlayer';
+>>>>>>> Add basic testing modal with recorded video playback
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -124,10 +128,11 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game, isDownloading, downloadId, openGame } = this.props;
+    const { game, isDownloading, downloadId, openGame, desktopBlob } = this.props;
     const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
+    const feedbackModalId = `feedback-${game._id}`;
 
     return (
       <div className="gameshow">
@@ -143,6 +148,14 @@ class GameShow extends Component {
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
         </Modal>
+        <Modal title="Testing Feedback" id={feedbackModalId}>
+          {
+            desktopBlob !== null
+              ? <VideoPlayer src={desktopBlob.url} />
+              : null
+          }
+          <p>Other content</p>
+        </Modal>
       </div>
     );
   }
@@ -153,11 +166,13 @@ GameShow.propTypes = {
   downloadId: PropTypes.string.isRequired,
   incrementMetric: PropTypes.func.isRequired,
   openGame: PropTypes.func.isRequired,
-  isDownloading: PropTypes.bool
+  isDownloading: PropTypes.bool,
+  desktopBlob: PropTypes.object
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
+  desktopBlob: null
 };
 
 export default GameShow;

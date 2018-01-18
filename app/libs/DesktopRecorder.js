@@ -77,8 +77,10 @@ class DesktopRecorder {
   stopRecording = () => {
     if (recordRTC) {
       recordRTC.stopRecording(() => {
+        const blob = recordRTC.getBlob();
         const blobObject = {
-          blob: recordRTC.getBlob(),
+          blob,
+          url: URL.createObjectURL(blob),
           startTime,
           stopTime: Date.now()
         };

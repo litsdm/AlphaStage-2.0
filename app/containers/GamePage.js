@@ -67,6 +67,7 @@ class GamePage extends Component {
   }
 
   openGame = (localPath) => {
+    const { game } = this.props;
     const { micRecorder, desktopRecorder } = this.state;
     const openCommand = process.platform === 'darwin'
       ? `open -a ${localPath} --wait-apps`
@@ -78,6 +79,7 @@ class GamePage extends Component {
       // Game was closed
       desktopRecorder.stopRecording();
       micRecorder.stopRecording();
+      document.getElementById(`feedback-${game._id}`).style.display = 'block';
     });
 
     setTimeout(() => desktopRecorder.startRecording(), 5000);
@@ -92,6 +94,7 @@ class GamePage extends Component {
       isDownloading,
       downloadId
     } = this.props;
+    const { desktopBlob } = this.state;
 
     return (
       loading
@@ -102,6 +105,7 @@ class GamePage extends Component {
           downloadId={downloadId}
           incrementMetric={incrementMetric}
           openGame={this.openGame}
+          desktopBlob={desktopBlob}
         />
     );
   }
