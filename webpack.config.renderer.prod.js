@@ -140,6 +140,10 @@ export default merge.smart(baseConfig, {
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
         loader: 'graphql-tag/loader',
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader!octal-number-loader'
       }
     ]
   },
