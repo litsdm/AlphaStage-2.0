@@ -1,8 +1,10 @@
 import React from 'react';
+import styles from './Sessions.scss';
 
 const Sessions = () => (
-  <div>
-    <p>Testing Sessions</p>
+  <div className={styles.Container}>
+    <button className={styles.Button}>Create New Session</button>
+    <div className={styles.Divider} />
   </div>
 );
 
