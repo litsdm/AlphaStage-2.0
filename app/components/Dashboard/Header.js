@@ -46,7 +46,7 @@ const Header = (props) => {
           className={`${styles.Tab} ${tabIndex === 1 ? styles.active : ''}`}
           onClick={selectTab(1)}
         >
-          Feedback
+          Testing Sessions
           <div className={styles.Indicator} />
         </button>
         <button className={`${styles.Tab} ${styles.Drop}`} onClick={toggleDropdown}>

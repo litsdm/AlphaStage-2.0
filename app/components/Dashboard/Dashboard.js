@@ -4,6 +4,7 @@ import styles from './styles.scss';
 
 import Header from './Header';
 import Overview from './Overview';
+import Sessions from './TestingSessions/Sessions';
 import SettingsModal from './SettingsModal';
 
 class Dashboard extends Component {
@@ -28,12 +29,36 @@ class Dashboard extends Component {
     this.setState({ tabIndex });
   }
 
+  renderPage() {
+    const { games } = this.props;
+    const { tabIndex, currentIndex } = this.state;
+
+    const currentGame = games[currentIndex];
+    const { downloads, pageViews, plays, uninstalls } = currentGame;
+
+    switch (tabIndex) {
+      case 0:
+        return (
+          <Overview
+            downloads={downloads || undefined}
+            pageViews={pageViews || undefined}
+            plays={plays || undefined}
+            uninstalls={uninstalls || undefined}
+          />
+        );
+      case 1:
+        return <Sessions />;
+
+      default:
+        break;
+    }
+  }
+
   render() {
     const { games, updateGeneral, deleteGame } = this.props;
     const { currentIndex, displayDropdown, tabIndex } = this.state;
 
     const currentGame = games[currentIndex];
-    const { downloads, pageViews, plays, uninstalls } = currentGame;
     const modalId = `settings-${currentGame._id}`;
 
     return (
@@ -49,18 +74,7 @@ class Dashboard extends Component {
           selectGame={this.selectGame}
           selectTab={this.selectTab}
         />
-        {
-          tabIndex === 0
-          ? (
-            <Overview
-              downloads={downloads || undefined}
-              pageViews={pageViews || undefined}
-              plays={plays || undefined}
-              uninstalls={uninstalls || undefined}
-            />
-          )
-          : null
-        }
+        {this.renderPage()}
         <SettingsModal
           id={modalId}
           game={currentGame}
