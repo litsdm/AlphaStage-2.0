@@ -14,7 +14,7 @@ const Routes = ({ history }) => (
   <App history={history}>
     <Switch>
       <Route path="/categories/:category" component={CategoryPage} />
-      <Route path="/dashboard" component={DashboardPage} />
+      <Route exact path="/dashboard" component={DashboardPage} />
       <Route path="/games/new" component={CreateGamePage} />
       <Route path="/games/edit/:id" component={CreateGamePage} />
       <Route path="/games/:id" component={GamePage} />

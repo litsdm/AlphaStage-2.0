@@ -4,7 +4,7 @@ import styles from './styles.scss';
 
 import Header from './Header';
 import Overview from './Overview';
-import Sessions from './TestingSessions/Sessions';
+import Sessions from './TestingSessions';
 import SettingsModal from './SettingsModal';
 
 class Dashboard extends Component {
