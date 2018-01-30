@@ -10,7 +10,7 @@ class Index extends Component {
     page: this.props.sessions.length > 0 ? 0 : 1
   };
 
-  switchPage(page) {
+  switchPage = (page) => {
     this.setState({ page });
   }
 
@@ -19,11 +19,11 @@ class Index extends Component {
 
     switch (page) {
       case 0:
-        return <Sessions />;
+        return <Sessions switchPage={this.switchPage} />;
       case 1:
-        return <Empty />;
+        return <Empty switchPage={this.switchPage} />;
       case 2:
-        return <Create />;
+        return <Create switchPage={this.switchPage} />;
       default:
         break;
     }
