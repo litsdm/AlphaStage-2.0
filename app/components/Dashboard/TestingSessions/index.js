@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { array } from 'prop-types';
 
 import Sessions from './Sessions';
 import Empty from './Empty';
@@ -6,7 +7,7 @@ import Create from './Create';
 
 class Index extends Component {
   state = {
-    page: 0
+    page: this.props.sessions.length > 0 ? 0 : 1
   };
 
   switchPage(page) {
@@ -28,5 +29,13 @@ class Index extends Component {
     }
   }
 }
+
+Index.propTypes = {
+  sessions: array
+};
+
+Index.defaultProps = {
+  sessions: []
+};
 
 export default Index;
