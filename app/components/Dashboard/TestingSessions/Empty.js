@@ -8,7 +8,7 @@ const Empty = ({ switchPage }) => {
   const switchToNS = () => switchPage(2);
   return (
     <div className={styles.Empty}>
-      <p>You have no testing sessions for this game yet.</p>
+      <p>You have no <strong>Testing Sessions</strong> for this game yet.</p>
       <NSButton switchPage={switchToNS} />
     </div>
   );
