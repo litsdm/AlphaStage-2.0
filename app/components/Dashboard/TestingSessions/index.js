@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { array } from 'prop-types';
+import { array, string } from 'prop-types';
 
 import Sessions from './Sessions';
 import Empty from './Empty';
-import Create from './Create';
+import Show from './Show';
 
 class Index extends Component {
   state = {
@@ -15,15 +15,16 @@ class Index extends Component {
   }
 
   render() {
+    const { createId } = this.props;
     const { page } = this.state;
 
     switch (page) {
       case 0:
-        return <Sessions switchPage={this.switchPage} />;
+        return <Sessions createId={createId} switchPage={this.switchPage} />;
       case 1:
-        return <Empty switchPage={this.switchPage} />;
+        return <Empty createId={createId} switchPage={this.switchPage} />;
       case 2:
-        return <Create switchPage={this.switchPage} />;
+        return <Show switchPage={this.switchPage} />;
       default:
         break;
     }
@@ -31,7 +32,8 @@ class Index extends Component {
 }
 
 Index.propTypes = {
-  sessions: array
+  sessions: array,
+  createId: string.isRequired
 };
 
 Index.defaultProps = {

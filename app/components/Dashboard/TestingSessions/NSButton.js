@@ -1,15 +1,21 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { string } from 'prop-types';
 import styles from './NSButton.scss';
 
-const NSButton = ({ switchPage }) => (
-  <button className={styles.Button} onClick={switchPage}>
-    Create New Session
-  </button>
-);
+const NSButton = ({ createId }) => {
+  const openModal = () => {
+    document.getElementById(createId).style.display = 'block';
+  };
+
+  return (
+    <button className={styles.Button} onClick={openModal}>
+      Create New Session
+    </button>
+  );
+};
 
 NSButton.propTypes = {
-  switchPage: func.isRequired
+  createId: string.isRequired
 };
 
 export default NSButton;

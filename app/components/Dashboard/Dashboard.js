@@ -6,6 +6,7 @@ import Header from './Header';
 import Overview from './Overview';
 import Sessions from './TestingSessions';
 import SettingsModal from './SettingsModal';
+import CreateModal from './TestingSessions/CreateModal';
 
 class Dashboard extends Component {
   state = {
@@ -47,7 +48,7 @@ class Dashboard extends Component {
           />
         );
       case 1:
-        return <Sessions />;
+        return <Sessions createId={`create-${currentGame._id}`} />;
 
       default:
         break;
@@ -81,6 +82,7 @@ class Dashboard extends Component {
           updateGeneral={updateGeneral}
           deleteGame={deleteGame}
         />
+        <CreateModal id={`create-${currentGame._id}`} />
       </div>
     );
   }
