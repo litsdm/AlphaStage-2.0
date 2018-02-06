@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-dates';
 import uuid from 'uuid/v4';
-import { string } from 'prop-types';
+import { func, string } from 'prop-types';
 import styles from './CreateModal.scss';
 
 import Modal from '../../Modal';
@@ -19,6 +19,14 @@ class Create extends Component {
 
   onCancel = () => {
     const { id } = this.props;
+    document.getElementById(id).style.display = 'none';
+  }
+
+  onSubmit = () => {
+    const { id, createSession } = this.props;
+    const { focusedInput, ...input } = this.state;
+
+    createSession(input);
     document.getElementById(id).style.display = 'none';
   }
 
@@ -104,7 +112,7 @@ class Create extends Component {
           }
           <div className={styles.Footer}>
             <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
-            <button className={styles.Submit}>Submit</button>
+            <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
           </div>
         </div>
       </Modal>
@@ -113,7 +121,8 @@ class Create extends Component {
 }
 
 Create.propTypes = {
-  id: string.isRequired
+  id: string.isRequired,
+  createSession: func.isRequired
 };
 
 export default Create;
