@@ -82,3 +82,56 @@
     color: rgba(255, 255, 255, 0.6);
   }
 }
+
+.Numbers {
+  display: flex;
+
+  button {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 3px 12px;
+    font-size: 16px;
+    color: #bbb;
+    margin-right: 12px;
+    transition: 0.2s all ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-color: #fff;
+      padding: 3px 15px;
+    }
+
+    &.active {
+      background-color: #2091f3;
+      color: #fff;
+      border-color: #2091f3;
+    }
+  }
+}
+
+.Other {
+  align-items: center;
+  display: flex;
+
+  p {
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
+  input {
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    display: block;
+    padding: 6px;
+    outline: none;
+    max-width: 52px;
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-color: #64B5F6;
+    }
+  }
+}

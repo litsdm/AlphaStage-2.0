@@ -16,6 +16,11 @@ class Create extends Component {
     startDate: null
   }
 
+  onCancel = () => {
+    const { id } = this.props;
+    document.getElementById(id).style.display = 'none';
+  }
+
   render() {
     const { id } = this.props;
     return (
@@ -34,8 +39,16 @@ class Create extends Component {
             />
           </div>
           <div className={styles.InputContainer}>
-            <p>Number of Testers</p>
-            <input className={styles.Input} />
+            <p>Max Number of Testers</p>
+            <div className={styles.Numbers}>
+              <button className={styles.active}>50</button>
+              <button>100</button>
+              <button>200</button>
+              <button>400</button>
+              <div className={styles.Other}>
+                <p>Other: </p><input type="number" />
+              </div>
+            </div>
           </div>
           <div className={styles.InputContainer}>
             <p>Reward Type</p>
