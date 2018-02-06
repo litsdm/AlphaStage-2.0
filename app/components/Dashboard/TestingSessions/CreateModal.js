@@ -11,8 +11,8 @@ class Create extends Component {
   state = {
     endDate: null,
     focusedInput: null,
-    maxTesters: 100,
-    rewardType: '',
+    maxTesters: 50,
+    rewardType: 'Money',
     reward: '',
     startDate: null
   }
@@ -26,6 +26,11 @@ class Create extends Component {
     const { value } = target;
     const maxTesters = value ? parseInt(value, 10) : 50;
     this.setState({ maxTesters });
+  }
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   renderNumberButtons = () => {
@@ -46,6 +51,7 @@ class Create extends Component {
 
   render() {
     const { id } = this.props;
+    const { rewardType } = this.state;
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
@@ -72,14 +78,32 @@ class Create extends Component {
           </div>
           <div className={styles.InputContainer}>
             <p>Reward Type</p>
-            <select className={styles.Select} />
+            <select
+              className={styles.Select}
+              name="rewardType"
+              onChange={this.handleChange}
+            >
+              <option value="Money">Money</option>
+              <option value="No Reward">No Reward</option>
+            </select>
           </div>
-          <div className={styles.InputContainer}>
-            <p>Individual Reward</p>
-            <input className={styles.Input} />
-          </div>
+          {
+            rewardType !== 'No Reward'
+            ? (
+              <div className={styles.InputContainer}>
+                <p>Individual Reward</p>
+                <input
+                  type={rewardType === 'Money' ? 'number' : 'text'}
+                  className={styles.Input}
+                  name="reward"
+                  onChange={this.handleChange}
+                />
+              </div>
+            )
+            : null
+          }
           <div className={styles.Footer}>
-            <button className={styles.Cancel}>Cancel</button>
+            <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
             <button className={styles.Submit}>Submit</button>
           </div>
         </div>
