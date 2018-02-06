@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-dates';
+import uuid from 'uuid/v4';
 import { string } from 'prop-types';
 import styles from './CreateModal.scss';
 
@@ -10,7 +11,7 @@ class Create extends Component {
   state = {
     endDate: null,
     focusedInput: null,
-    maxTesters: 0,
+    maxTesters: 100,
     rewardType: '',
     reward: '',
     startDate: null
@@ -19,6 +20,28 @@ class Create extends Component {
   onCancel = () => {
     const { id } = this.props;
     document.getElementById(id).style.display = 'none';
+  }
+
+  onNumberChange = ({ target }) => {
+    const { value } = target;
+    const maxTesters = value ? parseInt(value, 10) : 50;
+    this.setState({ maxTesters });
+  }
+
+  renderNumberButtons = () => {
+    const { maxTesters } = this.state;
+    const numbers = [50, 100, 200, 400];
+
+    return numbers.map(number => (
+      <button
+        className={number === maxTesters ? styles.active : ''}
+        value={number}
+        onClick={this.onNumberChange}
+        key={uuid()}
+      >
+        {number}
+      </button>
+      ));
   }
 
   render() {
@@ -41,12 +64,9 @@ class Create extends Component {
           <div className={styles.InputContainer}>
             <p>Max Number of Testers</p>
             <div className={styles.Numbers}>
-              <button className={styles.active}>50</button>
-              <button>100</button>
-              <button>200</button>
-              <button>400</button>
+              {this.renderNumberButtons()}
               <div className={styles.Other}>
-                <p>Other: </p><input type="number" />
+                <p>Other: </p><input onChange={this.onNumberChange} type="number" />
               </div>
             </div>
           </div>

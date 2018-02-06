@@ -97,15 +97,14 @@
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.2);
-      color: #fff;
       border-color: #fff;
-      padding: 3px 15px;
+      color: #fff;
     }
 
     &.active {
       background-color: #2091f3;
-      color: #fff;
       border-color: #2091f3;
+      color: #fff;
     }
   }
 }
