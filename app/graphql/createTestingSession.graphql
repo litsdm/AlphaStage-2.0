@@ -1,0 +1,14 @@
+mutation CreateTestingSession($input: TSInput!) {
+  createTestingSession(session: $input) {
+    _id,
+    endDate,
+    game,
+    maxTesters,
+    rewardType,
+    reward,
+    startDate,
+    testers {
+      username
+    }
+  }
+}

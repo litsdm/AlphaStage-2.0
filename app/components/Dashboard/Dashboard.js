@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { array, func } from 'prop-types';
 import styles from './styles.scss';
 
 import Header from './Header';
@@ -56,7 +56,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { games, updateGeneral, deleteGame } = this.props;
+    const { games, updateGeneral, deleteGame, createTestingSession } = this.props;
     const { currentIndex, displayDropdown, tabIndex } = this.state;
 
     const currentGame = games[currentIndex];
@@ -82,16 +82,17 @@ class Dashboard extends Component {
           updateGeneral={updateGeneral}
           deleteGame={deleteGame}
         />
-        <CreateModal id={`create-${currentGame._id}`} />
+        <CreateModal createSession={createTestingSession} id={`create-${currentGame._id}`} />
       </div>
     );
   }
 }
 
 Dashboard.propTypes = {
-  games: PropTypes.array,
-  updateGeneral: PropTypes.func.isRequired,
-  deleteGame: PropTypes.func.isRequired
+  games: array,
+  updateGeneral: func.isRequired,
+  deleteGame: func.isRequired,
+  createTestingSession: func.isRequired
 };
 
 Dashboard.defaultProps = {

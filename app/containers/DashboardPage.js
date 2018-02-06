@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { array, bool, func, object } from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
 import Dashboard from '../components/Dashboard/Dashboard';
@@ -11,6 +11,7 @@ import userGamesQuery from '../graphql/userGames.graphql';
 import allGamesQuery from '../graphql/allGames.graphql';
 import updateGeneralSettings from '../graphql/updateGeneralSettings.graphql';
 import deleteGame from '../graphql/deleteGame.graphql';
+import createTestingSession from '../graphql/createTestingSession.graphql';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -32,6 +33,11 @@ const withGraphql = compose(
       const user = jwtDecode(token);
       return { variables: { id: user._id } };
     }
+  }),
+  graphql(createTestingSession, {
+    props: ({ mutate }) => ({
+      createSession: (input) => mutate({ variables: { input } }),
+    })
   }),
   graphql(updateGeneralSettings, {
     props: ({ mutate }) => ({
@@ -64,7 +70,7 @@ const withGraphql = compose(
   }),
 );
 
-const DashboardPage = ({ user, games, updateGeneral, loading, delGame }) => (
+const DashboardPage = ({ user, games, updateGeneral, loading, delGame, createSession }) => (
   loading
     ? <Loader />
     : (
@@ -73,17 +79,19 @@ const DashboardPage = ({ user, games, updateGeneral, loading, delGame }) => (
         games={games}
         updateGeneral={updateGeneral}
         deleteGame={delGame}
+        createTestingSession={createSession}
       />
     )
 );
 
 
 DashboardPage.propTypes = {
-  user: PropTypes.object.isRequired,
-  updateGeneral: PropTypes.func.isRequired,
-  delGame: PropTypes.func.isRequired,
-  games: PropTypes.array,
-  loading: PropTypes.bool
+  user: object.isRequired,
+  updateGeneral: func.isRequired,
+  delGame: func.isRequired,
+  createSession: func.isRequired,
+  games: array,
+  loading: bool
 };
 
 DashboardPage.defaultProps = {
