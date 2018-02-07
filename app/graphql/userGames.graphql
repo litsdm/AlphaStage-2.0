@@ -9,6 +9,10 @@ query UserGames($id: String) {
       pageViews,
       plays,
       releaseStatus,
+      testingSessions {
+        startDate,
+        endDate
+      },
       title,
       thumbnail,
       uninstalls

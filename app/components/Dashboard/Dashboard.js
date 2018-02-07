@@ -48,7 +48,7 @@ class Dashboard extends Component {
           />
         );
       case 1:
-        return <Sessions createId={`create-${currentGame._id}`} />;
+        return <Sessions sessions={currentGame.testingSessions} createId={`create-${currentGame._id}`} />;
 
       default:
         break;
@@ -82,7 +82,11 @@ class Dashboard extends Component {
           updateGeneral={updateGeneral}
           deleteGame={deleteGame}
         />
-        <CreateModal createSession={createTestingSession} id={`create-${currentGame._id}`} />
+        <CreateModal
+          gameId={currentGame._id}
+          createSession={createTestingSession}
+          id={`create-${currentGame._id}`}
+        />
       </div>
     );
   }

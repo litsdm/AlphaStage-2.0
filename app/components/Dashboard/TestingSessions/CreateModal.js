@@ -23,10 +23,10 @@ class Create extends Component {
   }
 
   onSubmit = () => {
-    const { id, createSession } = this.props;
+    const { gameId, id, createSession } = this.props;
     const { focusedInput, ...input } = this.state;
 
-    createSession(input);
+    createSession({ ...input, game: gameId });
     document.getElementById(id).style.display = 'none';
   }
 
@@ -122,6 +122,7 @@ class Create extends Component {
 
 Create.propTypes = {
   id: string.isRequired,
+  gameId: string.isRequired,
   createSession: func.isRequired
 };
 
