@@ -17,6 +17,19 @@ class Create extends Component {
     startDate: null
   }
 
+  isInputValid = () => {
+    const { startDate, endDate, rewardType, reward } = this.state;
+
+    if (startDate === null || endDate === null) {
+      return { isValid: false, error: 'Both start date and end date must be selected.' };
+    }
+    if (rewardType !== 'No Reward' && reward === '') {
+      return { isValid: false, error: 'Please input the reward that each individual will receive.' };
+    }
+
+    return { isValid: true };
+  }
+
   onCancel = () => {
     const { id } = this.props;
     document.getElementById(id).style.display = 'none';
@@ -25,6 +38,16 @@ class Create extends Component {
   onSubmit = () => {
     const { gameId, id, createSession } = this.props;
     const { focusedInput, ...input } = this.state;
+    const errorElement = document.getElementById('errorMessage');
+    errorElement.style.display = 'none';
+
+    const validate = this.isInputValid();
+
+    if (!validate.isValid) {
+      errorElement.innerHTML = validate.error;
+      errorElement.style.display = 'block';
+      return;
+    }
 
     createSession({ ...input, game: gameId });
     document.getElementById(id).style.display = 'none';
@@ -111,8 +134,11 @@ class Create extends Component {
             : null
           }
           <div className={styles.Footer}>
-            <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
-            <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
+            <p id="errorMessage" />
+            <div>
+              <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
+              <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
+            </div>
           </div>
         </div>
       </Modal>

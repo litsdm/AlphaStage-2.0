@@ -46,8 +46,19 @@
   align-items: center;
   background-color: #2F3136;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 12px;
+
+  p {
+    font-size: 14px;
+    color: #F44336;
+  }
+
+  div {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .Submit {
