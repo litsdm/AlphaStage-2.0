@@ -15,12 +15,12 @@ class Index extends Component {
   }
 
   render() {
-    const { createId } = this.props;
+    const { createId, sessions } = this.props;
     const { page } = this.state;
 
     switch (page) {
       case 0:
-        return <Sessions createId={createId} switchPage={this.switchPage} />;
+        return <Sessions sessions={sessions} createId={createId} switchPage={this.switchPage} />;
       case 1:
         return <Empty createId={createId} switchPage={this.switchPage} />;
       case 2:

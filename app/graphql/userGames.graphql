@@ -11,7 +11,12 @@ query UserGames($id: String) {
       releaseStatus,
       testingSessions {
         startDate,
-        endDate
+        endDate,
+        maxTesters,
+        testers {
+          _id,
+          username
+        }
       },
       title,
       thumbnail,

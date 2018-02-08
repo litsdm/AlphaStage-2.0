@@ -1,5 +1,27 @@
+.Header {
+  padding: 24px;
+}
+
 .Divider {
   background-color: #4A4C51;
   height: 1px;
   width: 100%;
+}
+
+.List {
+  padding: 24px;
+}
+
+.Pending,
+.Active,
+.Finished {
+  align-items: center;
+  display: flex;
+
+  p {
+    color: #fff;
+    font-size: 12px;
+    margin-left: 6px;
+    opacity: 0.5;
+  }
 }
