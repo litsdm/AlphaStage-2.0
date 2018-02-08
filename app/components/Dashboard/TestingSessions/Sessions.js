@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import uuid from 'uuid/v4';
 import { array, string } from 'prop-types';
 import styles from './Sessions.scss';
 
@@ -18,6 +19,27 @@ const Sessions = ({ createId, sessions }) => {
     return <span className={styles.Finished}>Finished <p>{` - ${now.to(endDate)}`}</p></span>;
   };
 
+  const renderSessionRows = () =>
+    sessions.map(session => {
+      const { startDate, endDate, testers, maxTesters } = session;
+
+      const displayStart = moment(startDate).format('MMM Do, YYYY');
+      const displayEnd = moment(endDate).format('MMM Do, YYYY');
+
+      return (
+        <div key={uuid()} className={styles.Row}>
+          <p className={styles.Dates}>
+            {`${displayStart} - ${displayEnd}`}
+          </p>
+          {renderStatus(session)}
+          <p className={styles.Testers}>
+            {`Testers: ${testers.length} / ${maxTesters}`}
+          </p>
+        </div>
+      );
+    });
+
+
   return (
     <div className={styles.Container}>
       <div className={styles.Header}>
@@ -25,9 +47,7 @@ const Sessions = ({ createId, sessions }) => {
       </div>
       <div className={styles.Divider} />
       <div className={styles.List}>
-        <div className={styles.Row}>
-          {renderStatus(sessions[0])}
-        </div>
+        {renderSessionRows()}
       </div>
     </div>
   );
