@@ -35,9 +35,22 @@ const withGraphql = compose(
     }
   }),
   graphql(createTestingSession, {
-    props: ({ mutate }) => ({
-      createSession: (input) => mutate({ variables: { input } }),
-    })
+    props: ({ mutate }) => {
+      const token = localStorage.getItem('token');
+      const user = jwtDecode(token);
+      const queriesToRefetch = [
+        {
+          query: userGamesQuery,
+          variables: { id: user._id }
+        }
+      ];
+      return ({
+        createSession: (input) => mutate({
+          refetchQueries: queriesToRefetch,
+          variables: { input }
+        }),
+      });
+    }
   }),
   graphql(updateGeneralSettings, {
     props: ({ mutate }) => ({
