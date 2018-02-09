@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Header.scss';
 
+import Banner from '../Dashboard/TestingSessions/Banner';
+
 const Header = ({ coverImage, modalId }) => {
   const openModal = () => {
     document.getElementById(modalId).style.display = 'block';
@@ -15,6 +17,7 @@ const Header = ({ coverImage, modalId }) => {
       role="button"
       tabIndex="-1"
     >
+      <Banner />
       <button className={styles.ButtonPlay}>
         <i className="fa fa-play-circle-o" />
       </button>
