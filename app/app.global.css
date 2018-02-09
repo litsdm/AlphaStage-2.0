@@ -88,6 +88,10 @@ p {
   width: 100% !important;
 }
 
+.gameshow {
+  position: relative;
+}
+
 .DateInput_input {
   width: 80%;
 }

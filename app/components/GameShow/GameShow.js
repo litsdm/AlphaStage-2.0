@@ -8,6 +8,7 @@ import styles from './styles.scss';
 import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
+import Banner from '../Dashboard/TestingSessions/Banner';
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -112,6 +113,7 @@ class GameShow extends Component {
 
     return (
       <div className="gameshow">
+        <Banner />
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
