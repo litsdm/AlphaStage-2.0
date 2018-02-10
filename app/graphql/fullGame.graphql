@@ -15,6 +15,10 @@ query FullGame($id: String) {
     shortDescription,
     spaceRequired,
     tags,
+    testingSessions {
+      startDate,
+      endDate
+    }
     title,
     thumbnail,
     trailer,
