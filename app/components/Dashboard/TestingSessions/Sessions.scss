@@ -1,0 +1,64 @@
+.Header {
+  padding: 24px;
+}
+
+.Divider {
+  background-color: #4A4C51;
+  height: 1px;
+  width: 100%;
+}
+
+.List {
+  padding: 24px;
+}
+
+.Row {
+  color: #bbb;
+  cursor: pointer;
+  background-color: #2B2C31;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  padding: 24px;
+  transition: 0.2s all ease;
+
+  &:hover {
+    background-color: rgba(43, 44, 49, 0.8);
+    color: #fff;
+  }
+}
+
+.Pending,
+.Active,
+.Finished {
+  align-items: center;
+  display: flex;
+  margin-bottom: 12px;
+
+  p {
+    color: #fff;
+    font-size: 12px;
+    margin-left: 6px;
+    opacity: 0.5;
+  }
+}
+
+.Active {
+  color: #00E676;
+}
+
+.Pending {
+  color: #CFD8DC;
+}
+
+.Finished {
+  color: #DD2C00;
+}
+
+.Dates {
+  float: right;
+  font-size: 14px;
+}
+
+.Testers {
+  font-size: 14px;
+}

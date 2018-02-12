@@ -1,0 +1,11 @@
+.Empty {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  justify-content: center;
+
+  p {
+    margin-bottom: 12px;
+  }
+}

@@ -1,0 +1,57 @@
+.Banner {
+  align-items: center;
+  background: rgba(43, 44, 49, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  padding: 6px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+
+  span {
+    opacity: 0.8;
+  }
+}
+
+.Eligible {
+  color: #00E676;
+}
+
+.Buttons {
+  display: flex;
+  margin-top: 6px;
+}
+
+.Start {
+  background-color: #2091f3;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 12px;
+  padding: 6px 18px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #2098f3;
+  }
+}
+
+.Hide {
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.4);;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 6px 18px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}

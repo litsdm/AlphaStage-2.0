@@ -5,9 +5,12 @@ import Slider from 'react-slick';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
+import { getStatus } from '../../helpers/dates';
+
 import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
+import Banner from '../Dashboard/TestingSessions/Banner';
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -17,6 +20,7 @@ const INITIAL_PERCENTAGE = 90;
 class GameShow extends Component {
   state = {
     progress: 0,
+    activeSession: null
   };
 
   componentDidMount() {
@@ -24,6 +28,7 @@ class GameShow extends Component {
     const contentContainer = document.getElementById('content-container');
     const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
 
+    this.checkForActiveSession();
     incrementMetric(game._id, 'pageViews');
 
     contentContainer.addEventListener('scroll', this.handleScroll);
@@ -48,6 +53,20 @@ class GameShow extends Component {
 
     ipcRenderer.on('download-progress', (e, progress) => {
       if (game._id === downloadId) this.setState({ progress });
+    });
+  }
+
+  checkForActiveSession = () => {
+    const { testingSessions } = this.props.game;
+    testingSessions.every(session => {
+      const status = getStatus(session);
+
+      if (status === 'Active') {
+        this.setState({ activeSession: session });
+        return false;
+      }
+
+      return true;
     });
   }
 
@@ -106,12 +125,13 @@ class GameShow extends Component {
 
   render() {
     const { game, isDownloading, downloadId } = this.props;
-    const { progress } = this.state;
+    const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
 
     return (
       <div className="gameshow">
+        {activeSession ? <Banner /> : null}
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}

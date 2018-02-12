@@ -15,6 +15,9 @@
   "license": "MIT",
   "dependencies": {
     "electron-dl": "^1.10.0",
+    "moment": "^2.20.1",
+    "moment-range": "^3.1.1",
+    "react-dates": "^16.2.1",
     "shortid": "^2.2.8",
     "sweetalert": "^2.0.8"
   }

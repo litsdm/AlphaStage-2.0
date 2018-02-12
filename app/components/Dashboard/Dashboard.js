@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { array, func } from 'prop-types';
 import styles from './styles.scss';
 
 import Header from './Header';
 import Overview from './Overview';
+import Sessions from './TestingSessions';
 import SettingsModal from './SettingsModal';
+import CreateModal from './TestingSessions/CreateModal';
 
 class Dashboard extends Component {
   state = {
@@ -28,12 +30,36 @@ class Dashboard extends Component {
     this.setState({ tabIndex });
   }
 
-  render() {
-    const { games, updateGeneral, deleteGame } = this.props;
-    const { currentIndex, displayDropdown, tabIndex } = this.state;
+  renderPage() {
+    const { games } = this.props;
+    const { tabIndex, currentIndex } = this.state;
 
     const currentGame = games[currentIndex];
     const { downloads, pageViews, plays, uninstalls } = currentGame;
+
+    switch (tabIndex) {
+      case 0:
+        return (
+          <Overview
+            downloads={downloads || undefined}
+            pageViews={pageViews || undefined}
+            plays={plays || undefined}
+            uninstalls={uninstalls || undefined}
+          />
+        );
+      case 1:
+        return <Sessions sessions={currentGame.testingSessions} createId={`create-${currentGame._id}`} />;
+
+      default:
+        break;
+    }
+  }
+
+  render() {
+    const { games, updateGeneral, deleteGame, createTestingSession } = this.props;
+    const { currentIndex, displayDropdown, tabIndex } = this.state;
+
+    const currentGame = games[currentIndex];
     const modalId = `settings-${currentGame._id}`;
 
     return (
@@ -49,23 +75,17 @@ class Dashboard extends Component {
           selectGame={this.selectGame}
           selectTab={this.selectTab}
         />
-        {
-          tabIndex === 0
-          ? (
-            <Overview
-              downloads={downloads || undefined}
-              pageViews={pageViews || undefined}
-              plays={plays || undefined}
-              uninstalls={uninstalls || undefined}
-            />
-          )
-          : null
-        }
+        {this.renderPage()}
         <SettingsModal
           id={modalId}
           game={currentGame}
           updateGeneral={updateGeneral}
           deleteGame={deleteGame}
+        />
+        <CreateModal
+          gameId={currentGame._id}
+          createSession={createTestingSession}
+          id={`create-${currentGame._id}`}
         />
       </div>
     );
@@ -73,9 +93,10 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  games: PropTypes.array,
-  updateGeneral: PropTypes.func.isRequired,
-  deleteGame: PropTypes.func.isRequired
+  games: array,
+  updateGeneral: func.isRequired,
+  deleteGame: func.isRequired,
+  createTestingSession: func.isRequired
 };
 
 Dashboard.defaultProps = {
