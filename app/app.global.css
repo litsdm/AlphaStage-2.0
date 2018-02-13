@@ -89,7 +89,6 @@ p {
   width: 100% !important;
 }
 
-<<<<<<< HEAD
 .gameshow {
   position: relative;
 }
@@ -119,7 +118,8 @@ p {
 .CalendarDay__selected_span {
   background: #20c2f3;
   border: 1px solid #1baad6;
-=======
+}
+
 .video-js {
   font-size: 10px;
   color: #fff;
@@ -164,5 +164,4 @@ p {
 .video-js .vjs-load-progress div {
   background: white;
   background: rgba(115, 133, 159, 0.75);
->>>>>>> Add basic testing modal with recorded video playback
 }

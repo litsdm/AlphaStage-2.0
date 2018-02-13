@@ -10,11 +10,8 @@ import { getStatus } from '../../helpers/dates';
 import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
-<<<<<<< HEAD
 import Banner from '../Dashboard/TestingSessions/Banner';
-=======
 import VideoPlayer from '../VideoPlayer';
->>>>>>> Add basic testing modal with recorded video playback
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;

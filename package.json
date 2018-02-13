@@ -215,6 +215,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-slick": "^0.15.4",
+    "recordrtc": "^5.4.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "shortid": "^2.2.8",
