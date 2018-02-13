@@ -77,7 +77,7 @@ class Create extends Component {
       >
         {number}
       </button>
-      ));
+    ));
   }
 
   render() {

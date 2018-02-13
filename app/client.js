@@ -5,7 +5,7 @@ const networkInterface = createNetworkInterface({ uri: 'http://localhost:3001/gr
 networkInterface.use([{
   applyMiddleware(req, next) {
     if (!req.options.headers) {
-      req.options.headers = {};  // Create the header object if needed.
+      req.options.headers = {}; // Create the header object if needed.
     }
     // get the authentication token from local storage if it exists
     const token = localStorage.getItem('token');

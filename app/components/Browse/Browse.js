@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
+import { array } from 'prop-types';
 
 import TopSlider from './TopSlider';
 import CategoryGrid from './CategoryGrid';
 
-import type { Game } from '../../types/dataTypes';
-
 class Browse extends Component {
-  props: {
-    games: [Game]
-  }
-
   render() {
     return (
       <div>
@@ -19,5 +14,9 @@ class Browse extends Component {
     );
   }
 }
+
+Browse.propTypes = {
+  games: array.isRequired
+};
 
 export default Browse;

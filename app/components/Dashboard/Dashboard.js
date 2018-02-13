@@ -100,8 +100,7 @@ Dashboard.propTypes = {
 };
 
 Dashboard.defaultProps = {
-  games: [],
-  user: {}
+  games: []
 };
 
 export default Dashboard;

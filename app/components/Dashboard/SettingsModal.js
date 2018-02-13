@@ -45,16 +45,16 @@ class SettingsModal extends Component {
         }
       }
     })
-    .then(title => {
-      if (!title) return;
-      if (title !== game.title) return;
+      .then(title => {
+        if (!title) return;
+        if (title !== game.title) return;
 
-      deleteGame(game._id);
-      document.getElementById(id).style.display = 'none';
+        deleteGame(game._id);
+        document.getElementById(id).style.display = 'none';
 
-      return title;
-    })
-    .catch(err => console.log(err));
+        return title;
+      })
+      .catch(err => console.log(err));
   }
 
   activeClass = (index) => (
@@ -109,7 +109,6 @@ SettingsModal.propTypes = {
 
 SettingsModal.defaultProps = {
   id: '',
-  userId: ''
 };
 
 export default SettingsModal;

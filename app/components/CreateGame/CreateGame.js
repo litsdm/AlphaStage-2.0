@@ -204,8 +204,8 @@ class CreateGame extends Component {
               }
             }
           })
-           .then(route => history.push(route))
-           .catch(err => console.log(err))
+            .then(route => history.push(route))
+            .catch(err => console.log(err))
         );
       })
       .catch(err => console.log(err));

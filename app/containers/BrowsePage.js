@@ -19,8 +19,8 @@ const withGames = graphql(allGamesQuery, {
 
 const BrowsePage = ({ games, loading }) => (
   loading
-  ? null
-  : <Browse games={games} />
+    ? null
+    : <Browse games={games} />
 );
 
 BrowsePage.propTypes = {

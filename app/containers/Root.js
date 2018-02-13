@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ConnectedRouter } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
 
 import client from '../client';
 import Routes from '../routes';
 
-type RootType = {
+type Props = {
   store: {},
   history: {}
 };
 
-export default function Root({ store, history }: RootType) {
-  return (
-    <ApolloProvider store={store} client={client}>
-      <ConnectedRouter history={history}>
-        <Routes history={history} />
-      </ConnectedRouter>
-    </ApolloProvider>
-  );
+export default class Root extends Component<Props> {
+  render() {
+    return (
+      <ApolloProvider store={this.props.store} client={client}>
+        <ConnectedRouter history={this.props.history}>
+          <Routes history={this.props.history} />
+        </ConnectedRouter>
+      </ApolloProvider>
+    );
+  }
 }

@@ -45,13 +45,13 @@ const GamePage = (props) => {
 
   return (
     loading
-    ? <Loader />
-    : <GameShow
-      game={game}
-      isDownloading={isDownloading}
-      downloadId={downloadId}
-      incrementMetric={incrementMetric}
-    />
+      ? <Loader />
+      : <GameShow
+        game={game}
+        isDownloading={isDownloading}
+        downloadId={downloadId}
+        incrementMetric={incrementMetric}
+      />
   );
 };
 

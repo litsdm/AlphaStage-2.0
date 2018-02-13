@@ -14,6 +14,7 @@ const Header = ({ coverImage, modalId }) => {
       onClick={openModal}
       role="button"
       tabIndex="-1"
+      onKeyUp={() => {}}
     >
       <button className={styles.ButtonPlay}>
         <i className="fa fa-play-circle-o" />

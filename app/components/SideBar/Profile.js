@@ -20,7 +20,7 @@ const Profile = ({ user, logout, setImage, updateUserPic }) => {
   const chooseProfilePicture = () => {
     parseImageUpload(profilePictureOptions)
       .then(({ filesUploaded }) => {
-        const url = filesUploaded[0].url;
+        const { url } = filesUploaded[0];
         setImage(user._id, url)
           .then(() => renewToken(user._id))
           .catch(err => console.log(err));
