@@ -14,10 +14,10 @@
     "compat/compat": "error",
     "consistent-return": "off",
     "comma-dangle": "off",
-    "flowtype-errors/show-errors": "error",
     "generator-star-spacing": "off",
     "import/no-unresolved": "error",
     "import/no-extraneous-dependencies": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "no-console": "off",
     "no-use-before-define": "off",
     "no-multi-assign": "off",
@@ -32,11 +32,18 @@
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off",
     "react/forbid-prop-types": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "object-curly-newline": "off",
+    "jsx-a11y/label-has-for": [ 2, {
+            "components": [ "Label" ],
+            "required": {
+                "every": [ "id" ]
+            },
+            "allowChildren": false
+        }]
   },
   "plugins": [
     "flowtype",
-    "flowtype-errors",
     "import",
     "promise",
     "compat",
