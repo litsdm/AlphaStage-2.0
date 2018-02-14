@@ -14,7 +14,9 @@ export const uploadFile = (file, signedRequest) =>
 
 const callApi = (endpoint, body, method = 'GET') => {
   const token = localStorage.getItem('token') || null;
-  const apiUrl = 'localhost:3001';
+  const apiUrl = process.env.NODE_ENV === 'production'
+    ? 'https://alphastage-be.herokuapp.com'
+    : 'localhost:3001';
   const urlScheme = apiUrl === 'localhost:3001' ? 'http://' : '';
 
   return fetch(`${urlScheme}${apiUrl}/${endpoint}`, {
