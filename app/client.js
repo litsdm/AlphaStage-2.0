@@ -2,7 +2,7 @@ import { ApolloClient, createNetworkInterface } from 'react-apollo';
 
 const uri = process.env.NODE_ENV === 'production'
   ? 'https://alphastage-be.herokuapp.com/graphql'
-  : 'http://localhost:3001';
+  : 'http://localhost:3001/graphql';
 
 const networkInterface = createNetworkInterface({ uri });
 
