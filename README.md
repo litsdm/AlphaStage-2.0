@@ -8,7 +8,7 @@
   <img style="width: 25px; height 25px;" src="/resources/icon.png"/>
 </p>
 
-Alpha Stage allows developers to get feedback from all of their players! It comes with built in analytics and also records the user's gameplay so developers can see what their users are doing and what they can do to improve their games.
+Alpha Stage is a playtesting platform for game developers that allows them to get valuable feedback from testers saving them time and money. To do this, it records the user’s gameplay or segments of it and sends it back to the developers for review.
 
 Alpha Stage is built on top of [electron-react-boilerplate](https://github.com/chentsulin/electron-react-boilerplate) make sure to check them out!
 
