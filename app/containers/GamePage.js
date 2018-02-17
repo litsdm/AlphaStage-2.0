@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import DesktopRecorder from '../libs/DesktopRecorder';
 import MicrophoneRecorder from '../libs/MicrophoneRecorder';
+import { mergeVideoAndAudio } from '../helpers/video';
 
 import GameShow from '../components/GameShow/GameShow';
 import Loader from '../components/Loader';
@@ -47,6 +48,7 @@ class GamePage extends Component {
   state = {
     desktopBlob: null,
     desktopRecorder: null,
+    finalVideo: null,
     micBlob: null,
     micRecorder: null
   }
@@ -63,7 +65,25 @@ class GamePage extends Component {
   onMediaStop = (type, blobObject) => {
     const name = type === 'mic' ? 'micBlob' : 'desktopBlob';
 
-    this.setState({ [name]: blobObject });
+    this.setState({ [name]: blobObject }, this.mergeBlobs);
+  }
+
+  mergeBlobs = () => {
+    const { game } = this.props;
+    const { desktopBlob, micBlob } = this.state;
+
+    if (desktopBlob === null || micBlob === null) {
+      setTimeout(() => this.mergeBlobs(), 500);
+      return;
+    }
+
+    console.log(desktopBlob, micBlob);
+
+    const output = `${game._id}-${(new Date()).toLocaleTimeString('en-US')}.mp4`;
+
+    mergeVideoAndAudio(desktopBlob.url, micBlob.url, output, (processedUrl) => {
+      this.setState({ finalVideo: processedUrl });
+    });
   }
 
   openGame = (localPath) => {
@@ -94,7 +114,7 @@ class GamePage extends Component {
       isDownloading,
       downloadId
     } = this.props;
-    const { desktopBlob } = this.state;
+    const { finalVideo } = this.state;
 
     return (
       loading
@@ -105,7 +125,7 @@ class GamePage extends Component {
           downloadId={downloadId}
           incrementMetric={incrementMetric}
           openGame={this.openGame}
-          desktopBlob={desktopBlob}
+          finalVideo={finalVideo}
         />
     );
   }

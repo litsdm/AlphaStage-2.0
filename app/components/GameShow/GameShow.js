@@ -125,7 +125,7 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game, isDownloading, downloadId, openGame, desktopBlob } = this.props;
+    const { game, isDownloading, downloadId, openGame, finalVideo } = this.props;
     const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
@@ -147,8 +147,8 @@ class GameShow extends Component {
         </Modal>
         <Modal title="Testing Feedback" id={feedbackModalId}>
           {
-            desktopBlob !== null
-              ? <VideoPlayer src={desktopBlob.url} />
+            finalVideo !== null
+              ? <VideoPlayer src={finalVideo} />
               : null
           }
           <p>Other content</p>
@@ -164,12 +164,12 @@ GameShow.propTypes = {
   incrementMetric: PropTypes.func.isRequired,
   openGame: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool,
-  desktopBlob: PropTypes.object
+  finalVideo: PropTypes.string
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
-  desktopBlob: null
+  finalVideo: null
 };
 
 export default GameShow;

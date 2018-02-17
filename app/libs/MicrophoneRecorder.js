@@ -87,7 +87,7 @@ export default class MicrophoneRecorder {
       startTime,
       stopTime: Date.now(),
       options: mediaOptions,
-      blobURL: window.URL.createObjectURL(blob)
+      url: URL.createObjectURL(blob)
     };
 
     if (onStopCallback) onStopCallback('mic', blobObject);
