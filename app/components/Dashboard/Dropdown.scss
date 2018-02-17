@@ -1,9 +1,11 @@
 .Dropdown {
-  background-color: #2F3136;
+  background-color: #eee;
   border-radius: 4px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  color: #000;
   display: none;
-  margin-left: 18px;
+  margin-left: 48px;
+  margin-top: 6px;
   min-width: 320px;
   position: absolute;
   top: 236px;
@@ -21,7 +23,7 @@
 }
 
 .Head {
-  background-color: #2B2C31;
+  background-color: #fff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   padding: 12px;
@@ -29,7 +31,6 @@
 
 .Row {
   align-items: center;
-  color: white;
   cursor: pointer;
   display: flex;
   font-size: 18px;
@@ -37,8 +38,8 @@
   padding: 6px 12px;
   width: 100%;
 
-  &:hover {
-    background-color: #2091f3;
+  i {
+    color: #20c2f3;
   }
 
   img {
@@ -50,5 +51,10 @@
     margin-right: 12px;
     text-align: left;
     width: 100%;
+  }
+
+  &:hover {
+    background-color: #2091f3;
+    color: #fff;
   }
 }
