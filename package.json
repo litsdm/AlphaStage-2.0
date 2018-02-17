@@ -40,7 +40,13 @@
       "app.html",
       "main.prod.js",
       "main.prod.js.map",
-      "package.json"
+      "package.json",
+      "app/node_modules/ffmpeg-static/bin/${os}/${arch}/ffmpeg",
+      "app/node_modules/ffmpeg-static/index.js",
+      "app/node_modules/ffmpeg-static/package.json",
+      "app/node_modules/ffprobe-static/bin/${os}/${arch}/ffmpeg",
+      "app/node_modules/ffprobe-static/index.js",
+      "app/node_modules/ffprobe-static/package.json"
     ],
     "dmg": {
       "contents": [
@@ -198,6 +204,7 @@
     "electron-debug": "^1.5.0",
     "electron-dl": "^1.10.0",
     "filestack-js": "^0.11.2",
+    "fluent-ffmpeg": "^2.1.2",
     "font-awesome": "^4.7.0",
     "graphql": "^0.13.0",
     "graphql-tag": "^2.7.3",
