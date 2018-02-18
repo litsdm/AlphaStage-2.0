@@ -11,7 +11,7 @@
 }
 
 .STitle {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.6);
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 12px;
@@ -31,7 +31,7 @@
 .Lock,
 .Globe {
   text-align: center;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 
   i {
     font-size: 2rem;
@@ -108,7 +108,7 @@ input:checked + .Slider:before {
 .Select {
   background-color: rgba(255, 255, 255, 0.4);
   border: none;
-  color: white;
+  color: black;
   display: block;
   font-size: 16px;
   height: 35px;
