@@ -56,3 +56,15 @@
   float: right;
   font-size: 1rem;
 }
+
+.GalleryClose {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 0;
+
+  button {
+    font-size: 1rem;
+    padding: 3px;
+  }
+}
