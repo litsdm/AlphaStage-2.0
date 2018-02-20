@@ -24,7 +24,7 @@ const InfoCard = ({ game, progress, isDownloading, downloadId, openGame }) => {
         <ProgressBar progress={progress} display={isDownloading && game._id === downloadId} />
         <div className={styles.Row}>
           <p className={styles.Subtitle}>Release Status</p>
-          <p className={styles.Subvalue}>{game.releaseStatus}</p>
+          <p className={styles.Subvalue}>{game.releaseStatus.split(' - ')[0]}</p>
         </div>
         <div className={styles.Row}>
           <p className={styles.Subtitle}>Genre</p>

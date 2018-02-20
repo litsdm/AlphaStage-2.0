@@ -4,7 +4,7 @@
   padding: 24px;
 
   p {
-    color: #efefef;
+    color: #101010;
     flex-basis: 33%;
     font-weight: bold;
     opacity: 0.7;
@@ -12,10 +12,10 @@
 }
 
 .Input {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(200, 200, 200, 0.4);
   border: none;
   border-radius: 4px;
-  color: white;
+  color: black;
   display: block;
   font-size: 16px;
   flex-basis: 66%;
@@ -25,15 +25,15 @@
   width: 80%;
 
   &:focus {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(200, 200, 200, 0.5);
     border-color: #64B5F6;
   }
 }
 
 .Select {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(200, 200, 200, 0.4);
   border: none;
-  color: white;
+  color: black;
   display: block;
   font-size: 16px;
   flex-basis: 66%;
@@ -44,7 +44,7 @@
 
 .Footer {
   align-items: center;
-  background-color: #2F3136;
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
   padding: 12px;
@@ -80,7 +80,7 @@
 
 .Cancel {
   border-radius: 4px;
-  color: rgba(255, 255, 255, 0.4);;
+  color: rgba(0, 0, 0, 0.4);;
   font-size: 16px;
   font-weight: bold;
   margin-right: 12px;
@@ -90,7 +90,7 @@
   transition: all 0.2s ease;
 
   &:hover {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -108,8 +108,8 @@
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.2);
-      border-color: #fff;
-      color: #fff;
+      border-color: #000;
+      color: #000;
     }
 
     &.active {
@@ -130,17 +130,17 @@
   }
 
   input {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(200, 200, 200, 0.4);
     border: none;
     border-radius: 4px;
-    color: white;
+    color: black;
     display: block;
     padding: 6px;
     outline: none;
     max-width: 52px;
 
     &:focus {
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(200, 200, 200, 0.5);
       border-color: #64B5F6;
     }
   }

@@ -81,7 +81,11 @@ p {
 
 .slick-dots li button:before,
 .slick-dots li.slick-active button:before {
-  color: white;
+  color: black;
+}
+
+.slick-arrow:before {
+  color: black;
 }
 
 .gameshow .slick-slide.slick-active {

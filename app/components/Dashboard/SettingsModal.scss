@@ -4,9 +4,8 @@
 
 .Menu {
   align-items: flex-start;
-  background-color: #2F3136;
+  background-color: #fff;
   display: flex;
-  flex-basis: 33%;
   flex-direction: column;
   padding: 12px;
   width: 204px;
@@ -32,13 +31,14 @@
 }
 
 .Divider {
-  background-color: #444;
+  background-color: #ddd;
   height: 1px;
   margin: 12px 0;
   width: 100%;
 }
 
 .Content {
+  flex-basis: 66%;
   padding: 24px;
   width: 100%;
 }

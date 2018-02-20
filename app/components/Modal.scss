@@ -13,24 +13,25 @@
 }
 
 .Content {
-  background-color: #36393E;
+  background-color: #eee;
+  color: black;
   margin: 12.5% auto;
   margin-bottom: 0;
   width: 60%;
 }
 
 .Header {
-  background-color: #2F3136;
+  background-color: #fff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   padding: 24px;
 }
 
 .SettingsHeader {
-  background-color: #36393E;
+  background-color: #eee;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  box-shadow: 0 1px 4px #222;
+  box-shadow: 0 1px 4px #ddd;
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -43,7 +44,7 @@
 }
 
 .SettingsTitle {
-  background-color: #2F3136;
+  background-color: #fff;
   border-top-left-radius: 4px;
   font-size: 18px;
   padding: 12px;
@@ -51,7 +52,19 @@
 }
 
 .ButtonClose {
-  color: white;
+  color: black;
   float: right;
   font-size: 1rem;
+}
+
+.GalleryClose {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 0;
+
+  button {
+    font-size: 1rem;
+    padding: 3px;
+  }
 }

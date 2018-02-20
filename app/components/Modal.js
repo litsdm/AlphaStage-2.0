@@ -42,7 +42,7 @@ const Modal = ({ title, isGallery, isSettings, trailerId, children, id }) => {
 
   const galleryStyles = (
     isGallery
-      ? { padding: '30px', borderRadius: '4px' }
+      ? { padding: '30px', borderRadius: '4px', paddingTop: '0' }
       : {}
   );
 
@@ -55,6 +55,15 @@ const Modal = ({ title, isGallery, isSettings, trailerId, children, id }) => {
   return (
     <div id={id} className={styles.Modal}>
       <div className={styles.Content} style={{ ...galleryStyles, ...settingsStyles }}>
+        {
+          isGallery
+            ? (
+              <div className={styles.GalleryClose}>
+                <button onClick={closeModal}><i className="fa fa-times" /></button>
+              </div>
+            )
+            : null
+        }
         {title ? renderHeader() : null}
         {isSettings ? renderSettingsHeader() : null}
         {children}
