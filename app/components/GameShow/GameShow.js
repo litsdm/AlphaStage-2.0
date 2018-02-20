@@ -11,6 +11,7 @@ import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
 import Banner from '../Dashboard/TestingSessions/Banner';
+import VideoPlayer from '../VideoPlayer';
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -124,10 +125,11 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game, isDownloading, downloadId } = this.props;
+    const { game, isDownloading, downloadId, openGame, finalVideo } = this.props;
     const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
+    const feedbackModalId = `feedback-${game._id}`;
 
     return (
       <div className="gameshow">
@@ -138,9 +140,18 @@ class GameShow extends Component {
           progress={progress}
           isDownloading={isDownloading}
           downloadId={downloadId}
+          openGame={openGame}
         />
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
+        </Modal>
+        <Modal title="Testing Feedback" id={feedbackModalId}>
+          {
+            finalVideo !== null
+              ? <VideoPlayer src={finalVideo} />
+              : null
+          }
+          <p>Other content</p>
         </Modal>
       </div>
     );
@@ -151,11 +162,14 @@ GameShow.propTypes = {
   game: PropTypes.object.isRequired,
   downloadId: PropTypes.string.isRequired,
   incrementMetric: PropTypes.func.isRequired,
-  isDownloading: PropTypes.bool
+  openGame: PropTypes.func.isRequired,
+  isDownloading: PropTypes.bool,
+  finalVideo: PropTypes.string
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
+  finalVideo: null
 };
 
 export default GameShow;

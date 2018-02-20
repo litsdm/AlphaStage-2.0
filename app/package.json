@@ -14,5 +14,8 @@
     "postinstall": "npm run electron-rebuild"
   },
   "license": "",
-  "dependencies": {}
+  "dependencies": {
+    "ffmpeg-static": "git@github.com:pietrop/ffmpeg-static.git",
+    "ffprobe-static": "git@github.com:pietrop/ffprobe-static.git"
+  }
 }
