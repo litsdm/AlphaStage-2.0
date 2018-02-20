@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { exec } from 'child_process';
+import fs from 'fs';
+import { remote } from 'electron';
 import PropTypes from 'prop-types';
 
 import DesktopRecorder from '../libs/DesktopRecorder';
@@ -13,6 +15,10 @@ import Loader from '../components/Loader';
 
 import fullGameQuery from '../graphql/fullGame.graphql';
 import addToMetric from '../graphql/addToMetric.graphql';
+
+const { app } = remote;
+const videoReader = new FileReader();
+const audioReader = new FileReader();
 
 const mapStateToProps = ({ game }) => (
   {
@@ -46,11 +52,11 @@ const micOptions = {
 
 class GamePage extends Component {
   state = {
-    desktopBlob: null,
+    audioFile: null,
     desktopRecorder: null,
     finalVideo: null,
-    micBlob: null,
-    micRecorder: null
+    micRecorder: null,
+    videoFile: null
   }
 
   componentWillReceiveProps({ game, loading }) {
@@ -63,25 +69,45 @@ class GamePage extends Component {
   }
 
   onMediaStop = (type, blobObject) => {
-    const name = type === 'mic' ? 'micBlob' : 'desktopBlob';
+    // const name = type === 'mic' ? 'micBlob' : 'desktopBlob';
 
-    this.setState({ [name]: blobObject }, this.mergeBlobs);
+    // this.setState({ [name]: blobObject }, this.mergeBlobs);
+    this.saveRecordedFile(type, blobObject.blob);
+  }
+
+  saveRecordedFile = (type, blob) => {
+    const reader = type === 'mic' ? audioReader : videoReader;
+    const name = type === 'mic' ? 'audioFile' : 'videoFile';
+    const appDataPath = app.getPath('appData');
+    const path = `${appDataPath}/ASLibrary/Sessions/${type}-${new Date().getTime()}.webm`;
+
+    reader.onload = () => {
+      const buffer = Buffer.from(reader.result);
+      fs.writeFile(path, buffer, {}, err => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        this.setState({ [name]: path }, this.mergeBlobs);
+      });
+    };
+
+    reader.readAsArrayBuffer(blob);
   }
 
   mergeBlobs = () => {
     const { game } = this.props;
-    const { desktopBlob, micBlob } = this.state;
+    const { audioFile, videoFile } = this.state;
+    const appDataPath = app.getPath('appData');
 
-    if (desktopBlob === null || micBlob === null) {
+    if (audioFile === null || videoFile === null) {
       setTimeout(() => this.mergeBlobs(), 500);
       return;
     }
 
-    console.log(desktopBlob, micBlob);
+    const output = `${appDataPath}/ASLibrary/Sessions/merged-${game._id}-${new Date().getTime()}.mp4`;
 
-    const output = `${game._id}-${(new Date()).toLocaleTimeString('en-US')}.mp4`;
-
-    mergeVideoAndAudio(desktopBlob.url, micBlob.url, output, (processedUrl) => {
+    mergeVideoAndAudio(audioFile, videoFile, output, (processedUrl) => {
       this.setState({ finalVideo: processedUrl });
     });
   }
