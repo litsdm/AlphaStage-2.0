@@ -69,9 +69,6 @@ class GamePage extends Component {
   }
 
   onMediaStop = (type, blobObject) => {
-    // const name = type === 'mic' ? 'micBlob' : 'desktopBlob';
-
-    // this.setState({ [name]: blobObject }, this.mergeBlobs);
     this.saveRecordedFile(type, blobObject.blob);
   }
 
@@ -112,12 +109,17 @@ class GamePage extends Component {
     });
   }
 
-  openGame = (localPath) => {
+  openGame = (localPath, type = 'play') => {
     const { game } = this.props;
     const { micRecorder, desktopRecorder } = this.state;
     const openCommand = process.platform === 'darwin'
       ? `open -a ${localPath} --wait-apps`
       : localPath;
+
+    if (type !== 'session') {
+      exec(openCommand, error => { if (error) throw error; });
+      return;
+    }
 
     exec(openCommand, (error) => {
       if (error) throw error;

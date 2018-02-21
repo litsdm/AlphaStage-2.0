@@ -6,6 +6,7 @@ import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
 import { getStatus } from '../../helpers/dates';
+import gamePath from '../../helpers/gamePath';
 
 import Header from './Header';
 import ContentCard from './ContentCard';
@@ -124,6 +125,13 @@ class GameShow extends Component {
     );
   }
 
+  startSession = () => {
+    const { game, openGame } = this.props;
+    const path = gamePath(game);
+
+    openGame(path, 'session');
+  }
+
   render() {
     const { game, isDownloading, downloadId, openGame, finalVideo } = this.props;
     const { progress, activeSession } = this.state;
@@ -133,7 +141,7 @@ class GameShow extends Component {
 
     return (
       <div className="gameshow">
-        {activeSession ? <Banner /> : null}
+        {activeSession ? <Banner startSession={this.startSession} /> : null}
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
