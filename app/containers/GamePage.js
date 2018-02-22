@@ -56,6 +56,7 @@ class GamePage extends Component {
     desktopRecorder: null,
     finalVideo: null,
     micRecorder: null,
+    micAllowed: true,
     videoFile: null
   }
 
@@ -68,14 +69,18 @@ class GamePage extends Component {
     }
   }
 
-  onMediaStop = (type, blobObject) => {
-    // const name = type === 'mic' ? 'micBlob' : 'desktopBlob';
+  handleChange = ({ target }) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ [name]: value });
+  }
 
-    // this.setState({ [name]: blobObject }, this.mergeBlobs);
+  onMediaStop = (type, blobObject) => {
     this.saveRecordedFile(type, blobObject.blob);
   }
 
   saveRecordedFile = (type, blob) => {
+    const { micAllowed } = this.state;
     const reader = type === 'mic' ? audioReader : videoReader;
     const name = type === 'mic' ? 'audioFile' : 'videoFile';
     const appDataPath = app.getPath('appData');
@@ -88,7 +93,11 @@ class GamePage extends Component {
           console.error(err);
           return;
         }
-        this.setState({ [name]: path }, this.mergeBlobs);
+        if (micAllowed) {
+          this.setState({ [name]: path }, this.mergeBlobs);
+        } else {
+          this.setState({ finalVideo: path });
+        }
       });
     };
 
@@ -112,24 +121,29 @@ class GamePage extends Component {
     });
   }
 
-  openGame = (localPath) => {
+  openGame = (localPath, type = 'play') => {
     const { game } = this.props;
-    const { micRecorder, desktopRecorder } = this.state;
+    const { micRecorder, desktopRecorder, micAllowed } = this.state;
     const openCommand = process.platform === 'darwin'
       ? `open -a ${localPath} --wait-apps`
       : localPath;
+
+    if (type !== 'session') {
+      exec(openCommand, error => { if (error) throw error; });
+      return;
+    }
 
     exec(openCommand, (error) => {
       if (error) throw error;
 
       // Game was closed
       desktopRecorder.stopRecording();
-      micRecorder.stopRecording();
+      if (micAllowed) micRecorder.stopRecording();
       document.getElementById(`feedback-${game._id}`).style.display = 'block';
     });
 
     setTimeout(() => desktopRecorder.startRecording(), 5000);
-    setTimeout(() => micRecorder.startRecording(), 5000);
+    if (micAllowed) setTimeout(() => micRecorder.startRecording(), 5000);
   };
 
   render() {
@@ -140,7 +154,7 @@ class GamePage extends Component {
       isDownloading,
       downloadId
     } = this.props;
-    const { finalVideo } = this.state;
+    const { finalVideo, micAllowed } = this.state;
 
     return (
       loading
@@ -152,6 +166,8 @@ class GamePage extends Component {
           incrementMetric={incrementMetric}
           openGame={this.openGame}
           finalVideo={finalVideo}
+          micAllowed={micAllowed}
+          handleChange={this.handleChange}
         />
     );
   }

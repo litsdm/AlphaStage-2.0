@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { string } from 'prop-types';
 import styles from './Banner.scss';
 
 class Banner extends Component {
@@ -7,6 +8,11 @@ class Banner extends Component {
   }
 
   onHide = () => this.setState({ hide: true });
+
+  openModal = () => {
+    const { modalId } = this.props;
+    document.getElementById(modalId).style.display = 'block';
+  }
 
   render() {
     const { hide } = this.state;
@@ -20,7 +26,7 @@ class Banner extends Component {
             </span>
           </span>
           <div className={styles.Buttons}>
-            <button className={styles.Start}>Start Session</button>
+            <button className={styles.Start} onClick={this.openModal}>Start Session</button>
             <button className={styles.Hide} onClick={this.onHide}>Hide</button>
           </div>
         </div>
@@ -28,5 +34,9 @@ class Banner extends Component {
       : null;
   }
 }
+
+Banner.propTypes = {
+  modalId: string.isRequired
+};
 
 export default Banner;

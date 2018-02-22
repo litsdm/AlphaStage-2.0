@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
-import PropTypes from 'prop-types';
+import { object, func, string, bool } from 'prop-types';
 import Slider from 'react-slick';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
 import { getStatus } from '../../helpers/dates';
+import gamePath from '../../helpers/gamePath';
 
 import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
 import Banner from '../Dashboard/TestingSessions/Banner';
+import InfoModal from '../Dashboard/TestingSessions/InfoModal';
 import VideoPlayer from '../VideoPlayer';
 
 const INITIAL_OFFSET = 427;
@@ -124,16 +126,32 @@ class GameShow extends Component {
     );
   }
 
+  startSession = () => {
+    const { game, openGame } = this.props;
+    const path = gamePath(game);
+
+    openGame(path, 'session');
+  }
+
   render() {
-    const { game, isDownloading, downloadId, openGame, finalVideo } = this.props;
+    const {
+      game,
+      isDownloading,
+      downloadId,
+      openGame,
+      finalVideo,
+      micAllowed,
+      handleChange
+    } = this.props;
     const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
     const feedbackModalId = `feedback-${game._id}`;
+    const sessionModalId = `session-${game._id}`;
 
     return (
       <div className="gameshow">
-        {activeSession ? <Banner /> : null}
+        {activeSession ? <Banner modalId={sessionModalId} /> : null}
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
@@ -153,22 +171,32 @@ class GameShow extends Component {
           }
           <p>Other content</p>
         </Modal>
+        <InfoModal
+          id={sessionModalId}
+          session={activeSession}
+          startSession={this.startSession}
+          handleChange={handleChange}
+          micAllowed={micAllowed}
+        />
       </div>
     );
   }
 }
 
 GameShow.propTypes = {
-  game: PropTypes.object.isRequired,
-  downloadId: PropTypes.string.isRequired,
-  incrementMetric: PropTypes.func.isRequired,
-  openGame: PropTypes.func.isRequired,
-  isDownloading: PropTypes.bool,
-  finalVideo: PropTypes.string
+  game: object.isRequired,
+  downloadId: string.isRequired,
+  incrementMetric: func.isRequired,
+  openGame: func.isRequired,
+  isDownloading: bool,
+  finalVideo: string,
+  micAllowed: bool,
+  handleChange: func.isRequired
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
+  micAllowed: true,
   finalVideo: null
 };
 

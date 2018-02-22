@@ -4,10 +4,6 @@ import YTPlayer from 'youtube-player';
 import styles from './Modal.scss';
 
 const Modal = ({ title, isGallery, isSettings, trailerId, children, id }) => {
-  window.onclick = ({ target }) => {
-    if (target.id === id) closeModal();
-  };
-
   const closeModal = () => {
     const modal = document.getElementById(id);
     if (trailerId) stopVideo();
@@ -54,6 +50,13 @@ const Modal = ({ title, isGallery, isSettings, trailerId, children, id }) => {
 
   return (
     <div id={id} className={styles.Modal}>
+      <div
+        className={styles.CloseOverlay}
+        onClick={closeModal}
+        onKeyDown={() => {}}
+        role="button"
+        tabIndex="0"
+      />
       <div className={styles.Content} style={{ ...galleryStyles, ...settingsStyles }}>
         {
           isGallery

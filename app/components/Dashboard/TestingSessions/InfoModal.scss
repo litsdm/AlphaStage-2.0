@@ -1,0 +1,119 @@
+.Content {
+  padding: 24px;
+
+  h2 {
+    opacity: 0.6;
+    margin-bottom: 6px;
+    margin-top: 24px;
+  }
+
+  p {
+    opacity: 0.8;
+  }
+}
+
+.How {
+  margin-top: 0 !important;
+}
+
+.Footer {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.Start {
+  background-color: #2091f3;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  min-width: 162px;
+  padding: 12px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #2098f3;
+  }
+}
+
+.Objectives {
+  background-color: #ddd;
+  margin-top: 18px;
+  padding: 12px;
+
+  p {
+    font-weight: bold;
+
+    i {
+      color: #2098f3;
+    }
+  }
+}
+
+.SwitchContainer {
+  background-color: #ddd;
+  display: flex;
+  margin-top: 12px;
+  padding: 12px;
+}
+
+.Switch {
+  display: inline-block;
+  height: 24px;
+  margin-right: 6px;
+  position: relative;
+  width: 42px;
+
+  input {
+    display: none;
+  }
+}
+
+.Slider {
+  -webkit-transition: .4s;
+  background-color: #aaa;
+  border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+
+  &:before {
+    -webkit-transition: .4s;
+    background-color: white;
+    border-radius: 50%;
+    bottom: 4px;
+    content: "";
+    height:16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+  }
+}
+
+input:checked + .Slider {
+  background-color: #2091f3;
+
+  &:before {
+    left: -4px;
+  }
+}
+
+input:focus + .Slider {
+  box-shadow: 0 0 1px #2091f3;
+}
+
+input:checked + .Slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
