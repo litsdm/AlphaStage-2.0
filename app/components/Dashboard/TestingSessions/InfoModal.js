@@ -1,14 +1,22 @@
 import React from 'react';
-import { func, string } from 'prop-types';
+import { func, string, object } from 'prop-types';
 import styles from './InfoModal.scss';
 
 import Modal from '../../Modal';
 
-const InfoModal = ({ id, startSession }) => {
+const InfoModal = ({ id, startSession, session }) => {
   const onStart = () => {
     document.getElementById(id).style.display = 'none';
     startSession();
   };
+
+  const renderObjectives = () => (
+    session.objectives.map(objective => (
+      <p>
+        <i className="fa fa-check-circle-o" /> {objective}
+      </p>
+    ))
+  );
 
   return (
     <Modal id={id} title="Testing Session">
@@ -24,10 +32,17 @@ const InfoModal = ({ id, startSession }) => {
         </p>
         <h2>This session{'\''}s objectives</h2>
         <p>
-          The developers of this game have laid a few objectives for you to follow,
+          The developers of this game have set a few objectives for you to follow,
           {' '}you can do as many as you like and then select the ones you accomplished
           {' '}when you are done playing.
         </p>
+        <div className={styles.Objectives}>
+          {
+            session
+              ? renderObjectives()
+              : null
+          }
+        </div>
         <h2>Commentary</h2>
         <p>
           If you allow it we will record your voice so you can tell the developers
@@ -45,7 +60,12 @@ const InfoModal = ({ id, startSession }) => {
 
 InfoModal.propTypes = {
   id: string.isRequired,
-  startSession: func.isRequired
+  startSession: func.isRequired,
+  session: object
+};
+
+InfoModal.defaultProps = {
+  session: {}
 };
 
 export default InfoModal;

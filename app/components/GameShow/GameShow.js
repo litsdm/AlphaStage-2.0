@@ -163,7 +163,11 @@ class GameShow extends Component {
           }
           <p>Other content</p>
         </Modal>
-        <InfoModal id={sessionModalId} startSession={this.startSession} />
+        <InfoModal
+          id={sessionModalId}
+          session={activeSession}
+          startSession={this.startSession}
+        />
       </div>
     );
   }

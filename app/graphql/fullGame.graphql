@@ -17,7 +17,8 @@ query FullGame($id: String) {
     tags,
     testingSessions {
       startDate,
-      endDate
+      endDate,
+      objectives
     }
     title,
     thumbnail,
