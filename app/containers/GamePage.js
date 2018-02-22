@@ -80,6 +80,7 @@ class GamePage extends Component {
   }
 
   saveRecordedFile = (type, blob) => {
+    const { micAllowed } = this.state;
     const reader = type === 'mic' ? audioReader : videoReader;
     const name = type === 'mic' ? 'audioFile' : 'videoFile';
     const appDataPath = app.getPath('appData');
@@ -92,7 +93,11 @@ class GamePage extends Component {
           console.error(err);
           return;
         }
-        this.setState({ [name]: path }, this.mergeBlobs);
+        if (micAllowed) {
+          this.setState({ [name]: path }, this.mergeBlobs);
+        } else {
+          this.setState({ finalVideo: path });
+        }
       });
     };
 
@@ -118,7 +123,7 @@ class GamePage extends Component {
 
   openGame = (localPath, type = 'play') => {
     const { game } = this.props;
-    const { micRecorder, desktopRecorder } = this.state;
+    const { micRecorder, desktopRecorder, micAllowed } = this.state;
     const openCommand = process.platform === 'darwin'
       ? `open -a ${localPath} --wait-apps`
       : localPath;
@@ -133,12 +138,12 @@ class GamePage extends Component {
 
       // Game was closed
       desktopRecorder.stopRecording();
-      micRecorder.stopRecording();
+      if (micAllowed) micRecorder.stopRecording();
       document.getElementById(`feedback-${game._id}`).style.display = 'block';
     });
 
     setTimeout(() => desktopRecorder.startRecording(), 5000);
-    setTimeout(() => micRecorder.startRecording(), 5000);
+    if (micAllowed) setTimeout(() => micRecorder.startRecording(), 5000);
   };
 
   render() {
