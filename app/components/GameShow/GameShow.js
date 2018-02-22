@@ -12,6 +12,7 @@ import Header from './Header';
 import ContentCard from './ContentCard';
 import Modal from '../Modal';
 import Banner from '../Dashboard/TestingSessions/Banner';
+import InfoModal from '../Dashboard/TestingSessions/InfoModal';
 import VideoPlayer from '../VideoPlayer';
 
 const INITIAL_OFFSET = 427;
@@ -138,10 +139,11 @@ class GameShow extends Component {
 
     const galleryModalId = `gallery-${game._id}`;
     const feedbackModalId = `feedback-${game._id}`;
+    const sessionModalId = `session-${game._id}`;
 
     return (
       <div className="gameshow">
-        {activeSession ? <Banner startSession={this.startSession} /> : null}
+        {activeSession ? <Banner modalId={sessionModalId} /> : null}
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
@@ -161,6 +163,7 @@ class GameShow extends Component {
           }
           <p>Other content</p>
         </Modal>
+        <InfoModal id={sessionModalId} startSession={this.startSession} />
       </div>
     );
   }

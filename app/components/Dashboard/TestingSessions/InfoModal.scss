@@ -1,0 +1,42 @@
+.Content {
+  padding: 24px;
+
+  h2 {
+    opacity: 0.6;
+    margin-bottom: 6px;
+    margin-top: 24px;
+  }
+
+  p {
+    opacity: 0.8;
+  }
+}
+
+.How {
+  margin-top: 0 !important;
+}
+
+.Footer {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.Start {
+  background-color: #2091f3;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  min-width: 162px;
+  padding: 12px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #2098f3;
+  }
+}
