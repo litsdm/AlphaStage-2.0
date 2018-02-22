@@ -56,6 +56,7 @@ class GamePage extends Component {
     desktopRecorder: null,
     finalVideo: null,
     micRecorder: null,
+    micAllowed: true,
     videoFile: null
   }
 
@@ -66,6 +67,12 @@ class GamePage extends Component {
         micRecorder: new MicrophoneRecorder(null, this.onMediaStop, micOptions)
       });
     }
+  }
+
+  handleChange = ({ target }) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ [name]: value });
   }
 
   onMediaStop = (type, blobObject) => {
@@ -142,7 +149,7 @@ class GamePage extends Component {
       isDownloading,
       downloadId
     } = this.props;
-    const { finalVideo } = this.state;
+    const { finalVideo, micAllowed } = this.state;
 
     return (
       loading
@@ -154,6 +161,8 @@ class GamePage extends Component {
           incrementMetric={incrementMetric}
           openGame={this.openGame}
           finalVideo={finalVideo}
+          micAllowed={micAllowed}
+          handleChange={this.handleChange}
         />
     );
   }

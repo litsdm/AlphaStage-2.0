@@ -1,10 +1,11 @@
 import React from 'react';
-import { func, string, object } from 'prop-types';
+import uuid from 'uuid/v4';
+import { func, string, object, bool } from 'prop-types';
 import styles from './InfoModal.scss';
 
 import Modal from '../../Modal';
 
-const InfoModal = ({ id, startSession, session }) => {
+const InfoModal = ({ id, startSession, session, micAllowed, handleChange }) => {
   const onStart = () => {
     document.getElementById(id).style.display = 'none';
     startSession();
@@ -12,7 +13,7 @@ const InfoModal = ({ id, startSession, session }) => {
 
   const renderObjectives = () => (
     session.objectives.map(objective => (
-      <p>
+      <p key={uuid()}>
         <i className="fa fa-check-circle-o" /> {objective}
       </p>
     ))
@@ -50,6 +51,19 @@ const InfoModal = ({ id, startSession, session }) => {
           {' '}is completely optional and you can turn it off by un-checking the
           {' '}checkbox just below this text.
         </p>
+        <div className={styles.SwitchContainer}>
+          <label htmlFor="micSwitch" className={styles.Switch}>
+            <input
+              id="micSwitch"
+              name="micAllowed"
+              type="checkbox"
+              checked={micAllowed}
+              onChange={handleChange}
+            />
+            <span className={styles.Slider} />
+          </label>
+          <span>Commentary is {micAllowed ? 'enabled' : 'disabled'}.</span>
+        </div>
       </div>
       <div className={styles.Footer}>
         <button className={styles.Start} onClick={onStart}>Start Session Now</button>
@@ -61,11 +75,14 @@ const InfoModal = ({ id, startSession, session }) => {
 InfoModal.propTypes = {
   id: string.isRequired,
   startSession: func.isRequired,
+  handleChange: func.isRequired,
+  micAllowed: bool,
   session: object
 };
 
 InfoModal.defaultProps = {
-  session: {}
+  session: {},
+  micAllowed: true
 };
 
 export default InfoModal;

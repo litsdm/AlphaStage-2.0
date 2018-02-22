@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
-import PropTypes from 'prop-types';
+import { object, func, string, bool } from 'prop-types';
 import Slider from 'react-slick';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
@@ -134,7 +134,15 @@ class GameShow extends Component {
   }
 
   render() {
-    const { game, isDownloading, downloadId, openGame, finalVideo } = this.props;
+    const {
+      game,
+      isDownloading,
+      downloadId,
+      openGame,
+      finalVideo,
+      micAllowed,
+      handleChange
+    } = this.props;
     const { progress, activeSession } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
@@ -167,6 +175,8 @@ class GameShow extends Component {
           id={sessionModalId}
           session={activeSession}
           startSession={this.startSession}
+          handleChange={handleChange}
+          micAllowed={micAllowed}
         />
       </div>
     );
@@ -174,16 +184,19 @@ class GameShow extends Component {
 }
 
 GameShow.propTypes = {
-  game: PropTypes.object.isRequired,
-  downloadId: PropTypes.string.isRequired,
-  incrementMetric: PropTypes.func.isRequired,
-  openGame: PropTypes.func.isRequired,
-  isDownloading: PropTypes.bool,
-  finalVideo: PropTypes.string
+  game: object.isRequired,
+  downloadId: string.isRequired,
+  incrementMetric: func.isRequired,
+  openGame: func.isRequired,
+  isDownloading: bool,
+  finalVideo: string,
+  micAllowed: bool,
+  handleChange: func.isRequired
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
+  micAllowed: true,
   finalVideo: null
 };
 
