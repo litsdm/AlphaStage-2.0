@@ -5,13 +5,14 @@ import { func, string } from 'prop-types';
 import styles from './CreateModal.scss';
 
 import Modal from '../../Modal';
-
+import Objectives from './Objectives';
 
 class Create extends Component {
   state = {
     endDate: null,
     focusedInput: null,
     maxTesters: 50,
+    objectives: [],
     rewardType: 'Money',
     reward: '',
     startDate: null
@@ -82,7 +83,7 @@ class Create extends Component {
 
   render() {
     const { id } = this.props;
-    const { rewardType } = this.state;
+    const { rewardType, objectives } = this.state;
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
@@ -106,6 +107,10 @@ class Create extends Component {
                 <p>Other: </p><input onChange={this.onNumberChange} type="number" />
               </div>
             </div>
+          </div>
+          <div className={styles.InputContainer}>
+            <p>Objectives</p>
+            <Objectives objectives={objectives} handleChange={this.handleChange} />
           </div>
           <div className={styles.InputContainer}>
             <p>Reward Type</p>

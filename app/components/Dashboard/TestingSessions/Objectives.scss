@@ -1,0 +1,48 @@
+.Objectives {
+  flex-basis: 66%;
+  width: 80%;
+}
+
+.Objective {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+
+  p {
+    flex-basis: 95%;
+    font-weight: 500;
+
+    i {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  button {
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.7;
+
+    &:hover {
+      color: #F44336;
+    }
+  }
+}
+
+.Input {
+  background-color: rgba(200, 200, 200, 0.4);
+  border: none;
+  border-radius: 4px;
+  color: black;
+  display: block;
+  font-size: 16px;
+  flex-basis: 66%;
+  outline: none;
+  padding: 10px 0;
+  padding-left: 10px;
+  width: 100%;
+
+  &:focus {
+    background-color: rgba(200, 200, 200, 0.5);
+    border-color: #64B5F6;
+  }
+}
