@@ -13,7 +13,7 @@ import ContentCard from './ContentCard';
 import Modal from '../Modal';
 import Banner from '../Dashboard/TestingSessions/Banner';
 import InfoModal from '../Dashboard/TestingSessions/InfoModal';
-import VideoPlayer from '../VideoPlayer';
+import FeedbackModal from './Feedback/FeedbackModal';
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -163,14 +163,7 @@ class GameShow extends Component {
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
         </Modal>
-        <Modal title="Testing Feedback" id={feedbackModalId}>
-          {
-            finalVideo !== null
-              ? <VideoPlayer src={finalVideo} />
-              : null
-          }
-          <p>Other content</p>
-        </Modal>
+        <FeedbackModal id={feedbackModalId} finalVideo={finalVideo} />
         <InfoModal
           id={sessionModalId}
           session={activeSession}
