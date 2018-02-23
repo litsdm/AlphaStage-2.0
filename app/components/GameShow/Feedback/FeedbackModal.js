@@ -31,6 +31,9 @@ class FeedbackModal extends Component {
           <CommentList comments={comments} setState={this.setStateProperty} />
           <CommentInput comments={comments} setState={this.setStateProperty} />
         </div>
+        <div className={styles.Footer}>
+          <button className={styles.Submit}>Send Feedback</button>
+        </div>
       </Modal>
     );
   }
