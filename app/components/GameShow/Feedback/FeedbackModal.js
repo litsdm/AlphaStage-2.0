@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { string, object } from 'prop-types';
 import styles from './FeedbackModal.scss';
 
 import Modal from '../../Modal';
 import VideoPlayer from '../../VideoPlayer';
 import CommentList from './CommentList';
 import CommentInput from './CommentInput';
+import ObjectiveList from './ObjectiveList';
 
 class FeedbackModal extends Component {
   state = {
@@ -17,7 +18,7 @@ class FeedbackModal extends Component {
   }
 
   render() {
-    const { finalVideo, id } = this.props;
+    const { finalVideo, id, session } = this.props;
     const { comments } = this.state;
     return (
       <Modal title="Testing Feedback" id={id}>
@@ -27,9 +28,11 @@ class FeedbackModal extends Component {
             : null
         }
         <div className={styles.Content}>
-          <p>Comments</p>
+          <p className={styles.Title}>Comments</p>
           <CommentList comments={comments} setState={this.setStateProperty} />
           <CommentInput comments={comments} setState={this.setStateProperty} />
+          <p className={styles.Title}>Objectives</p>
+          <ObjectiveList objectives={session ? session.objectives : undefined} />
         </div>
         <div className={styles.Footer}>
           <button className={styles.Submit}>Send Feedback</button>
@@ -41,12 +44,14 @@ class FeedbackModal extends Component {
 
 FeedbackModal.propTypes = {
   finalVideo: string,
-  id: string
+  id: string,
+  session: object
 };
 
 FeedbackModal.defaultProps = {
   finalVideo: '',
-  id: ''
+  id: '',
+  session: {}
 };
 
 export default FeedbackModal;

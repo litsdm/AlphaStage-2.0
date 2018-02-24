@@ -163,7 +163,7 @@ class GameShow extends Component {
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
         </Modal>
-        <FeedbackModal id={feedbackModalId} finalVideo={finalVideo} />
+        <FeedbackModal id={feedbackModalId} finalVideo={finalVideo} session={activeSession} />
         <InfoModal
           id={sessionModalId}
           session={activeSession}

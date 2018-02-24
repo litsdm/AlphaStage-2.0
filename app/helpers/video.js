@@ -11,7 +11,6 @@ export const mergeVideoAndAudio = (video, audio, output, cb) => { // eslint-disa
     .videoCodec('copy')
     .audioCodec('aac')
     .on('end', () => {
-      console.log('Finished Processing Video');
       cb(output);
     })
     .saveToFile(output);
