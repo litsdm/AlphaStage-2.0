@@ -26,12 +26,15 @@ class GameShow extends Component {
     activeSession: null
   };
 
+  componentWillMount() {
+    this.checkForActiveSession();
+  }
+
   componentDidMount() {
     const { game, downloadId, incrementMetric } = this.props;
     const contentContainer = document.getElementById('content-container');
     const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
 
-    this.checkForActiveSession();
     incrementMetric(game._id, 'pageViews');
 
     contentContainer.addEventListener('scroll', this.handleScroll);

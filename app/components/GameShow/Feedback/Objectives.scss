@@ -10,9 +10,25 @@
 }
 
 .Objective {
+  cursor: pointer;
+  display: block;
+  opacity: 0.6;
   font-weight: bold;
+  user-select: none;
 
   i {
     color: #bbb;
+  }
+
+  input {
+    display: none;
+  }
+
+  &.active {
+    opacity: 1;
+
+    i {
+      color: #2098f3;
+    }
   }
 }

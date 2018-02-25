@@ -10,7 +10,18 @@ import ObjectiveList from './ObjectiveList';
 
 class FeedbackModal extends Component {
   state = {
-    comments: []
+    comments: [],
+    objectives: []
+  }
+
+  componentWillMount() {
+    const { session } = this.props;
+    this.createObjectives(session.objectives);
+  }
+
+  createObjectives = (objectives) => {
+    const objectivesObject = objectives.map(objective => ({ text: objective, done: false }));
+    this.setState({ objectives: objectivesObject });
   }
 
   setStateProperty = (name, value) => {
@@ -18,8 +29,8 @@ class FeedbackModal extends Component {
   }
 
   render() {
-    const { finalVideo, id, session } = this.props;
-    const { comments } = this.state;
+    const { finalVideo, id } = this.props;
+    const { comments, objectives } = this.state;
     return (
       <Modal title="Testing Feedback" id={id}>
         {
@@ -32,7 +43,7 @@ class FeedbackModal extends Component {
           <CommentList comments={comments} setState={this.setStateProperty} />
           <CommentInput comments={comments} setState={this.setStateProperty} />
           <p className={styles.Title}>Objectives</p>
-          <ObjectiveList objectives={session ? session.objectives : undefined} />
+          <ObjectiveList setState={this.setStateProperty} objectives={objectives} />
         </div>
         <div className={styles.Footer}>
           <button className={styles.Submit}>Send Feedback</button>
@@ -51,7 +62,9 @@ FeedbackModal.propTypes = {
 FeedbackModal.defaultProps = {
   finalVideo: '',
   id: '',
-  session: {}
+  session: {
+    objectives: []
+  }
 };
 
 export default FeedbackModal;
