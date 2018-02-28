@@ -102,7 +102,12 @@ class GamePage extends Component {
           console.error(err);
           return;
         }
-        this.setState({ [name]: path }, this.mergeBlobs);
+        this.setState({ [name]: path }, () => {
+          const { audioFile, videoFile } = this.state;
+          if (audioFile && videoFile) {
+            this.mergeBlobs();
+          }
+        });
       });
     };
 
