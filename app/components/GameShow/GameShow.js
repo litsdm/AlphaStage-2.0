@@ -23,7 +23,6 @@ const INITIAL_PERCENTAGE = 90;
 class GameShow extends Component {
   state = {
     progress: 0,
-    activeSession: null
   };
 
   componentWillMount() {
@@ -63,12 +62,13 @@ class GameShow extends Component {
   }
 
   checkForActiveSession = () => {
-    const { testingSessions } = this.props.game;
+    const { game, handleChange } = this.props;
+    const { testingSessions } = game;
     testingSessions.every(session => {
       const status = getStatus(session);
 
       if (status === 'Active') {
-        this.setState({ activeSession: session });
+        handleChange({ target: { name: 'activeSession', value: session } });
         return false;
       }
 
@@ -138,6 +138,7 @@ class GameShow extends Component {
 
   render() {
     const {
+      activeSession,
       game,
       isDownloading,
       downloadId,
@@ -146,7 +147,7 @@ class GameShow extends Component {
       micAllowed,
       handleChange
     } = this.props;
-    const { progress, activeSession } = this.state;
+    const { progress } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
     const feedbackModalId = `feedback-${game._id}`;
@@ -180,6 +181,7 @@ class GameShow extends Component {
 }
 
 GameShow.propTypes = {
+  activeSession: object,
   game: object.isRequired,
   downloadId: string.isRequired,
   incrementMetric: func.isRequired,
@@ -193,7 +195,8 @@ GameShow.propTypes = {
 GameShow.defaultProps = {
   isDownloading: false,
   micAllowed: true,
-  finalVideo: null
+  finalVideo: null,
+  activeSession: null
 };
 
 export default GameShow;

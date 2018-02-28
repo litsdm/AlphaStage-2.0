@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import DesktopRecorder from '../libs/DesktopRecorder';
 import MicrophoneRecorder from '../libs/MicrophoneRecorder';
 import { mergeVideoAndAudio } from '../helpers/video';
+import callApi, { getFileBlob, uploadFile } from '../helpers/apiCaller';
 
 import GameShow from '../components/GameShow/GameShow';
 import Loader from '../components/Loader';
@@ -52,11 +53,13 @@ const micOptions = {
 
 class GamePage extends Component {
   state = {
+    activeSession: null,
     audioFile: null,
     desktopRecorder: null,
     finalVideo: null,
     micRecorder: null,
     micAllowed: true,
+    s3Url: '',
     videoFile: null
   }
 
@@ -104,6 +107,30 @@ class GamePage extends Component {
     reader.readAsArrayBuffer(blob);
   }
 
+  getFileAndUpload = (path) => {
+    getFileBlob(path, (blob) => {
+      this.uploadVideo(blob);
+    });
+  }
+
+  uploadVideo = (file) => {
+    const { game } = this.props;
+    const fileName = `test-${game._id}-${new Date().getTime()}.${file.type.split('/')[1]}`;
+    let s3Url;
+    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
+      .then(res => res.json())
+      .then(({ signedRequest, url }) => {
+        s3Url = url;
+        return uploadFile(file, signedRequest);
+      })
+      .then(res => {
+        if (res.status !== 200) return Promise.reject();
+        this.setState({ s3Url });
+        return s3Url;
+      })
+      .catch(() => console.log('error ocurred'));
+  }
+
   mergeBlobs = () => {
     const { game } = this.props;
     const { audioFile, videoFile } = this.state;
@@ -118,6 +145,7 @@ class GamePage extends Component {
 
     mergeVideoAndAudio(audioFile, videoFile, output, (processedUrl) => {
       this.setState({ finalVideo: processedUrl });
+      this.getFileAndUpload(processedUrl);
     });
   }
 
@@ -154,12 +182,13 @@ class GamePage extends Component {
       isDownloading,
       downloadId
     } = this.props;
-    const { finalVideo, micAllowed } = this.state;
+    const { activeSession, finalVideo, micAllowed } = this.state;
 
     return (
       loading
         ? <Loader />
         : <GameShow
+          activeSession={activeSession || undefined}
           game={game}
           isDownloading={isDownloading}
           downloadId={downloadId}

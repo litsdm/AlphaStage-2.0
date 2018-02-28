@@ -11,8 +11,8 @@ export const uploadFile = (file, signedRequest) =>
     body: file
   });
 
-export const getLocalFile = (url, cb) => {
-  const xhr = XMLHttpRequest();
+export const getFileBlob = (url, cb) => {
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'blob';
   xhr.addEventListener('load', () => cb(xhr.response));

@@ -14,9 +14,11 @@ class FeedbackModal extends Component {
     objectives: []
   }
 
-  componentWillMount() {
+  componentWillReceiveProps(nextProps) {
     const { session } = this.props;
-    this.createObjectives(session.objectives);
+    if (session !== nextProps.session) {
+      this.createObjectives(nextProps.session.objectives);
+    }
   }
 
   createObjectives = (objectives) => {
