@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { exec } from 'child_process';
 import fs from 'fs';
 import { remote } from 'electron';
-import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
+import { bool, object, string, func } from 'prop-types';
 
 import DesktopRecorder from '../libs/DesktopRecorder';
 import MicrophoneRecorder from '../libs/MicrophoneRecorder';
@@ -16,6 +17,7 @@ import Loader from '../components/Loader';
 
 import fullGameQuery from '../graphql/fullGame.graphql';
 import addToMetric from '../graphql/addToMetric.graphql';
+import createTest from '../graphql/createTest.graphql';
 
 const { app } = remote;
 const videoReader = new FileReader();
@@ -33,6 +35,16 @@ const withGraphql = compose(
     props: ({ mutate }) => ({
       incrementMetric: (gameId, metric) => mutate({ variables: { gameId, metric } }),
     }),
+  }),
+  graphql(createTest, {
+    props: ({ mutate }) => ({
+      sendFeedback: (feedback) => {
+        const token = localStorage.getItem('token');
+        const user = jwtDecode(token);
+        const input = { ...feedback, testerId: user._id };
+        mutate({ variables: { input } });
+      }
+    })
   }),
   graphql(fullGameQuery, {
     props: ({ data }) => {
@@ -187,9 +199,10 @@ class GamePage extends Component {
       loading,
       incrementMetric,
       isDownloading,
-      downloadId
+      downloadId,
+      sendFeedback
     } = this.props;
-    const { activeSession, finalVideo, micAllowed } = this.state;
+    const { activeSession, finalVideo, micAllowed, s3Url } = this.state;
 
     return (
       loading
@@ -204,17 +217,20 @@ class GamePage extends Component {
           finalVideo={finalVideo}
           micAllowed={micAllowed}
           handleChange={this.handleChange}
+          s3Url={s3Url}
+          sendFeedback={sendFeedback}
         />
     );
   }
 }
 
 GamePage.propTypes = {
-  loading: PropTypes.bool,
-  game: PropTypes.object,
-  isDownloading: PropTypes.bool,
-  downloadId: PropTypes.string.isRequired,
-  incrementMetric: PropTypes.func.isRequired
+  loading: bool,
+  game: object,
+  isDownloading: bool,
+  downloadId: string.isRequired,
+  incrementMetric: func.isRequired,
+  sendFeedback: func.isRequired
 };
 
 GamePage.defaultProps = {

@@ -145,7 +145,9 @@ class GameShow extends Component {
       openGame,
       finalVideo,
       micAllowed,
-      handleChange
+      handleChange,
+      s3Url,
+      sendFeedback
     } = this.props;
     const { progress } = this.state;
 
@@ -167,7 +169,13 @@ class GameShow extends Component {
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
         </Modal>
-        <FeedbackModal id={feedbackModalId} finalVideo={finalVideo} session={activeSession} />
+        <FeedbackModal
+          id={feedbackModalId}
+          finalVideo={finalVideo}
+          session={activeSession}
+          s3Url={s3Url}
+          sendFeedback={sendFeedback}
+        />
         <InfoModal
           id={sessionModalId}
           session={activeSession}
@@ -189,14 +197,17 @@ GameShow.propTypes = {
   isDownloading: bool,
   finalVideo: string,
   micAllowed: bool,
-  handleChange: func.isRequired
+  handleChange: func.isRequired,
+  s3Url: string,
+  sendFeedback: func.isRequired
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
   micAllowed: true,
   finalVideo: null,
-  activeSession: null
+  activeSession: null,
+  s3Url: ''
 };
 
 export default GameShow;

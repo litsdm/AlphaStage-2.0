@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, object } from 'prop-types';
+import { string, object, func } from 'prop-types';
 import styles from './FeedbackModal.scss';
 
 import Modal from '../../Modal';
@@ -30,9 +30,18 @@ class FeedbackModal extends Component {
     this.setState({ [name]: value });
   }
 
+  handleSend = () => {
+    const { s3Url, session, sendFeedback, id } = this.props;
+    const input = { ...this.state, s3Url, testingSessionId: session._id };
+
+    sendFeedback(input);
+    document.getElementById(id).style.display = 'none';
+  }
+
   render() {
-    const { finalVideo, id } = this.props;
+    const { finalVideo, id, s3Url } = this.props;
     const { comments, objectives } = this.state;
+
     return (
       <Modal title="Testing Feedback" id={id}>
         {
@@ -48,7 +57,16 @@ class FeedbackModal extends Component {
           <ObjectiveList setState={this.setStateProperty} objectives={objectives} />
         </div>
         <div className={styles.Footer}>
-          <button className={styles.Submit}>Send Feedback</button>
+          <p className={`${styles.Processing} ${!s3Url ? styles.active : ''}`}>
+            <i className="fa fa-spinner fa-pulse fa-fw" /> Uploading video please wait.
+          </p>
+          <button
+            className={`${styles.Submit} ${!s3Url ? styles.disabled : ''}`}
+            onClick={this.handleSend}
+            disabled={!s3Url}
+          >
+            Send Feedback
+          </button>
         </div>
       </Modal>
     );
@@ -58,7 +76,9 @@ class FeedbackModal extends Component {
 FeedbackModal.propTypes = {
   finalVideo: string,
   id: string,
-  session: object
+  session: object,
+  s3Url: string,
+  sendFeedback: func.isRequired
 };
 
 FeedbackModal.defaultProps = {
@@ -66,7 +86,8 @@ FeedbackModal.defaultProps = {
   id: '',
   session: {
     objectives: []
-  }
+  },
+  s3Url: ''
 };
 
 export default FeedbackModal;
