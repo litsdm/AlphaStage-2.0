@@ -79,15 +79,21 @@ class GamePage extends Component {
   }
 
   onMediaStop = (type, blobObject) => {
-    this.saveRecordedFile(type, blobObject.blob);
+    this.saveRecordedFile(type, blobObject);
   }
 
-  saveRecordedFile = (type, blob) => {
+  saveRecordedFile = (type, { blob, url }) => {
     const { micAllowed } = this.state;
     const reader = type === 'mic' ? audioReader : videoReader;
     const name = type === 'mic' ? 'audioFile' : 'videoFile';
     const appDataPath = app.getPath('appData');
     const path = `${appDataPath}/ASLibrary/Sessions/${type}-${new Date().getTime()}.webm`;
+
+    if (!micAllowed && type !== 'mic') {
+      this.setState({ finalVideo: url });
+      this.uploadVideo(blob);
+      return;
+    }
 
     reader.onload = () => {
       const buffer = Buffer.from(reader.result);
@@ -96,11 +102,7 @@ class GamePage extends Component {
           console.error(err);
           return;
         }
-        if (micAllowed) {
-          this.setState({ [name]: path }, this.mergeBlobs);
-        } else {
-          this.setState({ finalVideo: path });
-        }
+        this.setState({ [name]: path }, this.mergeBlobs);
       });
     };
 
