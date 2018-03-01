@@ -4,17 +4,20 @@ import { connect } from 'react-redux';
 import { exec } from 'child_process';
 import fs from 'fs';
 import { remote } from 'electron';
-import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
+import { bool, object, string, func } from 'prop-types';
 
 import DesktopRecorder from '../libs/DesktopRecorder';
 import MicrophoneRecorder from '../libs/MicrophoneRecorder';
-import { mergeVideoAndAudio } from '../helpers/video';
+import { mergeVideoAndAudio, convertToMp4 } from '../helpers/video';
+import callApi, { getFileBlob, uploadFile } from '../helpers/apiCaller';
 
 import GameShow from '../components/GameShow/GameShow';
 import Loader from '../components/Loader';
 
 import fullGameQuery from '../graphql/fullGame.graphql';
 import addToMetric from '../graphql/addToMetric.graphql';
+import createTest from '../graphql/createTest.graphql';
 
 const { app } = remote;
 const videoReader = new FileReader();
@@ -32,6 +35,16 @@ const withGraphql = compose(
     props: ({ mutate }) => ({
       incrementMetric: (gameId, metric) => mutate({ variables: { gameId, metric } }),
     }),
+  }),
+  graphql(createTest, {
+    props: ({ mutate }) => ({
+      sendFeedback: (feedback) => {
+        const token = localStorage.getItem('token');
+        const user = jwtDecode(token);
+        const input = { ...feedback, testerId: user._id };
+        mutate({ variables: { input } });
+      }
+    })
   }),
   graphql(fullGameQuery, {
     props: ({ data }) => {
@@ -52,11 +65,13 @@ const micOptions = {
 
 class GamePage extends Component {
   state = {
+    activeSession: null,
     audioFile: null,
     desktopRecorder: null,
     finalVideo: null,
     micRecorder: null,
     micAllowed: true,
+    s3Url: '',
     videoFile: null
   }
 
@@ -76,10 +91,10 @@ class GamePage extends Component {
   }
 
   onMediaStop = (type, blobObject) => {
-    this.saveRecordedFile(type, blobObject.blob);
+    this.saveRecordedFile(type, blobObject);
   }
 
-  saveRecordedFile = (type, blob) => {
+  saveRecordedFile = (type, { blob }) => {
     const { micAllowed } = this.state;
     const reader = type === 'mic' ? audioReader : videoReader;
     const name = type === 'mic' ? 'audioFile' : 'videoFile';
@@ -94,9 +109,14 @@ class GamePage extends Component {
           return;
         }
         if (micAllowed) {
-          this.setState({ [name]: path }, this.mergeBlobs);
+          this.setState({ [name]: path }, () => {
+            const { audioFile, videoFile } = this.state;
+            if (audioFile && videoFile) {
+              this.mergeBlobs();
+            }
+          });
         } else {
-          this.setState({ finalVideo: path });
+          this.setState({ [name]: path }, this.convertVideo);
         }
       });
     };
@@ -104,20 +124,55 @@ class GamePage extends Component {
     reader.readAsArrayBuffer(blob);
   }
 
+  getFileAndUpload = (path) => {
+    getFileBlob(path, (blob) => {
+      this.uploadVideo(blob);
+    });
+  }
+
+  uploadVideo = (file) => {
+    const { game } = this.props;
+    const fileName = `test-${game._id}-${new Date().getTime()}.${file.type.split('/')[1]}`;
+    let s3Url;
+    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
+      .then(res => res.json())
+      .then(({ signedRequest, url }) => {
+        s3Url = url;
+        return uploadFile(file, signedRequest);
+      })
+      .then(res => {
+        if (res.status !== 200) return Promise.reject();
+        this.setState({ s3Url });
+        return s3Url;
+      })
+      .catch(() => console.log('error ocurred'));
+  }
+
+  convertVideo = () => {
+    const { game } = this.props;
+    const { videoFile } = this.state;
+    const appDataPath = app.getPath('appData');
+
+    const output = `${appDataPath}/ASLibrary/Sessions/merged-${game._id}-${new Date().getTime()}.mp4`;
+
+    convertToMp4(videoFile, output, (processedUrl) => {
+      this.setState({ finalVideo: processedUrl });
+      this.getFileAndUpload(processedUrl);
+    });
+  }
+
   mergeBlobs = () => {
     const { game } = this.props;
     const { audioFile, videoFile } = this.state;
     const appDataPath = app.getPath('appData');
 
-    if (audioFile === null || videoFile === null) {
-      setTimeout(() => this.mergeBlobs(), 500);
-      return;
-    }
-
     const output = `${appDataPath}/ASLibrary/Sessions/merged-${game._id}-${new Date().getTime()}.mp4`;
+
+    console.log(audioFile, videoFile);
 
     mergeVideoAndAudio(audioFile, videoFile, output, (processedUrl) => {
       this.setState({ finalVideo: processedUrl });
+      this.getFileAndUpload(processedUrl);
     });
   }
 
@@ -152,14 +207,16 @@ class GamePage extends Component {
       loading,
       incrementMetric,
       isDownloading,
-      downloadId
+      downloadId,
+      sendFeedback
     } = this.props;
-    const { finalVideo, micAllowed } = this.state;
+    const { activeSession, finalVideo, micAllowed, s3Url } = this.state;
 
     return (
       loading
         ? <Loader />
         : <GameShow
+          activeSession={activeSession || undefined}
           game={game}
           isDownloading={isDownloading}
           downloadId={downloadId}
@@ -168,17 +225,20 @@ class GamePage extends Component {
           finalVideo={finalVideo}
           micAllowed={micAllowed}
           handleChange={this.handleChange}
+          s3Url={s3Url}
+          sendFeedback={sendFeedback}
         />
     );
   }
 }
 
 GamePage.propTypes = {
-  loading: PropTypes.bool,
-  game: PropTypes.object,
-  isDownloading: PropTypes.bool,
-  downloadId: PropTypes.string.isRequired,
-  incrementMetric: PropTypes.func.isRequired
+  loading: bool,
+  game: object,
+  isDownloading: bool,
+  downloadId: string.isRequired,
+  incrementMetric: func.isRequired,
+  sendFeedback: func.isRequired
 };
 
 GamePage.defaultProps = {

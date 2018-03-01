@@ -1,0 +1,34 @@
+.List {
+  background-color: #fff;
+  padding: 12px;
+}
+
+.Description {
+  font-size: 14px;
+  opacity: 0.5;
+  margin-bottom: 6px;
+}
+
+.Objective {
+  cursor: pointer;
+  display: block;
+  opacity: 0.6;
+  font-weight: bold;
+  user-select: none;
+
+  i {
+    color: #bbb;
+  }
+
+  input {
+    display: none;
+  }
+
+  &.active {
+    opacity: 1;
+
+    i {
+      color: #2098f3;
+    }
+  }
+}

@@ -13,7 +13,7 @@ import ContentCard from './ContentCard';
 import Modal from '../Modal';
 import Banner from '../Dashboard/TestingSessions/Banner';
 import InfoModal from '../Dashboard/TestingSessions/InfoModal';
-import VideoPlayer from '../VideoPlayer';
+import FeedbackModal from './Feedback/FeedbackModal';
 
 const INITIAL_OFFSET = 427;
 const OFFSET_DIFFERENCE = 375;
@@ -23,15 +23,17 @@ const INITIAL_PERCENTAGE = 90;
 class GameShow extends Component {
   state = {
     progress: 0,
-    activeSession: null
   };
+
+  componentWillMount() {
+    this.checkForActiveSession();
+  }
 
   componentDidMount() {
     const { game, downloadId, incrementMetric } = this.props;
     const contentContainer = document.getElementById('content-container');
     const editorRoot = document.getElementsByClassName('DraftEditor-root')[0];
 
-    this.checkForActiveSession();
     incrementMetric(game._id, 'pageViews');
 
     contentContainer.addEventListener('scroll', this.handleScroll);
@@ -60,12 +62,13 @@ class GameShow extends Component {
   }
 
   checkForActiveSession = () => {
-    const { testingSessions } = this.props.game;
+    const { game, handleChange } = this.props;
+    const { testingSessions } = game;
     testingSessions.every(session => {
       const status = getStatus(session);
 
       if (status === 'Active') {
-        this.setState({ activeSession: session });
+        handleChange({ target: { name: 'activeSession', value: session } });
         return false;
       }
 
@@ -135,15 +138,18 @@ class GameShow extends Component {
 
   render() {
     const {
+      activeSession,
       game,
       isDownloading,
       downloadId,
       openGame,
       finalVideo,
       micAllowed,
-      handleChange
+      handleChange,
+      s3Url,
+      sendFeedback
     } = this.props;
-    const { progress, activeSession } = this.state;
+    const { progress } = this.state;
 
     const galleryModalId = `gallery-${game._id}`;
     const feedbackModalId = `feedback-${game._id}`;
@@ -163,14 +169,13 @@ class GameShow extends Component {
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}
         </Modal>
-        <Modal title="Testing Feedback" id={feedbackModalId}>
-          {
-            finalVideo !== null
-              ? <VideoPlayer src={finalVideo} />
-              : null
-          }
-          <p>Other content</p>
-        </Modal>
+        <FeedbackModal
+          id={feedbackModalId}
+          finalVideo={finalVideo}
+          session={activeSession}
+          s3Url={s3Url}
+          sendFeedback={sendFeedback}
+        />
         <InfoModal
           id={sessionModalId}
           session={activeSession}
@@ -184,6 +189,7 @@ class GameShow extends Component {
 }
 
 GameShow.propTypes = {
+  activeSession: object,
   game: object.isRequired,
   downloadId: string.isRequired,
   incrementMetric: func.isRequired,
@@ -191,13 +197,17 @@ GameShow.propTypes = {
   isDownloading: bool,
   finalVideo: string,
   micAllowed: bool,
-  handleChange: func.isRequired
+  handleChange: func.isRequired,
+  s3Url: string,
+  sendFeedback: func.isRequired
 };
 
 GameShow.defaultProps = {
   isDownloading: false,
   micAllowed: true,
-  finalVideo: null
+  finalVideo: null,
+  activeSession: null,
+  s3Url: ''
 };
 
 export default GameShow;

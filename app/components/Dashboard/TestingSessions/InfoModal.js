@@ -14,7 +14,7 @@ const InfoModal = ({ id, startSession, session, micAllowed, handleChange }) => {
   const renderObjectives = () => (
     session.objectives.map(objective => (
       <p key={uuid()}>
-        <i className="fa fa-check-circle-o" /> {objective}
+        <i className="fa fa-exclamation" /> {objective}
       </p>
     ))
   );

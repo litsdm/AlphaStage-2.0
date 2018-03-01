@@ -11,6 +11,13 @@ export const uploadFile = (file, signedRequest) =>
     body: file
   });
 
+export const getFileBlob = (url, cb) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.addEventListener('load', () => cb(xhr.response));
+  xhr.send();
+};
 
 const callApi = (endpoint, body, method = 'GET') => {
   const token = localStorage.getItem('token') || null;
