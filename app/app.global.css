@@ -125,10 +125,11 @@ p {
 }
 
 .video-js {
-  font-size: 10px;
   color: #fff;
-  width: 100%;
+  font-size: 10px;
   height: 380px;
+  outline: none;
+  width: 100%;
 }
 
 .vjs-default-skin .vjs-big-play-button {

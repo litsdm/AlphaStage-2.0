@@ -7,7 +7,7 @@ const VideoPlayer = ({ src }) => {
     autoplay: false,
     controls: true,
     className: 'video-js vjs-default-skin',
-    poster: 'https://i.ytimg.com/vi/NpEaa2P7qZI/maxresdefault.jpg',
+    poster: 'https://image.ibb.co/jh0EYH/placeholder_black.png',
     src,
     preload: 'auto',
     width: '720',
