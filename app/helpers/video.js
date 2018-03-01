@@ -5,7 +5,16 @@ import { path as ffprobePath } from 'ffprobe-static';
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
 
-export const mergeVideoAndAudio = (video, audio, output, cb) => { // eslint-disable-line
+export const convertToMp4 = (video, output, cb) => {
+  ffmpeg(video)
+    .videoCodec('copy')
+    .on('end', () => {
+      cb(output);
+    })
+    .saveToFile(output);
+};
+
+export const mergeVideoAndAudio = (video, audio, output, cb) => {
   ffmpeg(video)
     .addInput(audio)
     .videoCodec('copy')

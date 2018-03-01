@@ -9,7 +9,7 @@ import { bool, object, string, func } from 'prop-types';
 
 import DesktopRecorder from '../libs/DesktopRecorder';
 import MicrophoneRecorder from '../libs/MicrophoneRecorder';
-import { mergeVideoAndAudio } from '../helpers/video';
+import { mergeVideoAndAudio, convertToMp4 } from '../helpers/video';
 import callApi, { getFileBlob, uploadFile } from '../helpers/apiCaller';
 
 import GameShow from '../components/GameShow/GameShow';
@@ -94,18 +94,12 @@ class GamePage extends Component {
     this.saveRecordedFile(type, blobObject);
   }
 
-  saveRecordedFile = (type, { blob, url }) => {
+  saveRecordedFile = (type, { blob }) => {
     const { micAllowed } = this.state;
     const reader = type === 'mic' ? audioReader : videoReader;
     const name = type === 'mic' ? 'audioFile' : 'videoFile';
     const appDataPath = app.getPath('appData');
     const path = `${appDataPath}/ASLibrary/Sessions/${type}-${new Date().getTime()}.webm`;
-
-    if (!micAllowed && type !== 'mic') {
-      this.setState({ finalVideo: url });
-      this.uploadVideo(blob);
-      return;
-    }
 
     reader.onload = () => {
       const buffer = Buffer.from(reader.result);
@@ -114,12 +108,16 @@ class GamePage extends Component {
           console.error(err);
           return;
         }
-        this.setState({ [name]: path }, () => {
-          const { audioFile, videoFile } = this.state;
-          if (audioFile && videoFile) {
-            this.mergeBlobs();
-          }
-        });
+        if (micAllowed) {
+          this.setState({ [name]: path }, () => {
+            const { audioFile, videoFile } = this.state;
+            if (audioFile && videoFile) {
+              this.mergeBlobs();
+            }
+          });
+        } else {
+          this.setState({ [name]: path }, this.convertVideo);
+        }
       });
     };
 
@@ -150,17 +148,27 @@ class GamePage extends Component {
       .catch(() => console.log('error ocurred'));
   }
 
+  convertVideo = () => {
+    const { game } = this.props;
+    const { videoFile } = this.state;
+    const appDataPath = app.getPath('appData');
+
+    const output = `${appDataPath}/ASLibrary/Sessions/merged-${game._id}-${new Date().getTime()}.mp4`;
+
+    convertToMp4(videoFile, output, (processedUrl) => {
+      this.setState({ finalVideo: processedUrl });
+      this.getFileAndUpload(processedUrl);
+    });
+  }
+
   mergeBlobs = () => {
     const { game } = this.props;
     const { audioFile, videoFile } = this.state;
     const appDataPath = app.getPath('appData');
 
-    if (audioFile === null || videoFile === null) {
-      setTimeout(() => this.mergeBlobs(), 500);
-      return;
-    }
-
     const output = `${appDataPath}/ASLibrary/Sessions/merged-${game._id}-${new Date().getTime()}.mp4`;
+
+    console.log(audioFile, videoFile);
 
     mergeVideoAndAudio(audioFile, videoFile, output, (processedUrl) => {
       this.setState({ finalVideo: processedUrl });
