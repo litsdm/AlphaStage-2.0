@@ -16,7 +16,7 @@ class FeedbackModal extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { session } = this.props;
-    if (session !== nextProps.session) {
+    if (session !== nextProps.session && nextProps.session) {
       this.createObjectives(nextProps.session.objectives);
     }
   }
@@ -31,10 +31,10 @@ class FeedbackModal extends Component {
   }
 
   handleSend = () => {
-    const { s3Url, session, sendFeedback, id } = this.props;
+    const { s3Url, session, sendFeedback, id, gameId } = this.props;
     const input = { ...this.state, s3Url, testingSessionId: session._id };
 
-    sendFeedback(input);
+    sendFeedback(input, gameId);
     document.getElementById(id).style.display = 'none';
   }
 
@@ -76,6 +76,7 @@ class FeedbackModal extends Component {
 FeedbackModal.propTypes = {
   finalVideo: string,
   id: string,
+  gameId: string,
   session: object,
   s3Url: string,
   sendFeedback: func.isRequired
@@ -84,6 +85,7 @@ FeedbackModal.propTypes = {
 FeedbackModal.defaultProps = {
   finalVideo: '',
   id: '',
+  gameId: '',
   session: {
     objectives: []
   },

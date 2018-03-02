@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import { object, func, string, bool } from 'prop-types';
 import Slider from 'react-slick';
 import uuid from 'uuid/v4';
+import jwtDecode from 'jwt-decode';
 import styles from './styles.scss';
 
 import { getStatus } from '../../helpers/dates';
@@ -64,10 +65,14 @@ class GameShow extends Component {
   checkForActiveSession = () => {
     const { game, handleChange } = this.props;
     const { testingSessions } = game;
+    const token = localStorage.getItem('token');
+    const user = jwtDecode(token);
+
     testingSessions.every(session => {
       const status = getStatus(session);
+      const ids = session.testerIds || [];
 
-      if (status === 'Active') {
+      if (status === 'Active' && !ids.includes(user._id)) {
         handleChange({ target: { name: 'activeSession', value: session } });
         return false;
       }
@@ -175,6 +180,7 @@ class GameShow extends Component {
           session={activeSession}
           s3Url={s3Url}
           sendFeedback={sendFeedback}
+          gameId={game._id}
         />
         <InfoModal
           id={sessionModalId}

@@ -38,11 +38,17 @@ const withGraphql = compose(
   }),
   graphql(createTest, {
     props: ({ mutate }) => ({
-      sendFeedback: (feedback) => {
+      sendFeedback: (feedback, gameId) => {
         const token = localStorage.getItem('token');
         const user = jwtDecode(token);
         const input = { ...feedback, testerId: user._id };
-        mutate({ variables: { input } });
+        const queriesToRefetch = [
+          {
+            query: fullGameQuery,
+            variables: { id: gameId }
+          }
+        ];
+        mutate({ variables: { input }, refetchQueries: queriesToRefetch, });
       }
     })
   }),
@@ -201,6 +207,12 @@ class GamePage extends Component {
     if (micAllowed) setTimeout(() => micRecorder.startRecording(), 5000);
   };
 
+  handleFeedback = (feedback, gameId) => {
+    const { sendFeedback } = this.props;
+    sendFeedback(feedback, gameId);
+    this.setState({ activeSession: null });
+  }
+
   render() {
     const {
       game,
@@ -208,7 +220,6 @@ class GamePage extends Component {
       incrementMetric,
       isDownloading,
       downloadId,
-      sendFeedback
     } = this.props;
     const { activeSession, finalVideo, micAllowed, s3Url } = this.state;
 
@@ -226,7 +237,7 @@ class GamePage extends Component {
           micAllowed={micAllowed}
           handleChange={this.handleChange}
           s3Url={s3Url}
-          sendFeedback={sendFeedback}
+          sendFeedback={this.handleFeedback}
         />
     );
   }

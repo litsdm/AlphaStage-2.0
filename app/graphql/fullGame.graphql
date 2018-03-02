@@ -19,7 +19,8 @@ query FullGame($id: String) {
       _id,
       startDate,
       endDate,
-      objectives
+      objectives,
+      testerIds
     }
     title,
     thumbnail,
