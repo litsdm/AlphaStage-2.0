@@ -7,10 +7,10 @@ import CategoryGrid from './CategoryGrid';
 class Browse extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <TopSlider games={this.props.games} />
         <CategoryGrid />
-      </div>
+      </React.Fragment>
     );
   }
 }

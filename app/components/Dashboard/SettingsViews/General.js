@@ -17,7 +17,7 @@ const General = ({ privacyCheck, releaseStatus, handleChange }) => {
   );
 
   return (
-    <div>
+    <React.Fragment>
       <p className={styles.Title}>General</p>
       <div className={styles.Setting}>
         <p className={styles.STitle}>Availability</p>
@@ -54,7 +54,7 @@ const General = ({ privacyCheck, releaseStatus, handleChange }) => {
           {renderOptions()}
         </select>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

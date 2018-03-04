@@ -191,7 +191,7 @@ class ButtonContainer extends Component {
     const { isInstalling } = this.props;
 
     return (
-      <div>
+      <React.Fragment>
         <Button
           text={text}
           iconClass={iconClass}
@@ -208,7 +208,7 @@ class ButtonContainer extends Component {
           )
           : null
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

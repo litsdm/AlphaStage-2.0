@@ -96,11 +96,11 @@ class App extends Component {
     const { user, logout, updateUserPic } = this.props;
     const isAuthorized = !_.isEmpty(user);
     return (
-      <div>
+      <React.Fragment>
         {
           isAuthorized
           ? (
-            <div>
+            <React.Fragment>
               <SideBar user={user} logout={logout} updateUserPic={updateUserPic} />
               <div id="content-container" className="content-container">
                 <TopBar history={this.props.history} />
@@ -108,11 +108,11 @@ class App extends Component {
                   {this.props.children}
                 </div>
               </div>
-            </div>
+            </React.Fragment>
           )
           : <Auth />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

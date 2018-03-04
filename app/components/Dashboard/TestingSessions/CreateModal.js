@@ -140,10 +140,10 @@ class Create extends Component {
           }
           <div className={styles.Footer}>
             <p id="errorMessage" />
-            <div>
+            <React.Fragment>
               <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
               <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
-            </div>
+            </React.Fragment>
           </div>
         </div>
       </Modal>
