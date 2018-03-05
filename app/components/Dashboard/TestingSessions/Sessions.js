@@ -1,12 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 import uuid from 'uuid/v4';
-import { array, string } from 'prop-types';
+import { array, string, func } from 'prop-types';
 import styles from './Sessions.scss';
 
 import NSButton from './NSButton';
 
-const Sessions = ({ createId, sessions }) => {
+const Sessions = ({ createId, sessions, switchPage }) => {
+  const handleSwitch = (index) => () => switchPage(3, index);
+
   const renderStatus = (session) => {
     const { startDate, endDate } = session;
     const now = moment();
@@ -20,14 +22,21 @@ const Sessions = ({ createId, sessions }) => {
   };
 
   const renderSessionRows = () =>
-    sessions.map(session => {
+    sessions.map((session, index) => {
       const { startDate, endDate, testers, maxTesters } = session;
 
       const displayStart = moment(startDate).format('MMM Do, YYYY');
       const displayEnd = moment(endDate).format('MMM Do, YYYY');
 
       return (
-        <div key={uuid()} className={styles.Row}>
+        <div
+          key={uuid()}
+          className={styles.Row}
+          onClick={handleSwitch(index)}
+          role="button"
+          tabIndex={0}
+          onKeyPress={() => {}}
+        >
           <p className={styles.Dates}>
             {`${displayStart} - ${displayEnd}`}
           </p>
@@ -55,7 +64,8 @@ const Sessions = ({ createId, sessions }) => {
 
 Sessions.propTypes = {
   createId: string.isRequired,
-  sessions: array.isRequired
+  sessions: array.isRequired,
+  switchPage: func.isRequired
 };
 
 export default Sessions;
