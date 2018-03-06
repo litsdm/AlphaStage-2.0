@@ -35,7 +35,7 @@ const ObjectiveList = ({ objectives, setState }) => {
       ...objectives.slice(index + 1)
     ];
 
-    setState('objectives', newObjectives);
+    setState('objectives', newObjectives, checked);
   };
 
   return (

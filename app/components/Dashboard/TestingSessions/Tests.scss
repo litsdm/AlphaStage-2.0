@@ -67,3 +67,57 @@
   padding: 12px;
   padding-bottom: 1px;
 }
+
+.Test {
+  background-color: #2B2C31; //#2F3136;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  margin-right: 24px;
+  padding: 12px;
+  transition: 0.2s all ease;
+
+  p {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background-color: #2F3136;
+
+    .Dates,
+    .User {
+      opacity: 0.8
+    }
+
+    .TVal {
+      opacity: 1;
+    }
+  }
+}
+
+.Dates {
+  float: right;
+  opacity: 0.5;
+}
+
+.User {
+  font-size: 14px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.SubRow {
+  display: flex;
+  text-align: left;
+}
+
+.TSub {
+  flex-basis: 28%;
+  opacity: 0.8;
+}
+
+.TVal {
+  flex-basis: 72%;
+  font-weight: 100;
+  opacity: 0.7;
+}

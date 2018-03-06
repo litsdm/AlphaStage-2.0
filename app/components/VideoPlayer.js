@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import VideoJS from '../libs/VideoJS';
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ src, id }) => {
   const videoJsOptions = {
     autoplay: false,
     controls: true,
@@ -11,18 +11,21 @@ const VideoPlayer = ({ src }) => {
     src,
     preload: 'auto',
     width: '720',
-    height: '380'
+    height: '380',
+    id
   };
 
   return <VideoJS {...videoJsOptions} />;
 };
 
 VideoPlayer.propTypes = {
-  src: string
+  src: string,
+  id: string
 };
 
 VideoPlayer.defaultProps = {
-  src: ''
+  src: '',
+  id: ''
 };
 
 export default VideoPlayer;

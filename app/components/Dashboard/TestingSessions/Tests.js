@@ -40,7 +40,16 @@ const Tests = ({ session }) => {
         <div style={{ display: 'flex' }}>
           <div className={styles.Tests}>
             <div className={styles.Test}>
-              test
+              <p className={styles.Dates}>Created [date]</p>
+              <p className={styles.User}>Test by [user]</p>
+              <div className={styles.SubRow}>
+                <p className={styles.TSub}>Duration</p>
+                <p className={styles.TVal}>1:20</p>
+              </div>
+              <div className={styles.SubRow}>
+                <p className={styles.TSub}>Completed Objectives</p>
+                <p className={styles.TVal}>3</p>
+              </div>
             </div>
           </div>
           <div className={styles.Testers}>
