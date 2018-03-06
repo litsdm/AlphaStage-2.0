@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { string, object, func } from 'prop-types';
 import styles from './FeedbackModal.scss';
 
@@ -44,7 +45,13 @@ class FeedbackModal extends Component {
     /* We add _html5_api since the div surrounding the video element gets the
        actual id and assigns _html5_api to the actual video element */
     const vid = document.getElementById(`videoFeedback-${gameId}_html5_api`);
-    const input = { ...this.state, s3Url, testingSessionId: session._id, duration: vid.duration };
+    const input = {
+      ...this.state,
+      s3Url,
+      testingSessionId: session._id,
+      duration: vid.duration,
+      createdAt: moment()
+    };
 
     sendFeedback(input, gameId);
     document.getElementById(id).style.display = 'none';

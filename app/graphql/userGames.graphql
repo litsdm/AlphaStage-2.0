@@ -23,6 +23,7 @@ query UserGames($id: String) {
         tests {
           comments,
           completedObjectives,
+          createdAt,
           duration,
           objectives,
           s3Url
