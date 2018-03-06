@@ -121,3 +121,28 @@
   font-weight: 100;
   opacity: 0.7;
 }
+
+.Pending,
+.Active,
+.Finished {
+  align-items: center;
+  display: flex;
+
+  p {
+    color: #fff;
+    font-size: 12px;
+    margin-left: 6px;
+  }
+}
+
+.Active {
+  color: #00E676;
+}
+
+.Pending {
+  color: #CFD8DC;
+}
+
+.Finished {
+  color: #DD2C00;
+}
