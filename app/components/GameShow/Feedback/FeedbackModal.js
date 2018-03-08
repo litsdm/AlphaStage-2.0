@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { string, object, func } from 'prop-types';
 import styles from './FeedbackModal.scss';
 
 import Modal from '../../Modal';
-import VideoPlayer from '../../VideoPlayer';
-import CommentList from './CommentList';
-import CommentInput from './CommentInput';
-import ObjectiveList from './ObjectiveList';
+import FeedbackContent from './FeedbackContent';
 
 class FeedbackModal extends Component {
   state = {
     comments: [],
-    objectives: []
+    objectives: [],
+    completedObjectives: 0
   }
 
   componentWillReceiveProps(nextProps) {
     const { session } = this.props;
-    if (session !== nextProps.session) {
+    if (session !== nextProps.session && nextProps.session) {
       this.createObjectives(nextProps.session.objectives);
     }
   }
@@ -26,36 +25,50 @@ class FeedbackModal extends Component {
     this.setState({ objectives: objectivesObject });
   }
 
-  setStateProperty = (name, value) => {
-    this.setState({ [name]: value });
+  setStateProperty = (name, value, check = null) => {
+    let { completedObjectives } = this.state;
+    if (check !== null && !check) {
+      completedObjectives -= 1;
+    } else if (check !== null && check) {
+      completedObjectives += 1;
+    }
+
+    this.setState({ [name]: value, completedObjectives });
   }
 
   handleSend = () => {
-    const { s3Url, session, sendFeedback, id } = this.props;
-    const input = { ...this.state, s3Url, testingSessionId: session._id };
+    const { s3Url, session, sendFeedback, id, gameId } = this.props;
 
-    sendFeedback(input);
+    /* We add _html5_api since the div surrounding the video element gets the
+       actual id and assigns _html5_api to the actual video element */
+    const vid = document.getElementById(`videoFeedback-${gameId}_html5_api`);
+    const input = {
+      ...this.state,
+      s3Url,
+      testingSessionId: session._id,
+      duration: vid.duration,
+      createdAt: moment()
+    };
+
+    sendFeedback(input, gameId);
     document.getElementById(id).style.display = 'none';
   }
 
   render() {
-    const { finalVideo, id, s3Url } = this.props;
+    const { finalVideo, id, s3Url, gameId } = this.props;
     const { comments, objectives } = this.state;
+
+    const videoId = `videoFeedback-${gameId}`;
 
     return (
       <Modal title="Testing Feedback" id={id}>
-        {
-          finalVideo !== null
-            ? <VideoPlayer src={finalVideo} />
-            : null
-        }
-        <div className={styles.Content}>
-          <p className={styles.Title}>Comments</p>
-          <CommentList comments={comments} setState={this.setStateProperty} />
-          <CommentInput comments={comments} setState={this.setStateProperty} />
-          <p className={styles.Title}>Objectives</p>
-          <ObjectiveList setState={this.setStateProperty} objectives={objectives} />
-        </div>
+        <FeedbackContent
+          videoUrl={finalVideo}
+          comments={comments}
+          objectives={objectives}
+          videoId={videoId}
+          setState={this.setStateProperty}
+        />
         <div className={styles.Footer}>
           <p className={`${styles.Processing} ${!s3Url ? styles.active : ''}`}>
             <i className="fa fa-spinner fa-pulse fa-fw" /> Uploading video please wait.
@@ -76,6 +89,7 @@ class FeedbackModal extends Component {
 FeedbackModal.propTypes = {
   finalVideo: string,
   id: string,
+  gameId: string,
   session: object,
   s3Url: string,
   sendFeedback: func.isRequired
@@ -84,6 +98,7 @@ FeedbackModal.propTypes = {
 FeedbackModal.defaultProps = {
   finalVideo: '',
   id: '',
+  gameId: '',
   session: {
     objectives: []
   },

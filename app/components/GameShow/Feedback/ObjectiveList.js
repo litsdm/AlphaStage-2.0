@@ -1,9 +1,9 @@
 import React from 'react';
 import uuid from 'uuid/v4';
-import { array, func } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 import styles from './Objectives.scss';
 
-const ObjectiveList = ({ objectives, setState }) => {
+const ObjectiveList = ({ objectives, setState, display }) => {
   const renderObjectives = () => (
     objectives.map(({ text, done }, index) => {
       const key = uuid();
@@ -19,6 +19,7 @@ const ObjectiveList = ({ objectives, setState }) => {
             type="checkbox"
             checked={done}
             onChange={handleObjectiveClick(index)}
+            disabled={display}
           />
           <i className={`fa ${done ? 'fa-check-circle-o' : 'fa-circle-o'}`} /> {text}
         </label>
@@ -35,7 +36,7 @@ const ObjectiveList = ({ objectives, setState }) => {
       ...objectives.slice(index + 1)
     ];
 
-    setState('objectives', newObjectives);
+    setState('objectives', newObjectives, checked);
   };
 
   return (
@@ -50,11 +51,13 @@ const ObjectiveList = ({ objectives, setState }) => {
 
 ObjectiveList.propTypes = {
   objectives: array,
+  display: bool,
   setState: func.isRequired
 };
 
 ObjectiveList.defaultProps = {
-  objectives: []
+  objectives: [],
+  display: false
 };
 
 export default ObjectiveList;

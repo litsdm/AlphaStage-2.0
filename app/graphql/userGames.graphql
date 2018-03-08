@@ -13,9 +13,23 @@ query UserGames($id: String) {
         startDate,
         endDate,
         maxTesters,
+        rewardType,
+        reward,
         testers {
           _id,
-          username
+          username,
+          profilePic
+        },
+        tests {
+          _id,
+          comments,
+          completedObjectives,
+          createdAt,
+          duration,
+          objectives,
+          s3Url,
+          mark,
+          testerId
         }
       },
       title,

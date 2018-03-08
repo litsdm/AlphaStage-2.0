@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { string } from 'prop-types';
 import videojs from 'video.js';
 
 export default class VideoJS extends Component {
@@ -20,10 +21,21 @@ export default class VideoJS extends Component {
   // so videojs won't create additional wrapper in the DOM
   // see https://github.com/videojs/video.js/pull/3856
   render() {
+    const { src, id } = this.props;
     return (
       <div data-vjs-player>
-        <video src={this.props.src} ref={node => { this.videoNode = node; }} className="video-js" />
+        <video id={id} src={src} ref={node => { this.videoNode = node; }} className="video-js" />
       </div>
     );
   }
 }
+
+VideoJS.propTypes = {
+  src: string,
+  id: string
+};
+
+VideoJS.defaultProps = {
+  src: '',
+  id: ''
+};

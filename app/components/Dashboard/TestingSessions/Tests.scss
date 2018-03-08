@@ -1,0 +1,148 @@
+.Container {
+  padding: 24px;
+  padding-bottom: 12px;
+}
+
+.Row {
+  display: flex;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.Subtitle {
+  flex: 1 1 15%;
+}
+
+.Value {
+  flex: 1 1 85%;
+  font-weight: 100;
+  margin-right: 48px;
+  opacity: 0.7;
+}
+
+.Divider {
+  background-color: #4A4C51;
+  height: 1px;
+  width: 100%;
+}
+
+.Tests {
+  flex-basis: 70%;
+}
+
+.Testers {
+  flex-basis: 30%;
+}
+
+.Tester {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+
+  img {
+    border-radius: 50%;
+    height: 24px;
+    margin-right: 6px;
+    width: 24px;
+  }
+
+  p {
+    font-weight: 100;
+    opacity: 0.7;
+  }
+}
+
+.THeader {
+  background-color: #2B2C31;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 12px;
+}
+
+.TList {
+  background-color: #2F3136;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 12px;
+  padding-bottom: 1px;
+}
+
+.Test {
+  background-color: #2B2C31; //#2F3136;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  margin-right: 24px;
+  padding: 12px;
+  transition: 0.2s all ease;
+
+  p {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background-color: #2F3136;
+
+    .Dates,
+    .User {
+      opacity: 0.8
+    }
+
+    .TVal {
+      opacity: 1;
+    }
+  }
+}
+
+.Dates {
+  float: right;
+  opacity: 0.5;
+}
+
+.User {
+  font-size: 14px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.SubRow {
+  display: flex;
+  text-align: left;
+}
+
+.TSub {
+  flex-basis: 28%;
+  opacity: 0.8;
+}
+
+.TVal {
+  flex-basis: 72%;
+  font-weight: 100;
+  opacity: 0.7;
+}
+
+.Pending,
+.Active,
+.Finished {
+  align-items: center;
+  display: flex;
+
+  p {
+    color: #fff;
+    font-size: 12px;
+    margin-left: 6px;
+  }
+}
+
+.Active {
+  color: #00E676;
+}
+
+.Pending {
+  color: #CFD8DC;
+}
+
+.Finished {
+  color: #DD2C00;
+}
