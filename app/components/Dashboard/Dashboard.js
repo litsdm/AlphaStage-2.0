@@ -7,12 +7,14 @@ import Overview from './Overview';
 import Sessions from './TestingSessions';
 import SettingsModal from './SettingsModal';
 import CreateModal from './TestingSessions/CreateModal';
+import DisplayFeedbackModal from './TestingSessions/DisplayFeedbackModal';
 
 class Dashboard extends Component {
   state = {
     currentIndex: 0,
     displayDropdown: false,
-    tabIndex: 0
+    tabIndex: 0,
+    selectedTest: null
   }
 
   toggleDropdown = () => {
@@ -29,6 +31,8 @@ class Dashboard extends Component {
   selectTab = (tabIndex) => () => {
     this.setState({ tabIndex });
   }
+
+  selectTest = (selectedTest, cb) => this.setState({ selectedTest }, cb)
 
   renderPage() {
     const { games } = this.props;
@@ -48,7 +52,14 @@ class Dashboard extends Component {
           />
         );
       case 1:
-        return <Sessions sessions={currentGame.testingSessions} createId={`create-${currentGame._id}`} />;
+        return (
+          <Sessions
+            sessions={currentGame.testingSessions}
+            createId={`create-${currentGame._id}`}
+            displayId={`display-${currentGame._id}`}
+            selectTest={this.selectTest}
+          />
+        );
 
       default:
         break;
@@ -57,10 +68,11 @@ class Dashboard extends Component {
 
   render() {
     const { games, updateGeneral, deleteGame, createTestingSession } = this.props;
-    const { currentIndex, displayDropdown, tabIndex } = this.state;
+    const { currentIndex, displayDropdown, tabIndex, selectedTest } = this.state;
 
     const currentGame = games[currentIndex];
     const modalId = `settings-${currentGame._id}`;
+    const displayId = `display-${currentGame._id}`;
 
     return (
       <div className={styles.Dashboard}>
@@ -87,6 +99,7 @@ class Dashboard extends Component {
           createSession={createTestingSession}
           id={`create-${currentGame._id}`}
         />
+        <DisplayFeedbackModal id={displayId} {...selectedTest} />
       </div>
     );
   }

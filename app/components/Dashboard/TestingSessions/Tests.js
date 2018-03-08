@@ -2,12 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import uuid from 'uuid/v4';
 import _ from 'lodash';
-import { object } from 'prop-types';
+import { object, string, func } from 'prop-types';
 import styles from './Tests.scss';
 
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
-const Tests = ({ session }) => {
+const Tests = ({ session, displayId, selectTest }) => {
   const { testers, maxTesters, rewardType, reward, tests } = session;
 
   const getStatus = () => {
@@ -28,16 +28,39 @@ const Tests = ({ session }) => {
     return `${min}:${sec}`;
   };
 
+  const handleTestClick = (test) => () => {
+    selectTest(test, () => {
+      document.getElementById(displayId).style.display = 'block';
+    });
+  };
+
   const renderTests = () =>
-    tests.map(({ createdAt, duration, testerId, completedObjectives }) => {
+    tests.map(test => {
+      const {
+        createdAt,
+        duration,
+        testerId,
+        completedObjectives,
+        comments,
+        objectives,
+        s3Url
+      } = test;
       const formattedDuration = formatDuration(duration);
 
       const date = moment(createdAt);
       const now = moment();
 
       const user = _.find(testers, { _id: testerId });
+      const input = { videoUrl: s3Url, comments, objectives };
       return (
-        <div className={styles.Test} key={uuid()}>
+        <div
+          className={styles.Test}
+          key={uuid()}
+          onClick={handleTestClick(input)}
+          role="button"
+          tabIndex={0}
+          onKeyPress={() => {}}
+        >
           <p className={styles.Dates}>Created {now.to(date)}</p>
           <p className={styles.User}>Test by {user.username}</p>
           <div className={styles.SubRow}>
@@ -98,7 +121,13 @@ const Tests = ({ session }) => {
 };
 
 Tests.propTypes = {
-  session: object.isRequired
+  displayId: string,
+  session: object.isRequired,
+  selectTest: func.isRequired
+};
+
+Tests.defaultProps = {
+  displayId: ''
 };
 
 export default Tests;

@@ -1,0 +1,40 @@
+.Footer {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.GoodButton {
+  background-color: #2091f3;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  min-width: 162px;
+  padding: 12px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #2098f3;
+  }
+}
+
+.BadButton {
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.4);;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 12px;
+  min-width: 162px;
+  padding: 12px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
