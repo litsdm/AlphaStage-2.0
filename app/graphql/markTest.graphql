@@ -1,0 +1,12 @@
+mutation markTest($testId: String, $mark: Int) {
+  markTest(_id: $testId, mark: $mark) {
+    _id,
+    comments,
+    completedObjectives,
+    createdAt,
+    duration,
+    objectives,
+    s3Url,
+    testerId
+  }
+}

@@ -21,6 +21,7 @@ query UserGames($id: String) {
           profilePic
         },
         tests {
+          _id,
           comments,
           completedObjectives,
           createdAt,

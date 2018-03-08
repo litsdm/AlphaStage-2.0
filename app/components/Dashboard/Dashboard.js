@@ -67,7 +67,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { games, updateGeneral, deleteGame, createTestingSession } = this.props;
+    const { games, updateGeneral, deleteGame, createTestingSession, markTest } = this.props;
     const { currentIndex, displayDropdown, tabIndex, selectedTest } = this.state;
 
     const currentGame = games[currentIndex];
@@ -99,7 +99,7 @@ class Dashboard extends Component {
           createSession={createTestingSession}
           id={`create-${currentGame._id}`}
         />
-        <DisplayFeedbackModal id={displayId} {...selectedTest} />
+        <DisplayFeedbackModal id={displayId} {...selectedTest} markTest={markTest} />
       </div>
     );
   }
@@ -109,7 +109,8 @@ Dashboard.propTypes = {
   games: array,
   updateGeneral: func.isRequired,
   deleteGame: func.isRequired,
-  createTestingSession: func.isRequired
+  createTestingSession: func.isRequired,
+  markTest: func.isRequired
 };
 
 Dashboard.defaultProps = {

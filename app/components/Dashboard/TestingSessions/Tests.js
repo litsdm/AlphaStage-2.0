@@ -37,6 +37,7 @@ const Tests = ({ session, displayId, selectTest }) => {
   const renderTests = () =>
     tests.map(test => {
       const {
+        _id,
         createdAt,
         duration,
         testerId,
@@ -51,7 +52,7 @@ const Tests = ({ session, displayId, selectTest }) => {
       const now = moment();
 
       const user = _.find(testers, { _id: testerId });
-      const input = { videoUrl: s3Url, comments, objectives };
+      const input = { testId: _id, videoUrl: s3Url, comments, objectives };
       return (
         <div
           className={styles.Test}
