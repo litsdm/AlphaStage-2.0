@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import uuid from 'uuid/v4';
-import { array, func } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 import styles from './Comments.scss';
 
-const CommentList = ({ comments, setState }) => {
+const CommentList = ({ comments, setState, display }) => {
   const removeComment = (index) => () => {
     const value = [...comments.slice(0, index), ...comments.slice(index + 1)];
     setState('comments', value);
@@ -17,7 +17,11 @@ const CommentList = ({ comments, setState }) => {
         <div className={styles.Comment}>
           <div className={styles.Top}>
             <p>Commented {now.to(comment.createdAt)}</p>
-            <button onClick={removeComment(index)}><i className="fa fa-times" /></button>
+            {
+              display
+                ? null
+                : <button onClick={removeComment(index)}><i className="fa fa-times" /></button>
+            }
           </div>
           <div className={styles.Body}><p>{comment.body}</p></div>
         </div>
@@ -26,7 +30,7 @@ const CommentList = ({ comments, setState }) => {
   };
 
   return (
-    <div className={styles.CommentList}>
+    <div className={styles.CommentList} style={display ? { marginBottom: '24px' } : {}}>
       {renderComments()}
     </div>
   );
@@ -34,11 +38,13 @@ const CommentList = ({ comments, setState }) => {
 
 CommentList.propTypes = {
   comments: array,
+  display: bool,
   setState: func.isRequired
 };
 
 CommentList.defaultProps = {
-  comments: []
+  comments: [],
+  display: false
 };
 
 export default CommentList;

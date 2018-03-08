@@ -4,10 +4,7 @@ import { string, object, func } from 'prop-types';
 import styles from './FeedbackModal.scss';
 
 import Modal from '../../Modal';
-import VideoPlayer from '../../VideoPlayer';
-import CommentList from './CommentList';
-import CommentInput from './CommentInput';
-import ObjectiveList from './ObjectiveList';
+import FeedbackContent from './FeedbackContent';
 
 class FeedbackModal extends Component {
   state = {
@@ -65,18 +62,13 @@ class FeedbackModal extends Component {
 
     return (
       <Modal title="Testing Feedback" id={id}>
-        {
-          finalVideo !== null
-            ? <VideoPlayer src={finalVideo} id={videoId} />
-            : null
-        }
-        <div className={styles.Content}>
-          <p className={styles.Title}>Comments</p>
-          <CommentList comments={comments} setState={this.setStateProperty} />
-          <CommentInput comments={comments} setState={this.setStateProperty} />
-          <p className={styles.Title}>Objectives</p>
-          <ObjectiveList setState={this.setStateProperty} objectives={objectives} />
-        </div>
+        <FeedbackContent
+          videoUrl={finalVideo}
+          comments={comments}
+          objectives={objectives}
+          videoId={videoId}
+          setState={this.setStateProperty}
+        />
         <div className={styles.Footer}>
           <p className={`${styles.Processing} ${!s3Url ? styles.active : ''}`}>
             <i className="fa fa-spinner fa-pulse fa-fw" /> Uploading video please wait.
