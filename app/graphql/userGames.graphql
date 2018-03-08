@@ -28,6 +28,7 @@ query UserGames($id: String) {
           duration,
           objectives,
           s3Url,
+          mark,
           testerId
         }
       },

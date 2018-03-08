@@ -34,6 +34,17 @@ const Tests = ({ session, displayId, selectTest }) => {
     });
   };
 
+  const renderMark = (mark) => {
+    switch (mark) {
+      case 0:
+        return <React.Fragment><i className="fa fa-thumbs-down" /> Bad Feedback</React.Fragment>;
+      case 1:
+        return <React.Fragment><i className="fa fa-thumbs-up" /> Good Feedback</React.Fragment>;
+      default:
+        return 'Unmarked';
+    }
+  };
+
   const renderTests = () =>
     tests.map(test => {
       const {
@@ -44,6 +55,7 @@ const Tests = ({ session, displayId, selectTest }) => {
         completedObjectives,
         comments,
         objectives,
+        mark,
         s3Url
       } = test;
       const formattedDuration = formatDuration(duration);
@@ -71,6 +83,10 @@ const Tests = ({ session, displayId, selectTest }) => {
           <div className={styles.SubRow}>
             <p className={styles.TSub}>Completed Objectives</p>
             <p className={styles.TVal}>{completedObjectives}</p>
+          </div>
+          <div className={styles.SubRow}>
+            <p className={styles.TSub}>Mark</p>
+            <p className={styles.TVal}>{renderMark(mark)}</p>
           </div>
         </div>
       );
