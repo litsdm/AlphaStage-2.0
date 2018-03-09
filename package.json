@@ -1,7 +1,7 @@
 {
   "name": "alpha-stage",
   "productName": "Alpha Stage",
-  "version": "0.13.2",
+  "version": "0.0.1",
   "description": "Playtesting platform for game developers that allows them to get valuable feedback from testers saving them time and money. To do this, it records the user’s gameplay or segments of it and sends it back to the developers for review.",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -81,7 +81,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/cdiezmoran/AlphaStage-2.0"
   },
   "author": {
     "name": "Carlos Diez",
