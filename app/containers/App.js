@@ -60,6 +60,10 @@ class App extends Component {
       if (process.platform === 'darwin') this.unzipMac(savePath, unzipTo);
       else this.unzipWin(savePath, unzipTo);
     });
+
+    ipcRenderer.on('updateReady', () => {
+      console.log('update!');
+    });
   }
 
   unzipMac = (savePath, unzipTo) => {

@@ -10,8 +10,9 @@
  *
  * @flow
  */
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import { download } from 'electron-dl';
+import { autoUpdater } from 'electron-updater';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -71,6 +72,11 @@ app.on('ready', async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
+  if (process.env.NODE_ENV === 'production') {
+    autoUpdater.checkForUpdates();
+    dialog.showMessageBox(mainWindow, { type: 'info', message: 'first bruh' });
+  }
+
   const appDataPath = app.getPath('appData');
   ipcMain.on('download-game', (e, args) => {
     download(mainWindow, args.url, {
@@ -107,4 +113,12 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+});
+
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('updateReady');
+});
+
+ipcMain.on('quitAndInstall', () => {
+  autoUpdater.quitAndInstall();
 });
