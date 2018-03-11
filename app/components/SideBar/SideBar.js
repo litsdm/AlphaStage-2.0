@@ -10,6 +10,9 @@ const SideBar = ({ user, logout, updateUserPic }) => (
   <div className={styles.SideBar}>
     <Controls />
     <Menu />
+    <button className={styles.Help}>
+      Help & Feedback
+    </button>
     <Profile user={user} logout={logout} updateUserPic={updateUserPic} />
   </div>
 );
