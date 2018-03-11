@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import { autoUpdater } from 'electron-updater';
 import MenuBuilder from './menu';
@@ -74,7 +74,6 @@ app.on('ready', async () => {
 
   if (process.env.NODE_ENV === 'production') {
     autoUpdater.checkForUpdates();
-    dialog.showMessageBox(mainWindow, { type: 'info', message: 'first bruh' });
   }
 
   const appDataPath = app.getPath('appData');
