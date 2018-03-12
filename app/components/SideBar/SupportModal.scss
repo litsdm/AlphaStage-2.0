@@ -1,0 +1,110 @@
+.Content {
+  padding: 24px;
+}
+
+.Social {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  padding: 24px;
+
+  a {
+    align-items: center;
+    background-color: #20c2f3;
+    border-radius: 50%;
+    display: flex;
+    font-size: 2rem;
+    height: 75px;
+    justify-content: center;
+    transition: 0.2s all ease;
+    width: 75px;
+
+    &:hover {
+      background-color: #2091f3;
+    }
+  }
+}
+
+.Divider {
+  background-color: #ddd;
+  height: 1px;
+  width: 100%;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+}
+
+.Title {
+  font-size: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.Checkboxes {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.Label {
+  cursor: pointer;
+  font-size: 18px;
+  margin: 0 24px;
+  opacity: 0.5;
+  padding-left: 1px;
+
+  input {
+    display: none;
+  }
+
+  i {
+    margin-right: 3px;
+  }
+
+  &.active {
+    opacity: 1;
+
+    i {
+      color: #2091f3;
+    }
+  }
+}
+
+.Message {
+  font-size: 14px;
+  height: 150px;
+  margin: auto;
+  max-height: 150px;
+  outline: none;
+  padding: 12px;
+  width: 80%;
+}
+
+.Footer {
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.Send {
+  background-color: #2091f3;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  min-width: 162px;
+  padding: 12px;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #2098f3;
+  }
+}

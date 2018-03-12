@@ -8,6 +8,7 @@ import DecompressZip from 'decompress-zip';
 import type { Children } from 'react';
 
 import SideBar from '../components/SideBar/SideBar';
+import SupportModal from '../components/SideBar/SupportModal';
 import TopBar from '../components/TopBar';
 import Auth from '../components/Auth/Auth';
 
@@ -106,6 +107,7 @@ class App extends Component {
                 <TopBar history={this.props.history} />
                 <div className="content">
                   {this.props.children}
+                  <SupportModal />
                 </div>
               </div>
             </React.Fragment>

@@ -10,7 +10,10 @@ const SideBar = ({ user, logout, updateUserPic }) => (
   <div className={styles.SideBar}>
     <Controls />
     <Menu />
-    <button className={styles.Help}>
+    <button
+      className={styles.Help}
+      onClick={() => { document.getElementById('supportModal').style.display = 'block'; }}
+    >
       Help & Feedback
     </button>
     <Profile user={user} logout={logout} updateUserPic={updateUserPic} />
