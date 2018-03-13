@@ -88,8 +88,14 @@
   align-items: center;
   background-color: #fff;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 12px;
+
+  p {
+    color: #F44336;
+    opacity: 0;
+    font-size: 14px;
+  }
 }
 
 .Send {

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import swal from 'sweetalert';
 import styles from './SupportModal.scss';
+
+import callApi from '../../helpers/apiCaller';
 
 import Modal from '../Modal';
 
@@ -12,6 +15,29 @@ class SupportModal extends Component {
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
+  }
+
+  handleSend = () => {
+    const { message } = this.state;
+
+    const errorElement = document.getElementById('sErrorMessage');
+    errorElement.style.opacity = '0';
+
+    console.log(this.props);
+
+    if (!message) {
+      errorElement.style.opacity = '1';
+      return;
+    }
+
+    const body = {
+      ...this.state,
+      ...this.props
+    };
+
+    callApi('support', body, 'POST')
+      .then(() => swal('Message Sent!', 'Thank you for your message! We\'ll get back to you as soon as possible.', 'success'))
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -64,7 +90,8 @@ class SupportModal extends Component {
           </div>
         </div>
         <div className={styles.Footer}>
-          <button className={styles.Send}>
+          <p id="sErrorMessage">Please enter a message before sending.</p>
+          <button className={styles.Send} onClick={this.handleSend}>
             Send Message
           </button>
         </div>

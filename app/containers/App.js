@@ -107,7 +107,7 @@ class App extends Component {
                 <TopBar history={this.props.history} />
                 <div className="content">
                   {this.props.children}
-                  <SupportModal />
+                  <SupportModal userId={user._id} email={user.email} />
                 </div>
               </div>
             </React.Fragment>
