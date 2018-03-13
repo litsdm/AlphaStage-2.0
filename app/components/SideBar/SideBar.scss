@@ -6,3 +6,22 @@
   width: 220px;
   overflow-y: auto;
 }
+
+.Help {
+  bottom: 74px;
+  color: #97989A;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 12px 24px;
+  position: absolute;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+
+  &:hover {
+    background: linear-gradient(#2B2C31, #2b2b31);
+    color: #fff;
+  }
+}
