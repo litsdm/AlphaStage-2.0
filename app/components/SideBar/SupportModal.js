@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { shell } from 'electron';
 import swal from 'sweetalert';
 import styles from './SupportModal.scss';
 
@@ -23,8 +24,6 @@ class SupportModal extends Component {
     const errorElement = document.getElementById('sErrorMessage');
     errorElement.style.opacity = '0';
 
-    console.log(this.props);
-
     if (!message) {
       errorElement.style.opacity = '1';
       return;
@@ -46,7 +45,7 @@ class SupportModal extends Component {
       <Modal id="supportModal" title="Help & Feedback">
         <div className={styles.Content}>
           <div className={styles.Social}>
-            <a href="#facebook">
+            <a href="#facebook" onClick={() => shell.openExternal('https://www.facebook.com/Alpha-Stage-988855841290318/')}>
               <i className="fa fa-facebook-f" />
             </a>
             <a href="#twitter">
@@ -55,7 +54,7 @@ class SupportModal extends Component {
             <a href="#instagram">
               <i className="fa fa-instagram" />
             </a>
-            <a href="#github">
+            <a href="#github" onClick={() => shell.openExternal('https://github.com/cdiezmoran')}>
               <i className="fa fa-github" />
             </a>
           </div>
