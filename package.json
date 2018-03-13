@@ -1,7 +1,7 @@
 {
   "name": "alpha-stage",
   "productName": "Alpha Stage",
-  "version": "0.13.2",
+  "version": "0.0.1",
   "description": "Playtesting platform for game developers that allows them to get valuable feedback from testers saving them time and money. To do this, it records the user’s gameplay or segments of it and sends it back to the developers for review.",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -20,6 +20,8 @@
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
+    "ship": "npm run build && build -p always",
+    "ship-win": "npm run build && build --win --x64 -p always",
     "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && npm run build-dll && electron-builder install-app-deps && node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production electron ./app/",
@@ -81,7 +83,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/cdiezmoran/AlphaStage-2.0"
   },
   "author": {
     "name": "Carlos Diez",
@@ -203,6 +205,8 @@
     "draft-js": "^0.10.5",
     "electron-debug": "^1.5.0",
     "electron-dl": "^1.10.0",
+    "electron-log": "^2.2.14",
+    "electron-updater": "^2.21.0",
     "filestack-js": "^0.11.2",
     "fluent-ffmpeg": "^2.1.2",
     "font-awesome": "^4.7.0",

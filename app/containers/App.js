@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { ipcRenderer } from 'electron';
 import { exec } from 'child_process';
 import DecompressZip from 'decompress-zip';
+import swal from 'sweetalert';
 import type { Children } from 'react';
 
 import SideBar from '../components/SideBar/SideBar';
@@ -59,6 +60,23 @@ class App extends Component {
 
       if (process.platform === 'darwin') this.unzipMac(savePath, unzipTo);
       else this.unzipWin(savePath, unzipTo);
+    });
+
+    ipcRenderer.on('updateReady', () => {
+      swal({
+        title: 'Update Available!',
+        text: 'Alpha Stage needs to restart so this update can be installed. Do you want to restart it?',
+        icon: 'info',
+        buttons: {
+          cancel: 'Later',
+          restart: {
+            text: 'Restart now',
+            value: 'quitAndInstall'
+          }
+        }
+      })
+        .then(event => ipcRenderer.send(event))
+        .catch(err => console.log(err));
     });
   }
 
