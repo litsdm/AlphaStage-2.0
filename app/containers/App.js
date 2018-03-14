@@ -4,17 +4,31 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 import { ipcRenderer } from 'electron';
 import { exec } from 'child_process';
+import { graphql } from 'react-apollo';
 import DecompressZip from 'decompress-zip';
 import swal from 'sweetalert';
-import type { Children } from 'react';
+import { func, object, node } from 'prop-types';
 
 import SideBar from '../components/SideBar/SideBar';
 import SupportModal from '../components/SideBar/SupportModal';
 import TopBar from '../components/TopBar';
 import Auth from '../components/Auth/Auth';
 
+import userLevel from '../graphql/userLevel.graphql';
+
 import { removeUser, updateProfilePic } from '../actions/user';
 import { startInstall, finishInstall } from '../actions/game';
+
+const withLevel = graphql(userLevel, {
+  props: ({ data }) => {
+    if (!data.user) return { loading: data.loading };
+    if (data.error) return { hasErrors: true };
+    return {
+      userExp: data.user,
+    };
+  },
+  options: ({ user }) => ({ variables: { id: user._id } })
+});
 
 const mapStateToProps = ({ user }) => (
   {
@@ -35,15 +49,9 @@ const mapDispatchToProps = dispatch => ({
 let isInstalling = false;
 
 class App extends Component {
-  props: {
-    children: Children,
-    history: {},
-    user: {},
-    logout: Function, //eslint-disable-line
-    updateUserPic: Function, //eslint-disable-line
-    startInstalling: Function, //eslint-disable-line
-    completeInstall: Function //eslint-disable-line
-  };
+  state = {
+    expFill: ''
+  }
 
   componentDidMount() {
     const { startInstalling } = this.props;
@@ -80,6 +88,14 @@ class App extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { experience, nextLevelExp } = nextProps.userExp;
+    if (experience !== this.props.userExp.experience) {
+      const fill = (experience * 100) / nextLevelExp;
+      this.setState({ expFill: `${fill}%` });
+    }
+  }
+
   unzipMac = (savePath, unzipTo) => {
     const { completeInstall } = this.props;
     exec(`unzip ${savePath} -d ${unzipTo}`, (error) => {
@@ -112,7 +128,8 @@ class App extends Component {
   };
 
   render() {
-    const { user, logout, updateUserPic } = this.props;
+    const { user, logout, updateUserPic, userExp } = this.props;
+    const { expFill } = this.state;
     const isAuthorized = !_.isEmpty(user);
     return (
       <React.Fragment>
@@ -120,7 +137,12 @@ class App extends Component {
           isAuthorized
           ? (
             <React.Fragment>
-              <SideBar user={user} logout={logout} updateUserPic={updateUserPic} />
+              <SideBar
+                user={{ ...user, ...userExp }}
+                expFill={expFill}
+                logout={logout}
+                updateUserPic={updateUserPic}
+              />
               <div id="content-container" className="content-container">
                 <TopBar history={this.props.history} />
                 <div className="content">
@@ -137,4 +159,23 @@ class App extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+App.propTypes = {
+  children: node.isRequired,
+  history: object,
+  user: object,
+  userExp: object,
+  logout: func.isRequired,
+  updateUserPic: func.isRequired,
+  startInstalling: func.isRequired,
+  completeInstall: func.isRequired
+};
+
+App.defaultProps = {
+  history: {},
+  user: {},
+  userExp: {}
+};
+
+const graphqlApp = withLevel(App);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(graphqlApp));
