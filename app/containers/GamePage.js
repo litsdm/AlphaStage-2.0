@@ -18,13 +18,16 @@ import Loader from '../components/Loader';
 import fullGameQuery from '../graphql/fullGame.graphql';
 import addToMetric from '../graphql/addToMetric.graphql';
 import createTest from '../graphql/createTest.graphql';
+import addExp from '../graphql/addExp.graphql';
+import userLevel from '../graphql/userLevel.graphql';
 
 const { app } = remote;
 const videoReader = new FileReader();
 const audioReader = new FileReader();
 
-const mapStateToProps = ({ game }) => (
+const mapStateToProps = ({ game, user }) => (
   {
+    user,
     ...game,
     downloadId: game.id
   }
@@ -35,6 +38,21 @@ const withGraphql = compose(
     props: ({ mutate }) => ({
       incrementMetric: (gameId, metric) => mutate({ variables: { gameId, metric } }),
     }),
+  }),
+  graphql(addExp, {
+    props: ({ ownProps: { user }, mutate }) => ({
+      incrementExp: (input) => mutate({ variables: { input: { ...input, _id: user._id } } })
+    })
+  }),
+  graphql(userLevel, {
+    props: ({ data }) => {
+      if (!data.user) return { loading: data.loading };
+      if (data.error) return { hasErrors: true };
+      return {
+        userExp: data.user,
+      };
+    },
+    options: ({ user }) => ({ variables: { id: user._id } })
   }),
   graphql(createTest, {
     props: ({ mutate }) => ({
@@ -218,8 +236,10 @@ class GamePage extends Component {
       game,
       loading,
       incrementMetric,
+      incrementExp,
       isDownloading,
       downloadId,
+      userExp
     } = this.props;
     const { activeSession, finalVideo, micAllowed, s3Url } = this.state;
 
@@ -238,6 +258,8 @@ class GamePage extends Component {
           handleChange={this.handleChange}
           s3Url={s3Url}
           sendFeedback={this.handleFeedback}
+          addExp={incrementExp}
+          userExp={userExp}
         />
     );
   }
@@ -247,8 +269,10 @@ GamePage.propTypes = {
   loading: bool,
   game: object,
   isDownloading: bool,
+  userExp: object,
   downloadId: string.isRequired,
   incrementMetric: func.isRequired,
+  incrementExp: func.isRequired,
   sendFeedback: func.isRequired
 };
 
@@ -256,9 +280,10 @@ GamePage.defaultProps = {
   loading: false,
   game: {},
   isDownloading: false,
+  userExp: {}
 };
 
-const GamePageWithProps = connect(mapStateToProps, null)(GamePage);
-const GamePageWithData = withGraphql(GamePageWithProps);
+const GamePageWithData = withGraphql(GamePage);
+const GamePageWithProps = connect(mapStateToProps, null)(GamePageWithData);
 
-export default GamePageWithData;
+export default GamePageWithProps;

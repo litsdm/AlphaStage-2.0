@@ -37,7 +37,8 @@ class FeedbackModal extends Component {
   }
 
   handleSend = () => {
-    const { s3Url, session, sendFeedback, id, gameId } = this.props;
+    const { s3Url, session, sendFeedback, id, gameId, addExp, userExp } = this.props;
+    const { level, experience } = userExp;
 
     /* We add _html5_api since the div surrounding the video element gets the
        actual id and assigns _html5_api to the actual video element */
@@ -51,6 +52,7 @@ class FeedbackModal extends Component {
     };
 
     sendFeedback(input, gameId);
+    addExp({ exp: 125, level, currentExp: experience });
     document.getElementById(id).style.display = 'none';
   }
 
@@ -92,7 +94,9 @@ FeedbackModal.propTypes = {
   gameId: string,
   session: object,
   s3Url: string,
-  sendFeedback: func.isRequired
+  sendFeedback: func.isRequired,
+  addExp: func.isRequired,
+  userExp: object
 };
 
 FeedbackModal.defaultProps = {
@@ -102,7 +106,8 @@ FeedbackModal.defaultProps = {
   session: {
     objectives: []
   },
-  s3Url: ''
+  s3Url: '',
+  userExp: {}
 };
 
 export default FeedbackModal;
