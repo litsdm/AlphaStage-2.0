@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
+import { string, object } from 'prop-types';
 
 const propTypes = {
-  fill: PropTypes.string.isRequired,
-  styles: PropTypes.object.isRequired
+  fill: string.isRequired,
+  styles: object.isRequired
 };
 
 export default propTypes;

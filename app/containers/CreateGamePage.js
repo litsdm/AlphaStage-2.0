@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { bool, func, object } from 'prop-types';
 
 import createGame from '../graphql/createGame.graphql';
 import editGame from '../graphql/editGame.graphql';
@@ -54,12 +54,12 @@ const CreateGamePage = ({ submitGame, saveGame, user, match, game, loading }) =>
 );
 
 CreateGamePage.propTypes = {
-  submitGame: PropTypes.func.isRequired,
-  saveGame: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  loading: PropTypes.bool,
-  game: PropTypes.object
+  submitGame: func.isRequired,
+  saveGame: func.isRequired,
+  user: object.isRequired,
+  match: object.isRequired,
+  loading: bool,
+  game: object
 };
 
 CreateGamePage.defaultProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, number, object, string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import styles from './InfoCard.scss';
@@ -40,11 +40,11 @@ const InfoCard = ({ game, progress, isDownloading, downloadId, openGame }) => {
 };
 
 InfoCard.propTypes = {
-  game: PropTypes.object.isRequired,
-  openGame: PropTypes.func.isRequired,
-  progress: PropTypes.number,
-  isDownloading: PropTypes.bool,
-  downloadId: PropTypes.string
+  game: object.isRequired,
+  openGame: func.isRequired,
+  progress: number,
+  isDownloading: bool,
+  downloadId: string
 };
 
 InfoCard.defaultProps = {

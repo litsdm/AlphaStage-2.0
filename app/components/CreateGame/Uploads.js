@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import styles from './styles.scss';
 
 import callApi, { uploadFile } from '../../helpers/apiCaller';
@@ -112,17 +112,17 @@ const Uploads = (props) => {
 };
 
 Uploads.propTypes = {
-  platforms: PropTypes.object.isRequired,
-  fileId: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleBuildChange: PropTypes.func.isRequired,
-  macBuild: PropTypes.string.isRequired,
-  uploadError: PropTypes.string.isRequired,
-  uploadingMacBuild: PropTypes.bool.isRequired,
-  uploadingWindowsBuild: PropTypes.bool.isRequired,
-  validatedInputClass: PropTypes.func.isRequired,
-  windowsBuild: PropTypes.string.isRequired,
-  edit: PropTypes.bool
+  platforms: object.isRequired,
+  fileId: string.isRequired,
+  handleChange: func.isRequired,
+  handleBuildChange: func.isRequired,
+  macBuild: string.isRequired,
+  uploadError: string.isRequired,
+  uploadingMacBuild: bool.isRequired,
+  uploadingWindowsBuild: bool.isRequired,
+  validatedInputClass: func.isRequired,
+  windowsBuild: string.isRequired,
+  edit: bool
 };
 
 Uploads.defaultProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, bool, func, number, object, string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './Header.scss';
 
@@ -67,15 +67,15 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  games: PropTypes.array,
-  currentIndex: PropTypes.number,
-  currentGame: PropTypes.object,
-  displayDropdown: PropTypes.bool,
-  modalId: PropTypes.string,
-  tabIndex: PropTypes.number,
-  selectTab: PropTypes.func.isRequired,
-  toggleDropdown: PropTypes.func.isRequired,
-  selectGame: PropTypes.func.isRequired
+  games: array,
+  currentIndex: number,
+  currentGame: object,
+  displayDropdown: bool,
+  modalId: string,
+  tabIndex: number,
+  selectTab: func.isRequired,
+  toggleDropdown: func.isRequired,
+  selectGame: func.isRequired
 };
 
 Header.defaultProps = {

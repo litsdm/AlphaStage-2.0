@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { bool, array } from 'prop-types';
 
 import allGamesQuery from '../graphql/allGames.graphql';
 
@@ -24,8 +24,8 @@ const BrowsePage = ({ games, loading }) => (
 );
 
 BrowsePage.propTypes = {
-  loading: PropTypes.bool,
-  games: PropTypes.array,
+  loading: bool,
+  games: array,
 };
 
 BrowsePage.defaultProps = {

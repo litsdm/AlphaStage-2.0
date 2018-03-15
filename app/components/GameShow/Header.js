@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 import styles from './Header.scss';
 
 const Header = ({ coverImage, modalId }) => {
@@ -25,8 +25,8 @@ const Header = ({ coverImage, modalId }) => {
 };
 
 Header.propTypes = {
-  coverImage: PropTypes.string.isRequired,
-  modalId: PropTypes.string.isRequired
+  coverImage: string.isRequired,
+  modalId: string.isRequired
 };
 
 export default Header;

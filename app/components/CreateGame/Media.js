@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, bool, func, string } from 'prop-types';
 import uuid from 'uuid/v4';
 import parseImageUpload, { coverImageOptions, thumbnailOptions, screenshotOptions, removeFile } from '../../helpers/parseImageUpload';
 import styles from './styles.scss';
@@ -155,13 +155,13 @@ const Media = (props) => {
 };
 
 Media.propTypes = {
-  trailer: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  validatedInputClass: PropTypes.func.isRequired,
-  coverImage: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  screenshots: PropTypes.array.isRequired,
-  edit: PropTypes.bool
+  trailer: string.isRequired,
+  handleChange: func.isRequired,
+  validatedInputClass: func.isRequired,
+  coverImage: string.isRequired,
+  thumbnail: string.isRequired,
+  screenshots: array.isRequired,
+  edit: bool
 };
 
 Media.defaultProps = {

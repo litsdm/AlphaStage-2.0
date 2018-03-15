@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { array, bool, func, object, string } from 'prop-types';
 
 import gamesByTags from '../graphql/gamesByTags.graphql';
 
@@ -49,11 +49,11 @@ class CategoryPage extends Component {
 }
 
 CategoryPage.propTypes = {
-  loading: PropTypes.bool,
-  games: PropTypes.array,
-  category: PropTypes.string,
-  match: PropTypes.object.isRequired,
-  setCurrentCategory: PropTypes.func.isRequired
+  loading: bool,
+  games: array,
+  category: string,
+  match: object.isRequired,
+  setCurrentCategory: func.isRequired
 };
 
 CategoryPage.defaultProps = {

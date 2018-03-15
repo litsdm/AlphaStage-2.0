@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, func, string } from 'prop-types';
 
 import GameGrid from './GameGrid';
 import SideBar from './SideBar';
@@ -17,9 +17,9 @@ const Category = ({ games, currentCategory, setCategory }) => (
 );
 
 Category.propTypes = {
-  games: PropTypes.array,
-  currentCategory: PropTypes.string,
-  setCategory: PropTypes.func.isRequired
+  games: array,
+  currentCategory: string,
+  setCategory: func.isRequired
 };
 
 Category.defaultProps = {

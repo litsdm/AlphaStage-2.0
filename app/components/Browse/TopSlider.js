@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import PropTypes from 'prop-types';
+import { array } from 'prop-types';
 import uuid from 'uuid/v4';
 
 import styles from './styles.scss';
@@ -35,7 +35,7 @@ const TopSlider = ({ games }) => {
 };
 
 TopSlider.propTypes = {
-  games: PropTypes.array.isRequired
+  games: array.isRequired
 };
 
 export default TopSlider;

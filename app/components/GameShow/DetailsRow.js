@@ -1,6 +1,6 @@
 import React from 'react';
 import uuid from 'uuid/v4';
-import PropTypes from 'prop-types';
+import { array, bool, string } from 'prop-types';
 import styles from './AdditionalDetails.scss';
 
 const DetailsRow = ({ subtitle, values, last }) => {
@@ -21,9 +21,9 @@ const DetailsRow = ({ subtitle, values, last }) => {
 };
 
 DetailsRow.propTypes = {
-  subtitle: PropTypes.string.isRequired,
-  values: PropTypes.array,
-  last: PropTypes.bool
+  subtitle: string.isRequired,
+  values: array,
+  last: bool
 };
 
 DetailsRow.defaultProps = {

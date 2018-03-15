@@ -1,6 +1,6 @@
 import React from 'react';
 import uuid from 'uuid/v4';
-import PropTypes from 'prop-types';
+import { func, string } from 'prop-types';
 import styles from './SideBar.scss';
 
 const tags = ['Action', 'Adventure', 'Indie', 'Early Stage', 'RPG', 'Simulation', 'Sports'];
@@ -30,8 +30,8 @@ const SideBar = ({ currentCategory, setCategory }) => {
 };
 
 SideBar.propTypes = {
-  currentCategory: PropTypes.string,
-  setCategory: PropTypes.func.isRequired
+  currentCategory: string,
+  setCategory: func.isRequired
 };
 
 SideBar.defaultProps = {

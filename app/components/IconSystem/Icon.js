@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { object, string } from 'prop-types';
 
 import Boat from './Icons/Boat';
 import Chest from './Icons/Chest';
@@ -60,9 +60,9 @@ const Icon = ({ title, styles, fill }) => {
 };
 
 Icon.propTypes = {
-  title: PropTypes.string,
-  styles: PropTypes.object,
-  fill: PropTypes.string
+  title: string,
+  styles: object,
+  fill: string
 };
 
 Icon.defaultProps = {

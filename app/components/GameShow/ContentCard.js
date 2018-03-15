@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line
 import { EditorState, convertFromRaw, Editor } from 'draft-js';
-import PropTypes from 'prop-types';
+import { bool, func, number, object, string } from 'prop-types';
 import styles from './styles.scss';
 
 import InfoCard from './InfoCard';
@@ -43,11 +43,11 @@ const ContentCard = ({ game, progress, isDownloading, downloadId, openGame }) =>
 };
 
 ContentCard.propTypes = {
-  game: PropTypes.object.isRequired,
-  openGame: PropTypes.func.isRequired,
-  progress: PropTypes.number,
-  isDownloading: PropTypes.bool,
-  downloadId: PropTypes.string
+  game: object.isRequired,
+  openGame: func.isRequired,
+  progress: number,
+  isDownloading: bool,
+  downloadId: string
 };
 
 ContentCard.defaultProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, node, string } from 'prop-types';
 import YTPlayer from 'youtube-player';
 import styles from './Modal.scss';
 
@@ -76,12 +76,12 @@ const Modal = ({ title, isGallery, isSettings, trailerId, children, id }) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  isGallery: PropTypes.bool,
-  isSettings: PropTypes.bool,
-  trailerId: PropTypes.string,
+  children: node.isRequired,
+  id: string.isRequired,
+  title: string,
+  isGallery: bool,
+  isSettings: bool,
+  trailerId: string,
 };
 
 Modal.defaultProps = {

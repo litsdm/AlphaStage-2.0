@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { array, string } from 'prop-types';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
@@ -28,8 +28,8 @@ const Category = ({ title, icons }) => {
 };
 
 Category.propTypes = {
-  title: PropTypes.string,
-  icons: PropTypes.array
+  title: string,
+  icons: array
 };
 
 Category.defaultProps = {

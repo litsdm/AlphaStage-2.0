@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 import toastr from 'toastr';
 import styles from './styles.scss';
 
@@ -123,8 +123,8 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  switchForm: PropTypes.func.isRequired,
-  addUser: PropTypes.func.isRequired
+  switchForm: func.isRequired,
+  addUser: func.isRequired
 };
 
 export default Signup;

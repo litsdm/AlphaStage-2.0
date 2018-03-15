@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, object, string } from 'prop-types';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
@@ -103,12 +103,12 @@ const Basic = (props) => {
 };
 
 Basic.propTypes = {
-  title: PropTypes.string.isRequired,
-  shortDescription: PropTypes.string.isRequired,
-  releaseStatus: PropTypes.string.isRequired,
-  platforms: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  validatedInputClass: PropTypes.func.isRequired
+  title: string.isRequired,
+  shortDescription: string.isRequired,
+  releaseStatus: string.isRequired,
+  platforms: object.isRequired,
+  handleChange: func.isRequired,
+  validatedInputClass: func.isRequired
 };
 
 export default Basic;

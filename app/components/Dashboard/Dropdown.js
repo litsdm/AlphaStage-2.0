@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, bool, func, number } from 'prop-types';
 import uuid from 'uuid/v4';
 import styles from './Dropdown.scss';
 
@@ -25,10 +25,10 @@ const Dropdown = ({ games, currentIndex, display, selectGame }) => {
 };
 
 Dropdown.propTypes = {
-  games: PropTypes.array,
-  currentIndex: PropTypes.number,
-  display: PropTypes.bool,
-  selectGame: PropTypes.func.isRequired
+  games: array,
+  currentIndex: number,
+  display: bool,
+  selectGame: func.isRequired
 };
 
 Dropdown.defaultProps = {

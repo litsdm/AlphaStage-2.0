@@ -2,7 +2,7 @@ import React, { Component } from 'react'; //eslint-disable-line
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { withRouter } from 'react-router-dom';
 import shortid from 'shortid';
-import PropTypes from 'prop-types';
+import { bool, func, object } from 'prop-types';
 import swal from 'sweetalert';
 import { removeFile } from '../../helpers/parseImageUpload';
 import callApi from '../../helpers/apiCaller';
@@ -410,12 +410,12 @@ class CreateGame extends Component {
 }
 
 CreateGame.propTypes = {
-  submitGame: PropTypes.func.isRequired,
-  saveGame: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  edit: PropTypes.bool,
-  game: PropTypes.object
+  submitGame: func.isRequired,
+  saveGame: func.isRequired,
+  user: object.isRequired,
+  history: object.isRequired,
+  edit: bool,
+  game: object
 };
 
 CreateGame.defaultProps = {

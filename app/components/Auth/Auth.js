@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 import jwtDecode from 'jwt-decode';
 import styles from './styles.scss';
 
@@ -48,7 +48,7 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-  addUserFromToken: PropTypes.func.isRequired
+  addUserFromToken: func.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(Auth);

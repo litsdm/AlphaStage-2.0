@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, number, string } from 'prop-types';
 import styles from './PreviewImage.scss';
 
 const PreviewImage = ({ src, name, index, removeImage }) => {
@@ -20,10 +20,10 @@ const PreviewImage = ({ src, name, index, removeImage }) => {
 };
 
 PreviewImage.propTypes = {
-  src: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  index: PropTypes.number,
-  removeImage: PropTypes.func.isRequired
+  src: string,
+  name: string.isRequired,
+  index: number,
+  removeImage: func.isRequired
 };
 
 PreviewImage.defaultProps = {

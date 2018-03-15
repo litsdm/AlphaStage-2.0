@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { func, object, string } from 'prop-types';
 import swal from 'sweetalert';
 import styles from './SettingsModal.scss';
 
@@ -101,10 +101,10 @@ class SettingsModal extends Component {
 }
 
 SettingsModal.propTypes = {
-  id: PropTypes.string,
-  game: PropTypes.object.isRequired,
-  updateGeneral: PropTypes.func.isRequired,
-  deleteGame: PropTypes.func.isRequired
+  id: string,
+  game: object.isRequired,
+  updateGeneral: func.isRequired,
+  deleteGame: func.isRequired
 };
 
 SettingsModal.defaultProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, string } from 'prop-types';
 
 const Button = ({ text, iconClass, btnClass, handleClick, isDisabled }) => (
   <button className={btnClass} onClick={handleClick} disabled={isDisabled}>
@@ -8,11 +8,11 @@ const Button = ({ text, iconClass, btnClass, handleClick, isDisabled }) => (
 );
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
-  iconClass: PropTypes.string.isRequired,
-  btnClass: PropTypes.string.isRequired,
-  handleClick: PropTypes.func,
-  isDisabled: PropTypes.bool
+  text: string.isRequired,
+  iconClass: string.isRequired,
+  btnClass: string.isRequired,
+  handleClick: func,
+  isDisabled: bool
 };
 
 Button.defaultProps = {

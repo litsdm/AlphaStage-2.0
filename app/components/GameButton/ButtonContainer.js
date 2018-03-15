@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import { exec } from 'child_process';
 import fs from 'fs';
-import PropTypes from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import styles from './styles.scss';
 
 import { startDownload, finishDownload } from '../../actions/game';
@@ -214,15 +214,15 @@ class ButtonContainer extends Component {
 }
 
 ButtonContainer.propTypes = {
-  game: PropTypes.object.isRequired,
-  startDownloading: PropTypes.func.isRequired,
-  completeDownload: PropTypes.func.isRequired,
-  incrementMetric: PropTypes.func.isRequired,
-  openGame: PropTypes.func.isRequired,
-  isDownloading: PropTypes.bool,
-  isInstalling: PropTypes.bool,
-  downloadId: PropTypes.string,
-  isFinished: PropTypes.bool
+  game: object.isRequired,
+  startDownloading: func.isRequired,
+  completeDownload: func.isRequired,
+  incrementMetric: func.isRequired,
+  openGame: func.isRequired,
+  isDownloading: bool,
+  isInstalling: bool,
+  downloadId: string,
+  isFinished: bool
 };
 
 ButtonContainer.defaultProps = {

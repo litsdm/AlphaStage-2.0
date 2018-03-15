@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
@@ -59,9 +59,9 @@ const General = ({ privacyCheck, releaseStatus, handleChange }) => {
 };
 
 General.propTypes = {
-  privacyCheck: PropTypes.bool,
-  releaseStatus: PropTypes.string,
-  handleChange: PropTypes.func.isRequired
+  privacyCheck: bool,
+  releaseStatus: string,
+  handleChange: func.isRequired
 };
 
 General.defaultProps = {

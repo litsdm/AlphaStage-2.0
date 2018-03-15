@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, string } from 'prop-types';
 import styles from './AdditionalDetails.scss';
 
 import DetailsRow from './DetailsRow';
@@ -15,10 +15,10 @@ const AdditionalDetails = ({ languages, publisher, spaceRequired, website }) => 
 );
 
 AdditionalDetails.propTypes = {
-  languages: PropTypes.array,
-  publisher: PropTypes.string,
-  spaceRequired: PropTypes.string,
-  website: PropTypes.string
+  languages: array,
+  publisher: string,
+  spaceRequired: string,
+  website: string
 };
 
 AdditionalDetails.defaultProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, number } from 'prop-types';
 import styles from './ProgressBar.scss';
 
 const ProgressBar = ({ progress, display }) => {
@@ -16,8 +16,8 @@ const ProgressBar = ({ progress, display }) => {
 };
 
 ProgressBar.propTypes = {
-  progress: PropTypes.number,
-  display: PropTypes.bool
+  progress: number,
+  display: bool
 };
 
 ProgressBar.defaultProps = {

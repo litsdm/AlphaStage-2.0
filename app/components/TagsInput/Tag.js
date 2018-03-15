@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, number, string } from 'prop-types';
 import styles from './styles.scss';
 
 const Tag = ({ text, index, onRemoveClick }) => (
@@ -12,9 +12,9 @@ const Tag = ({ text, index, onRemoveClick }) => (
 );
 
 Tag.propTypes = {
-  text: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  onRemoveClick: PropTypes.func.isRequired
+  text: string.isRequired,
+  index: number.isRequired,
+  onRemoveClick: func.isRequired
 };
 
 export default Tag;

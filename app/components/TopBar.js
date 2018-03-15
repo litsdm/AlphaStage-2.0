@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { object } from 'prop-types';
 import styles from './TopBar.scss';
 
 const TopBar = ({ history }) => {
@@ -17,7 +17,7 @@ const TopBar = ({ history }) => {
 };
 
 TopBar.propTypes = {
-  history: PropTypes.object.isRequired
+  history: object.isRequired
 };
 
 export default TopBar;

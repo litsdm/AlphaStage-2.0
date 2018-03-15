@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, func } from 'prop-types';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
 
@@ -40,9 +40,9 @@ const TagsInput = ({ tags, handleAddTag, handleRemoveTag }) => {
 };
 
 TagsInput.propTypes = {
-  tags: PropTypes.array.isRequired,
-  handleAddTag: PropTypes.func.isRequired,
-  handleRemoveTag: PropTypes.func.isRequired
+  tags: array.isRequired,
+  handleAddTag: func.isRequired,
+  handleRemoveTag: func.isRequired
 };
 
 export default TagsInput;

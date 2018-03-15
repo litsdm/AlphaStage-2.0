@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, string } from 'prop-types';
 import styles from './styles.scss';
 import logo from '../../../resources/icon.png';
 
@@ -11,8 +11,8 @@ const Info = ({ message, isNewUser }) => (
 );
 
 Info.propTypes = {
-  message: PropTypes.string.isRequired,
-  isNewUser: PropTypes.bool.isRequired
+  message: string.isRequired,
+  isNewUser: bool.isRequired
 };
 
 export default Info;

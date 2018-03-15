@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { number } from 'prop-types';
 import styles from './Overview.scss';
 
 const Overview = ({ downloads, pageViews, plays, uninstalls }) => (
@@ -25,10 +25,10 @@ const Overview = ({ downloads, pageViews, plays, uninstalls }) => (
 
 
 Overview.propTypes = {
-  downloads: PropTypes.number,
-  pageViews: PropTypes.number,
-  plays: PropTypes.number,
-  uninstalls: PropTypes.number
+  downloads: number,
+  pageViews: number,
+  plays: number,
+  uninstalls: number
 };
 
 Overview.defaultProps = {

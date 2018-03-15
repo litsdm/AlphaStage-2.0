@@ -1,5 +1,5 @@
 import React from 'react'; //eslint-disable-line
-import PropTypes from 'prop-types';
+import { array, func, object, string } from 'prop-types';
 import { Editor, RichUtils } from 'draft-js';
 import uuid from 'uuid/v4';
 import styles from './styles.scss';
@@ -102,11 +102,11 @@ const Details = ({ editorState, tags, genre, handleChange, validatedInputClass }
 };
 
 Details.propTypes = {
-  editorState: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  tags: PropTypes.array.isRequired,
-  genre: PropTypes.string.isRequired,
-  validatedInputClass: PropTypes.func.isRequired
+  editorState: object.isRequired,
+  handleChange: func.isRequired,
+  tags: array.isRequired,
+  genre: string.isRequired,
+  validatedInputClass: func.isRequired
 };
 
 export default Details;

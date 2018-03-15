@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import uuid from 'uuid/v4';
-import PropTypes from 'prop-types';
+import { array } from 'prop-types';
 import styles from './GameGrid.scss';
 
 const GameGrid = ({ games }) => {
@@ -19,7 +19,7 @@ const GameGrid = ({ games }) => {
 };
 
 GameGrid.propTypes = {
-  games: PropTypes.array.isRequired
+  games: array.isRequired
 };
 
 export default GameGrid;

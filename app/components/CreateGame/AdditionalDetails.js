@@ -1,6 +1,6 @@
 import React from 'react';
 import uuid from 'uuid/v4';
-import PropTypes from 'prop-types';
+import { array, func, string } from 'prop-types';
 import styles from './styles.scss';
 
 import Tag from '../TagsInput/Tag';
@@ -109,11 +109,11 @@ const AdditionalDetails = ({ languages, publisher, spaceRequired, website, handl
 };
 
 AdditionalDetails.propTypes = {
-  languages: PropTypes.array,
-  publisher: PropTypes.string,
-  spaceRequired: PropTypes.string,
-  website: PropTypes.string,
-  handleChange: PropTypes.func.isRequired
+  languages: array,
+  publisher: string,
+  spaceRequired: string,
+  website: string,
+  handleChange: func.isRequired
 };
 
 AdditionalDetails.defaultProps = {
