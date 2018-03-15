@@ -41,7 +41,16 @@ const withGraphql = compose(
   }),
   graphql(addExp, {
     props: ({ ownProps: { user }, mutate }) => ({
-      incrementExp: (input) => mutate({ variables: { input: { ...input, _id: user._id } } })
+      incrementExp: (expObj) => {
+        const input = { ...expObj, _id: user._id };
+        const refetchQueries = [
+          {
+            query: userLevel,
+            variables: { id: user._id }
+          }
+        ];
+        mutate({ variables: { input }, refetchQueries });
+      }
     })
   }),
   graphql(userLevel, {
