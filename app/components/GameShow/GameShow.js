@@ -144,6 +144,7 @@ class GameShow extends Component {
   render() {
     const {
       activeSession,
+      addExp,
       game,
       isDownloading,
       downloadId,
@@ -152,7 +153,8 @@ class GameShow extends Component {
       micAllowed,
       handleChange,
       s3Url,
-      sendFeedback
+      sendFeedback,
+      userExp
     } = this.props;
     const { progress } = this.state;
 
@@ -181,6 +183,8 @@ class GameShow extends Component {
           s3Url={s3Url}
           sendFeedback={sendFeedback}
           gameId={game._id}
+          addExp={addExp}
+          userExp={userExp}
         />
         <InfoModal
           id={sessionModalId}
@@ -196,6 +200,7 @@ class GameShow extends Component {
 
 GameShow.propTypes = {
   activeSession: object,
+  addExp: func.isRequired,
   game: object.isRequired,
   downloadId: string.isRequired,
   incrementMetric: func.isRequired,
@@ -205,7 +210,8 @@ GameShow.propTypes = {
   micAllowed: bool,
   handleChange: func.isRequired,
   s3Url: string,
-  sendFeedback: func.isRequired
+  sendFeedback: func.isRequired,
+  userExp: object
 };
 
 GameShow.defaultProps = {
@@ -213,7 +219,8 @@ GameShow.defaultProps = {
   micAllowed: true,
   finalVideo: null,
   activeSession: null,
-  s3Url: ''
+  s3Url: '',
+  userExp: {}
 };
 
 export default GameShow;

@@ -1,0 +1,7 @@
+query UserLevel($id: String) {
+  user(_id: $id) {
+    experience,
+    level,
+    nextLevelExp
+  }
+}

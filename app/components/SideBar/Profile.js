@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { func, object, string } from 'prop-types';
 import styles from './Profile.scss';
 
 import setProfilePicture from '../../graphql/setProfilePicture.graphql';
@@ -16,7 +16,7 @@ const withMutation = graphql(setProfilePicture, {
   }),
 });
 
-const Profile = ({ user, logout, setImage, updateUserPic }) => {
+const Profile = ({ user, logout, setImage, updateUserPic, expFill }) => {
   const chooseProfilePicture = () => {
     parseImageUpload(profilePictureOptions)
       .then(({ filesUploaded }) => {
@@ -46,9 +46,9 @@ const Profile = ({ user, logout, setImage, updateUserPic }) => {
       <div className={styles.ProfileInfo}>
         <p className={styles.Name}>{user.username}</p>
         <div className={styles.ExpBar}>
-          <div className={styles.ExpBarFill} />
+          <div className={styles.ExpBarFill} style={{ width: expFill }} />
         </div>
-        <p className={styles.Level}>Lv. 100</p>
+        <p className={styles.Level}>{`Lv. ${user.level}`}</p>
       </div>
       <button className={styles.OptionsButton} onClick={logout}>
         <i className="fa fa-sign-out" />
@@ -58,10 +58,11 @@ const Profile = ({ user, logout, setImage, updateUserPic }) => {
 };
 
 Profile.propTypes = {
-  user: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
-  setImage: PropTypes.func.isRequired,
-  updateUserPic: PropTypes.func.isRequired
+  expFill: string.isRequired,
+  user: object.isRequired,
+  logout: func.isRequired,
+  setImage: func.isRequired,
+  updateUserPic: func.isRequired
 };
 
 export default withMutation(Profile);

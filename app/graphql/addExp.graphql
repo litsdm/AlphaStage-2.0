@@ -1,0 +1,7 @@
+mutation AddExo($input: LevelInput!) {
+  addExp(input: $input) {
+    experience,
+    level,
+    nextLevelExp
+  }
+}

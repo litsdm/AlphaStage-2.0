@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, object, string } from 'prop-types';
 import styles from './SideBar.scss';
 
 import Controls from '../Controls';
 import Profile from './Profile';
 import Menu from './Menu';
 
-const SideBar = ({ user, logout, updateUserPic }) => (
+const SideBar = ({ user, logout, updateUserPic, expFill }) => (
   <div className={styles.SideBar}>
     <Controls />
     <Menu />
@@ -16,14 +16,19 @@ const SideBar = ({ user, logout, updateUserPic }) => (
     >
       Help & Feedback
     </button>
-    <Profile user={user} logout={logout} updateUserPic={updateUserPic} />
+    <Profile user={user} logout={logout} updateUserPic={updateUserPic} expFill={expFill} />
   </div>
 );
 
 SideBar.propTypes = {
-  user: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
-  updateUserPic: PropTypes.func.isRequired
+  expFill: string,
+  user: object.isRequired,
+  logout: func.isRequired,
+  updateUserPic: func.isRequired
+};
+
+SideBar.defaultProps = {
+  expFill: ''
 };
 
 export default SideBar;
