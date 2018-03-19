@@ -12,7 +12,7 @@ class SettingsModal extends Component {
     contentIndex: 0,
     privacyCheck: this.props.game.isPrivate,
     releaseStatus: this.props.game.releaseStatus,
-    focusedInput: '',
+    focusedInput: null,
     playable: {
       allTime: true,
       onTestingSession: false,

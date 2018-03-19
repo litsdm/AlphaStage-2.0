@@ -1,6 +1,6 @@
 import React from 'react';
 import { DateRangePicker } from 'react-dates';
-import { string, func, object } from 'prop-types';
+import PropTypes, { func, object } from 'prop-types';
 import styles from './styles.scss';
 
 const Availability = ({ playable, setState, focusedInput }) => {
@@ -29,6 +29,28 @@ const Availability = ({ playable, setState, focusedInput }) => {
     setState('playable', newPlayable);
   };
 
+  const onActiveChange = ({ target: { value, checked } }) => {
+    const newPlayable = value.startsWith('certain')
+      ? {
+        ...playable,
+        [value]: {
+          ...playable[value],
+          active: checked
+        }
+      }
+      : {
+        ...playable,
+        [value]: checked
+      };
+
+    setState('playable', newPlayable);
+  };
+
+  const getLabelStyle = (active) => `${styles.RLabel} ${active ? styles.active : ''}`;
+
+  const dateActive = playable.certainDate.active;
+  const releaseActive = playable.certainRelease.active;
+
   return (
     <React.Fragment>
       <p className={styles.Title}>Availability</p>
@@ -39,39 +61,39 @@ const Availability = ({ playable, setState, focusedInput }) => {
         </p>
         <div>
           <div className={styles.Row}>
-            <label htmlFor="allTime" className={styles.RLabel}>
+            <label htmlFor="allTime" className={getLabelStyle(playable.allTime)}>
               <input
                 id="allTime"
                 type="checkbox"
-                name="type"
                 value="allTime"
-                checked
+                checked={playable.allTime}
+                onChange={onActiveChange}
               />
-              <i className="fa fa-circle-o" /> All the time
+              <i className={`fa ${playable.allTime ? 'fa-check-circle-o' : 'fa-circle-o'}`} /> All the time
             </label>
           </div>
           <div className={styles.Row}>
-            <label htmlFor="onTestingSession" className={styles.RLabel}>
+            <label htmlFor="onTestingSession" className={getLabelStyle(playable.onTestingSession)}>
               <input
                 id="onTestingSession"
                 type="checkbox"
-                name="type"
                 value="onTestingSession"
-                checked
+                checked={playable.onTestingSession}
+                onChange={onActiveChange}
               />
-              <i className="fa fa-circle-o" /> During testing sessions
+              <i className={`fa ${playable.onTestingSession ? 'fa-check-circle-o' : 'fa-circle-o'}`} /> During testing sessions
             </label>
           </div>
           <div className={styles.Row}>
-            <label htmlFor="certainDate" className={styles.RLabel}>
+            <label htmlFor="certainDate" className={getLabelStyle(dateActive)}>
               <input
                 id="certainDate"
                 type="checkbox"
-                name="type"
                 value="certainDate"
-                checked
+                checked={dateActive}
+                onChange={onActiveChange}
               />
-              <i className="fa fa-circle-o" /> During a certain date
+              <i className={`fa ${dateActive ? 'fa-check-circle-o' : 'fa-circle-o'}`} /> During a certain date
             </label>
             <div className={styles.ROptions}>
               <DateRangePicker
@@ -86,15 +108,16 @@ const Availability = ({ playable, setState, focusedInput }) => {
             </div>
           </div>
           <div className={styles.Row}>
-            <label htmlFor="certainRelease" className={styles.RLabel}>
+            <label htmlFor="certainRelease" className={getLabelStyle(releaseActive)}>
               <input
                 id="certainRelease"
                 type="checkbox"
                 name="type"
                 value="certainRelease"
-                checked
+                checked={releaseActive}
+                onChange={onActiveChange}
               />
-              <i className="fa fa-circle-o" /> When release status is:
+              <i className={`fa ${releaseActive ? 'fa-check-circle-o' : 'fa-circle-o'}`} /> When release status is:
             </label>
             <div className={styles.ROptions}>
               <select className={styles.Select} onChange={onReleaseChange}>
@@ -111,12 +134,12 @@ const Availability = ({ playable, setState, focusedInput }) => {
 Availability.propTypes = {
   playable: object,
   setState: func.isRequired,
-  focusedInput: string
+  focusedInput: PropTypes.oneOf(['startDate', 'endDate'])
 };
 
 Availability.defaultProps = {
   playable: {},
-  focusedInput: ''
+  focusedInput: null
 };
 
 export default Availability;

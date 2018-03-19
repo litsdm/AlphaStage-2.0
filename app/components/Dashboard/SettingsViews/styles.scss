@@ -145,6 +145,14 @@ input:checked + .Slider:before {
   &:hover {
     opacity: 1;
   }
+
+  &.active {
+    opacity: 1;
+
+    i {
+      color: #2091f3;
+    }
+  }
 }
 
 .ROptions {
