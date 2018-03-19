@@ -5,12 +5,27 @@ import styles from './SettingsModal.scss';
 
 import Modal from '../Modal';
 import General from './SettingsViews/General';
+import Availability from './SettingsViews/Availability';
 
 class SettingsModal extends Component {
   state = {
     contentIndex: 0,
     privacyCheck: this.props.game.isPrivate,
-    releaseStatus: this.props.game.releaseStatus
+    releaseStatus: this.props.game.releaseStatus,
+    focusedInput: '',
+    playable: {
+      allTime: true,
+      onTestingSession: false,
+      certainDate: {
+        active: false,
+        startDate: null,
+        endDate: null
+      },
+      certainRelease: {
+        active: false,
+        status: ''
+      }
+    }
   }
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
@@ -63,13 +78,21 @@ class SettingsModal extends Component {
       : ''
   )
 
+  setStateProperty = (name, value) => this.setState({ [name]: value })
+
   getContent = () => {
-    const { privacyCheck, releaseStatus } = this.state;
+    const { privacyCheck, releaseStatus, playable, focusedInput } = this.state;
     return [
       <General
         releaseStatus={releaseStatus || ''}
         privacyCheck={privacyCheck}
         handleChange={this.changeInput}
+      />,
+      <Availability
+        handleChange={this.changeInput}
+        playable={playable}
+        focusedInput={focusedInput}
+        setState={this.setStateProperty}
       />
     ];
   }
@@ -85,6 +108,9 @@ class SettingsModal extends Component {
           <div className={styles.Menu}>
             <button className={this.activeClass(0)} onClick={this.changeContent(0)}>
               General
+            </button>
+            <button className={this.activeClass(1)} onClick={this.changeContent(1)}>
+              Availability
             </button>
             <div className={styles.Divider} />
             <button className={styles.DeleteButton} onClick={this.checkDelete}>

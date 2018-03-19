@@ -18,6 +18,12 @@
   text-transform: uppercase;
 }
 
+.SDescription {
+  font-size: 14px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
 .SliderContainer {
  display: flex;
  margin-top: 12px;
@@ -115,4 +121,31 @@ input:checked + .Slider:before {
   margin-top: 6px;
   outline: 0;
   width: 80%;
+}
+
+.Row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.RLabel {
+  cursor: pointer;
+  opacity: 0.6;
+  padding: 12px;
+
+  i {
+    margin-right: 6px;
+  }
+
+  input {
+    display: none;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.ROptions {
 }
