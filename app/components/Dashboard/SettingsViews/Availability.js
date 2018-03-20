@@ -1,7 +1,16 @@
 import React from 'react';
 import { DateRangePicker } from 'react-dates';
+import uuid from 'uuid/v4';
 import PropTypes, { func, object } from 'prop-types';
 import styles from './styles.scss';
+
+const releaseOptions = [
+  'Released - Game is ready.',
+  'Beta - Some aspects of the game need polishing.',
+  'Alpha - Some of the main features are yet to be added.',
+  'Demo - Only a level or small part of the game.',
+  'Prototype - Just testing out an idea.'
+];
 
 const Availability = ({ playable, setState, focusedInput }) => {
   const onReleaseChange = ({ target: { value } }) => {
@@ -47,6 +56,10 @@ const Availability = ({ playable, setState, focusedInput }) => {
   };
 
   const getLabelStyle = (active) => `${styles.RLabel} ${active ? styles.active : ''}`;
+
+  const renderOptions = () => (
+    releaseOptions.map(value => <option value={value} key={uuid()}>{value}</option>)
+  );
 
   const dateActive = playable.certainDate.active;
   const releaseActive = playable.certainRelease.active;
@@ -120,8 +133,12 @@ const Availability = ({ playable, setState, focusedInput }) => {
               <i className={`fa ${releaseActive ? 'fa-check-circle-o' : 'fa-circle-o'}`} /> When release status is:
             </label>
             <div className={styles.ROptions}>
-              <select className={styles.Select} onChange={onReleaseChange}>
-                <option>Released</option>
+              <select
+                className={styles.SelectA}
+                onChange={onReleaseChange}
+                value={playable.certainRelease.status}
+              >
+                {renderOptions()}
               </select>
             </div>
           </div>

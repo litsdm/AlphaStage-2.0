@@ -111,7 +111,8 @@ input:checked + .Slider:before {
   transform: translateX(26px);
 }
 
-.Select {
+.Select,
+.SelectA {
   background-color: rgba(255, 255, 255, 0.4);
   border: none;
   color: black;
@@ -121,6 +122,12 @@ input:checked + .Slider:before {
   margin-top: 6px;
   outline: 0;
   width: 80%;
+}
+
+.SelectA {
+  margin: 0;
+  max-width: 355px;
+  width: 100%;
 }
 
 .Row {
