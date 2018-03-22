@@ -172,6 +172,7 @@ class GameShow extends Component {
           isDownloading={isDownloading}
           downloadId={downloadId}
           openGame={openGame}
+          activeSession={activeSession}
         />
         <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
           {this.renderSlider()}

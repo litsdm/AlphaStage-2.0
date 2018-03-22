@@ -9,6 +9,7 @@ query FullGame($id: String) {
     isPrivate,
     languages,
     macBuild,
+    playable,
     publisher,
     releaseStatus,
     screenshots,

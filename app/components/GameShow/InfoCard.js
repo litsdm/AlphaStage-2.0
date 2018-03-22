@@ -7,7 +7,7 @@ import styles from './InfoCard.scss';
 import GameButton from '../GameButton/ButtonContainer';
 import ProgressBar from '../ProgressBar';
 
-const InfoCard = ({ game, progress, isDownloading, downloadId, openGame }) => {
+const InfoCard = ({ game, progress, isDownloading, downloadId, openGame, activeSession }) => {
   const renderTags = () => (
     game.tags.map(tag => <Link key={uuid()} to="/">{tag}</Link>)
   );
@@ -18,7 +18,7 @@ const InfoCard = ({ game, progress, isDownloading, downloadId, openGame }) => {
         className={styles.Header}
         style={{ background: `url(${game.thumbnail})`, backgroundSize: '100% 100%' }}
       >
-        <GameButton openGame={openGame} game={game} />
+        <GameButton openGame={openGame} game={game} activeSession={activeSession} />
       </div>
       <div className={styles.Body}>
         <ProgressBar progress={progress} display={isDownloading && game._id === downloadId} />
@@ -44,13 +44,15 @@ InfoCard.propTypes = {
   openGame: func.isRequired,
   progress: number,
   isDownloading: bool,
-  downloadId: string
+  downloadId: string,
+  activeSession: object
 };
 
 InfoCard.defaultProps = {
   progress: 0,
   isDownloading: false,
-  downloadId: ''
+  downloadId: '',
+  activeSession: null
 };
 
 export default InfoCard;
