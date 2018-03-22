@@ -13,6 +13,7 @@ import updateGeneralSettings from '../graphql/updateGeneralSettings.graphql';
 import deleteGame from '../graphql/deleteGame.graphql';
 import createTestingSession from '../graphql/createTestingSession.graphql';
 import markTest from '../graphql/markTest.graphql';
+import setStrProperty from '../graphql/setStrProperty.graphql';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -59,6 +60,11 @@ const withGraphql = compose(
         mutate({ variables: { gameId, isPrivate, releaseStatus } }),
     })
   }),
+  graphql(setStrProperty, {
+    props: ({ mutate }) => ({
+      updateProperty: (gameId, name, value) => mutate({ variables: { gameId, name, value } })
+    })
+  }),
   graphql(deleteGame, {
     props: ({ mutate }) => {
       const token = localStorage.getItem('token');
@@ -90,7 +96,16 @@ const withGraphql = compose(
 );
 
 const DashboardPage = (props) => {
-  const { user, games, updateGeneral, loading, delGame, createSession, markFeedback } = props;
+  const {
+    user,
+    games,
+    updateGeneral,
+    loading,
+    delGame,
+    createSession,
+    markFeedback,
+    updateProperty
+  } = props;
   return (
     loading
       ? <Loader />
@@ -102,6 +117,7 @@ const DashboardPage = (props) => {
           deleteGame={delGame}
           createTestingSession={createSession}
           markTest={markFeedback}
+          updateProperty={updateProperty}
         />
       )
   );
@@ -114,6 +130,7 @@ DashboardPage.propTypes = {
   delGame: func.isRequired,
   createSession: func.isRequired,
   markFeedback: func.isRequired,
+  updateProperty: func.isRequired,
   games: array,
   loading: bool
 };

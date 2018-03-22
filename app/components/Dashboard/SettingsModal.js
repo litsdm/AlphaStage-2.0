@@ -23,9 +23,15 @@ class SettingsModal extends Component {
       },
       certainRelease: {
         active: false,
-        status: ''
+        status: 'Released - Game is ready.'
       }
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { playable } = this.state;
+    const { playable: prevPlayable } = prevState;
+    this.checkPlayableUpdate(prevPlayable, playable);
   }
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
@@ -78,7 +84,36 @@ class SettingsModal extends Component {
       : ''
   )
 
-  setStateProperty = (name, value) => this.setState({ [name]: value })
+  setStateProperty = (name, value) =>
+    this.setState({ [name]: value })
+
+  checkPlayableUpdate = (prevPlayable, playable) => {
+    const { updateProperty, game: { _id } } = this.props;
+    const {
+      allTime: prevAllTime,
+      onTestingSession: prevOnTestingSession,
+      certainDate: { active: prevDateActive, startDate: prevStartDate, endDate: prevEndDate },
+      certainRelease: { active: prevReleaseActive, status: prevStatus }
+    } = prevPlayable;
+    const {
+      allTime,
+      onTestingSession,
+      certainDate: { active: dateActive, startDate, endDate },
+      certainRelease: { active: releaseActive, status }
+    } = playable;
+
+    if (
+      allTime !== prevAllTime ||
+      onTestingSession !== prevOnTestingSession ||
+      (!dateActive && prevDateActive) ||
+      (!releaseActive && prevReleaseActive) ||
+      ((dateActive && startDate !== null && endDate !== null) &&
+      (!prevDateActive || prevStartDate === null || prevEndDate === null)) ||
+      ((releaseActive && status) && (!prevReleaseActive || !prevStatus))
+    ) {
+      updateProperty(_id, 'playable', JSON.stringify(playable));
+    }
+  }
 
   getContent = () => {
     const { privacyCheck, releaseStatus, playable, focusedInput } = this.state;
@@ -130,7 +165,8 @@ SettingsModal.propTypes = {
   id: string,
   game: object.isRequired,
   updateGeneral: func.isRequired,
-  deleteGame: func.isRequired
+  deleteGame: func.isRequired,
+  updateProperty: func.isRequired
 };
 
 SettingsModal.defaultProps = {
