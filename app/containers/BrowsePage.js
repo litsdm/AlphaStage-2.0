@@ -5,6 +5,7 @@ import { bool, array } from 'prop-types';
 import allGamesQuery from '../graphql/allGames.graphql';
 
 import Browse from '../components/Browse/Browse';
+import Loader from '../components/Loader';
 
 const withGames = graphql(allGamesQuery, {
   props: ({ data }) => {
@@ -19,7 +20,7 @@ const withGames = graphql(allGamesQuery, {
 
 const BrowsePage = ({ games, loading }) => (
   loading
-    ? null
+    ? <Loader />
     : <Browse games={games} />
 );
 

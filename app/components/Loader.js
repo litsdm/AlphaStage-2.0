@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from './Loader.scss';
 
-const Loader = () =>
-  <i className={['fa fa-spinner fa-pulse fa-3x fa-fw', styles.Loader].join(' ')} />;
+const Loader = () => (
+  <div className={styles.BouncingLoader}>
+    <div />
+    <div />
+    <div />
+  </div>
+);
 
 export default Loader;
