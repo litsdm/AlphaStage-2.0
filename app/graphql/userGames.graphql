@@ -7,6 +7,7 @@ query UserGames($id: String) {
       downloads,
       isPrivate,
       pageViews,
+      playable,
       plays,
       releaseStatus,
       testingSessions {

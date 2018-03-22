@@ -1,0 +1,6 @@
+mutation setStrProperty($gameId: String, $name: String, $value: String) {
+  setStrProperty(gameId: $gameId, propName: $name, propValue: $value) {
+    _id,
+    playable
+  }
+}

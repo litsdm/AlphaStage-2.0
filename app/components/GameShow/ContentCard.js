@@ -6,7 +6,7 @@ import styles from './styles.scss';
 import InfoCard from './InfoCard';
 import AdditionalDetails from './AdditionalDetails';
 
-const ContentCard = ({ game, progress, isDownloading, downloadId, openGame }) => {
+const ContentCard = ({ game, progress, isDownloading, downloadId, openGame, activeSession }) => {
   const editorState = () => {
     const contentState = convertFromRaw(JSON.parse(game.descriptionState));
     return EditorState.createWithContent(contentState);
@@ -29,6 +29,7 @@ const ContentCard = ({ game, progress, isDownloading, downloadId, openGame }) =>
             isDownloading={isDownloading}
             downloadId={downloadId}
             openGame={openGame}
+            activeSession={activeSession}
           />
         </div>
       </div>
@@ -47,13 +48,15 @@ ContentCard.propTypes = {
   openGame: func.isRequired,
   progress: number,
   isDownloading: bool,
-  downloadId: string
+  downloadId: string,
+  activeSession: object
 };
 
 ContentCard.defaultProps = {
   progress: 0,
   isDownloading: false,
-  downloadId: ''
+  downloadId: '',
+  activeSession: null
 };
 
 export default ContentCard;

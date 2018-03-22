@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import { exec } from 'child_process';
 import fs from 'fs';
+import moment from 'moment';
 import { bool, func, object, string } from 'prop-types';
 import styles from './styles.scss';
 
@@ -184,9 +185,38 @@ class ButtonContainer extends Component {
     }
   }
 
+  buttonStatus = () => {
+    const { game: { playable: strPlayable, releaseStatus }, activeSession } = this.props;
+    const playable = JSON.parse(strPlayable);
+    const {
+      allTime,
+      onTestingSession,
+      certainDate: { active: dateActive, startDate, endDate },
+      certainRelease: { active: releaseActive, status }
+    } = playable;
+    const now = moment();
+
+    if (
+      allTime ||
+      (onTestingSession && activeSession) ||
+      (dateActive && now.isBetween(startDate, endDate)) ||
+      (releaseActive && releaseStatus === status)
+    ) {
+      const key = this.buttonConfigKey();
+      return this.buttonConfig(key);
+    }
+
+    return {
+      iconClass: '',
+      btnClass: styles.ButtonDisabled,
+      handleClick: null,
+      isDisabled: true,
+      text: 'Not playable'
+    };
+  }
+
   render() {
-    const key = this.buttonConfigKey();
-    const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonConfig(key);
+    const { text, iconClass, btnClass, handleClick, isDisabled } = this.buttonStatus();
     const { isInstalled, uninstalling } = this.state;
     const { isInstalling } = this.props;
 
@@ -222,14 +252,16 @@ ButtonContainer.propTypes = {
   isDownloading: bool,
   isInstalling: bool,
   downloadId: string,
-  isFinished: bool
+  isFinished: bool,
+  activeSession: object
 };
 
 ButtonContainer.defaultProps = {
   isDownloading: false,
   isInstalling: false,
   downloadId: '',
-  isFinished: false
+  isFinished: false,
+  activeSession: null
 };
 
 const ButtonWithMutation = withMutation(ButtonContainer);
