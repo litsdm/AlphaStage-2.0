@@ -6,6 +6,7 @@ import styles from './CreateModal.scss';
 
 import Modal from '../../Modal';
 import Objectives from './Objectives';
+import ProgressBar from './CreatePages/ProgressBar';
 
 class Create extends Component {
   state = {
@@ -87,6 +88,7 @@ class Create extends Component {
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
+          <ProgressBar progress={2} />
           <div className={styles.InputContainer}>
             <p>Duration</p>
             <DateRangePicker
