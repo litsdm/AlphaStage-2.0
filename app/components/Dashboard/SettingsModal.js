@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
+import moment from 'moment';
 import swal from 'sweetalert';
 import styles from './SettingsModal.scss';
 
@@ -28,10 +29,22 @@ class SettingsModal extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setInitialState();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { playable } = this.state;
     const { playable: prevPlayable } = prevState;
     this.checkPlayableUpdate(prevPlayable, playable);
+  }
+
+  setInitialState = () => {
+    const { playable: strPlayable } = this.props.game;
+    const playable = JSON.parse(strPlayable);
+    playable.certainDate.startDate = moment(playable.certainDate.startDate);
+    playable.certainDate.endDate = moment(playable.certainDate.endDate);
+    this.setState({ playable });
   }
 
   changeContent = (contentIndex) => () => this.setState({ contentIndex });
