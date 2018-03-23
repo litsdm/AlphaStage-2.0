@@ -1,0 +1,62 @@
+.Container {
+  display: flex;
+  padding: 24px;
+}
+
+.Plan {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-basis: 33%;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  padding: 6px;
+  position: relative;
+  margin-right: 6px;
+
+  &:hover {
+    border-color: #2098f3;
+  }
+
+  &.active {
+    border: 3px solid #2098f3;
+  }
+}
+
+.Divider,
+.Divider2 {
+  background-color: #eee;
+  bottom: 0;
+  height: 1px;
+  left: 0;
+  margin-left: 12px;
+  position: absolute;
+  right: 0;
+  top: 55px;
+  width: 90%;
+}
+
+.Divider2 {
+  top: 185px;
+}
+
+.Name {
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.Info {
+  font-size: 12px;
+  margin: 12px 0;
+
+  p {
+    margin-bottom: 6px;
+  }
+}
+
+.Price {
+  margin: 12px 0;
+}

@@ -22,7 +22,7 @@ const ProgressBar = ({ progress }) => {
       </div>
       <div className={styles.Bar} style={progress > 0 ? { backgroundColor: '#2091f3' } : {}} />
       <div className={getCircleClass(1)}>
-        <p>Category</p>
+        <p>Plan</p>
         <div>
           <i className="fa fa-check" />
           <p>2</p>

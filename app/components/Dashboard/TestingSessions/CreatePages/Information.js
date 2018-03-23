@@ -17,7 +17,7 @@ const Information = ({ date, focusedInput, setState, objectives, handleChange })
       />
     </div>
     <div className={styles.InputContainer}>
-      <p>Duration</p>
+      <p>Start Date</p>
       <SingleDatePicker
         date={date}
         onDateChange={newDate => setState('startDate', newDate)}

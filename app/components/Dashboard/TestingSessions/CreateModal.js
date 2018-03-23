@@ -7,6 +7,25 @@ import styles from './CreateModal.scss';
 import Modal from '../../Modal';
 import ProgressBar from './CreatePages/ProgressBar';
 import Information from './CreatePages/Information';
+import Plans from './CreatePages/Plans';
+
+const plans = [
+  {
+    name: 'Basic',
+    perks: ['2 weeks duration', 'Invite only', 'Maximum of 30 testers'],
+    price: 'Free'
+  },
+  {
+    name: 'One Month',
+    perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 150 testers'],
+    price: '4.99'
+  },
+  {
+    name: 'Three Months',
+    perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s top Games'],
+    price: '9.99'
+  }
+];
 
 class Create extends Component {
   state = {
@@ -14,7 +33,8 @@ class Create extends Component {
     name: '',
     objectives: [],
     progress: 0,
-    startDate: moment()
+    startDate: moment(),
+    selectedPlan: 0
   }
 
   isInputValid = () => {
@@ -85,20 +105,32 @@ class Create extends Component {
     ));
   }
 
+  renderPage = () => {
+    const { objectives, startDate, focusedInput, progress, selectedPlan } = this.state;
+
+    if (progress === 0) {
+      return (
+        <Information
+          date={startDate}
+          focusedInput={focusedInput}
+          objectives={objectives}
+          handleChange={this.handleChange}
+          setState={this.setStateProperty}
+        />
+      );
+    } else if (progress === 1) {
+      return <Plans plans={plans} selectedPlan={selectedPlan} setState={this.setStateProperty} />;
+    }
+  }
+
   render() {
     const { id } = this.props;
-    const { objectives, startDate, focusedInput, progress } = this.state;
+    const { progress } = this.state;
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
           <ProgressBar progress={progress} />
-          <Information
-            date={startDate}
-            focusedInput={focusedInput}
-            objectives={objectives}
-            handleChange={this.handleChange}
-            setState={this.setStateProperty}
-          />
+          {this.renderPage()}
           <div className={styles.Footer}>
             <p id="errorMessage" />
             <div>
@@ -106,7 +138,7 @@ class Create extends Component {
               {
                 progress === 0
                   ? null
-                  : <button className={styles.Submit} onClick={this.prevPage}>Back</button>
+                  : <button className={styles.PrevButton} onClick={this.prevPage}>Back</button>
               }
               {
                 progress === 2

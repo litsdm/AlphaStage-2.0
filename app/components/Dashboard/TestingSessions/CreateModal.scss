@@ -62,7 +62,8 @@
   }
 }
 
-.Submit {
+.Submit,
+.PrevButton {
   background-color: #2091f3;
   border-radius: 4px;
   color: white;
@@ -76,6 +77,7 @@
 
   &:hover {
     background-color: #2098f3;
+    color: #fff;
   }
 }
 
@@ -145,4 +147,12 @@
       border-color: #64B5F6;
     }
   }
+}
+
+.PrevButton {
+  background-color: transparent;
+  border: 1px solid #2091f3;
+  color: #2091f3;
+  margin-right: 6px;
+
 }
