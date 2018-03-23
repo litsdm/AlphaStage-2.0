@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import { DateRangePicker } from 'react-dates';
 import uuid from 'uuid/v4';
 import { func, string } from 'prop-types';
+import moment from 'moment';
 import styles from './CreateModal.scss';
 
 import Modal from '../../Modal';
-import Objectives from './Objectives';
 import ProgressBar from './CreatePages/ProgressBar';
+import Information from './CreatePages/Information';
 
 class Create extends Component {
   state = {
-    endDate: null,
     focusedInput: null,
-    maxTesters: 50,
+    name: '',
     objectives: [],
-    rewardType: 'Money',
-    reward: '',
-    startDate: null
+    progress: 0,
+    startDate: moment()
   }
 
   isInputValid = () => {
@@ -66,6 +64,11 @@ class Create extends Component {
     this.setState({ [name]: value });
   }
 
+  setStateProperty = (name, value) => this.setState({ [name]: value });
+
+  nextPage = () => this.setState({ progress: this.state.progress + 1 });
+  prevPage = () => this.setState({ progress: this.state.progress - 1 });
+
   renderNumberButtons = () => {
     const { maxTesters } = this.state;
     const numbers = [50, 100, 200, 400];
@@ -84,68 +87,33 @@ class Create extends Component {
 
   render() {
     const { id } = this.props;
-    const { rewardType, objectives } = this.state;
+    const { objectives, startDate, focusedInput, progress } = this.state;
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
-          <ProgressBar progress={2} />
-          <div className={styles.InputContainer}>
-            <p>Duration</p>
-            <DateRangePicker
-              startDate={this.state.startDate}
-              startDateId="sessionStart"
-              endDate={this.state.endDate}
-              endDateId="sessionEnd"
-              onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
-              focusedInput={this.state.focusedInput}
-              onFocusChange={focusedInput => this.setState({ focusedInput })}
-            />
-          </div>
-          <div className={styles.InputContainer}>
-            <p>Max Number of Testers</p>
-            <div className={styles.Numbers}>
-              {this.renderNumberButtons()}
-              <div className={styles.Other}>
-                <p>Other: </p><input onChange={this.onNumberChange} type="number" />
-              </div>
-            </div>
-          </div>
-          <div className={styles.InputContainer}>
-            <p>Objectives</p>
-            <Objectives objectives={objectives} handleChange={this.handleChange} />
-          </div>
-          <div className={styles.InputContainer}>
-            <p>Reward Type</p>
-            <select
-              className={styles.Select}
-              name="rewardType"
-              onChange={this.handleChange}
-            >
-              <option value="Money">Money</option>
-              <option value="No Reward">No Reward</option>
-            </select>
-          </div>
-          {
-            rewardType !== 'No Reward'
-            ? (
-              <div className={styles.InputContainer}>
-                <p>Individual Reward</p>
-                <input
-                  type={rewardType === 'Money' ? 'number' : 'text'}
-                  className={styles.Input}
-                  name="reward"
-                  onChange={this.handleChange}
-                />
-              </div>
-            )
-            : null
-          }
+          <ProgressBar progress={progress} />
+          <Information
+            date={startDate}
+            focusedInput={focusedInput}
+            objectives={objectives}
+            handleChange={this.handleChange}
+            setState={this.setStateProperty}
+          />
           <div className={styles.Footer}>
             <p id="errorMessage" />
-            <React.Fragment>
+            <div>
               <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
-              <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
-            </React.Fragment>
+              {
+                progress === 0
+                  ? null
+                  : <button className={styles.Submit} onClick={this.prevPage}>Back</button>
+              }
+              {
+                progress === 2
+                  ? <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
+                  : <button className={styles.Submit} onClick={this.nextPage}>Next</button>
+              }
+            </div>
           </div>
         </div>
       </Modal>
