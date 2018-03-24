@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuid from 'uuid/v4';
 import { func, string } from 'prop-types';
 import moment from 'moment';
 import styles from './CreateModal.scss';
@@ -37,19 +36,6 @@ class Create extends Component {
     selectedPlan: 0
   }
 
-  isInputValid = () => {
-    const { startDate, endDate, rewardType, reward } = this.state;
-
-    if (startDate === null || endDate === null) {
-      return { isValid: false, error: 'Both start date and end date must be selected.' };
-    }
-    if (rewardType !== 'No Reward' && reward === '') {
-      return { isValid: false, error: 'Please input the reward that each individual will receive.' };
-    }
-
-    return { isValid: true };
-  }
-
   onCancel = () => {
     const { id } = this.props;
     document.getElementById(id).style.display = 'none';
@@ -73,12 +59,6 @@ class Create extends Component {
     document.getElementById(id).style.display = 'none';
   }
 
-  onNumberChange = ({ target }) => {
-    const { value } = target;
-    const maxTesters = value ? parseInt(value, 10) : 50;
-    this.setState({ maxTesters });
-  }
-
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
@@ -86,24 +66,32 @@ class Create extends Component {
 
   setStateProperty = (name, value) => this.setState({ [name]: value });
 
-  nextPage = () => this.setState({ progress: this.state.progress + 1 });
-  prevPage = () => this.setState({ progress: this.state.progress - 1 });
+  validateInfo = () => {
+    const { name, startDate, objectives } = this.state;
 
-  renderNumberButtons = () => {
-    const { maxTesters } = this.state;
-    const numbers = [50, 100, 200, 400];
+    if (!name) return { valid: false, error: 'Please enter a name for your Testing Session.' };
+    if (startDate === null) return { valid: false, error: 'Please select a valid start date.' };
+    if (objectives.length < 1) return { valid: false, error: 'Please enter at least one objective.' };
 
-    return numbers.map(number => (
-      <button
-        className={number === maxTesters ? styles.active : ''}
-        value={number}
-        onClick={this.onNumberChange}
-        key={uuid()}
-      >
-        {number}
-      </button>
-    ));
+    return { valid: true, error: null };
   }
+
+  nextPage = () => {
+    const { progress } = this.state;
+    const { valid, error } = this.validateInfo();
+    const errorElement = document.getElementById('errorMessage');
+    errorElement.style.opacity = '0';
+
+    if (progress === 0 && valid) {
+      this.setState({ progress: progress + 1 });
+      return;
+    }
+
+    errorElement.innerHTML = error;
+    errorElement.style.opacity = '1';
+  }
+
+  prevPage = () => this.setState({ progress: this.state.progress - 1 });
 
   renderPage = () => {
     const { objectives, startDate, focusedInput, progress, selectedPlan } = this.state;
