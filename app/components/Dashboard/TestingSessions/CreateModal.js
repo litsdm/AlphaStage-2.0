@@ -16,12 +16,12 @@ const plans = [
   },
   {
     name: 'One Month',
-    perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 150 testers'],
+    perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 150 testers', 'Support Alpha Stage\'s development.'],
     price: '4.99'
   },
   {
     name: 'Three Months',
-    perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s top Games'],
+    perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s Recommended Games', 'Support Alpha Stage\'s development.'],
     price: '9.99'
   }
 ];
@@ -78,17 +78,20 @@ class Create extends Component {
 
   nextPage = () => {
     const { progress } = this.state;
-    const { valid, error } = this.validateInfo();
-    const errorElement = document.getElementById('errorMessage');
-    errorElement.style.opacity = '0';
 
-    if (progress === 0 && valid) {
-      this.setState({ progress: progress + 1 });
-      return;
+    if (progress === 0) {
+      const { valid, error } = this.validateInfo();
+      const errorElement = document.getElementById('errorMessage');
+      errorElement.style.opacity = '0';
+
+      if (!valid) {
+        errorElement.innerHTML = error;
+        errorElement.style.opacity = '1';
+        return;
+      }
     }
 
-    errorElement.innerHTML = error;
-    errorElement.style.opacity = '1';
+    this.setState({ progress: progress + 1 });
   }
 
   prevPage = () => this.setState({ progress: this.state.progress - 1 });
