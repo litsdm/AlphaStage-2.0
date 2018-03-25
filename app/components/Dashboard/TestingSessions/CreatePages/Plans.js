@@ -29,7 +29,7 @@ const Plans = ({ plans, selectedPlan, setState }) => {
         {
           plan.price === 'Free'
             ? <p className={styles.Price}>Free</p>
-            : <p className={styles.Price}>{`$${plan.price} Monthly`}</p>
+            : <p className={styles.Price}>{`$${plan.price} ${plan.price === '9.99' ? 'Monthly' : ''}`}</p>
         }
       </div>
     ));

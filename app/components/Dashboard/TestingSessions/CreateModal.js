@@ -7,22 +7,29 @@ import Modal from '../../Modal';
 import ProgressBar from './CreatePages/ProgressBar';
 import Information from './CreatePages/Information';
 import Plans from './CreatePages/Plans';
+import Checkout from './CreatePages/Checkout';
 
 const plans = [
   {
     name: 'Basic',
     perks: ['2 weeks duration', 'Invite only', 'Maximum of 30 testers'],
-    price: 'Free'
+    price: 'Free',
+    duration: '2 weeks',
+    description: 'This plan is great if you want to test your game with a small group or people or inside your company. You have to invite people from this session\'s page once it is created.'
   },
   {
     name: 'One Month',
-    perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 150 testers', 'Support Alpha Stage\'s development.'],
-    price: '4.99'
+    perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 100 testers'],
+    price: '4.99',
+    duration: '1 M',
+    description: 'No need to invite anyone, just relax and review your feedback whenever you have time. You will also be supporting Alpha Stage\'s development :).'
   },
   {
     name: 'Three Months',
-    perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s Recommended Games', 'Support Alpha Stage\'s development.'],
-    price: '9.99'
+    perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s Recommended Games'],
+    price: '9.99',
+    duration: '3 months',
+    description: 'Your game will appear in the game recommendations on the home page for every one to see. You will also be supporting Alpha Stage\'s development :).'
   }
 ];
 
@@ -96,6 +103,20 @@ class Create extends Component {
 
   prevPage = () => this.setState({ progress: this.state.progress - 1 });
 
+  renderFinalButton = () => {
+    const { progress, selectedPlan } = this.state;
+
+    if (progress < 2) {
+      return <button className={styles.Submit} onClick={this.nextPage}>Next</button>;
+    }
+
+    if (selectedPlan === 0) {
+      return <button className={styles.Submit} onClick={this.createSession}>Create</button>;
+    }
+
+    return <button className={styles.Submit} onClick={this.onSubmit}>Checkout</button>;
+  }
+
   renderPage = () => {
     const { objectives, startDate, focusedInput, progress, selectedPlan } = this.state;
 
@@ -111,6 +132,8 @@ class Create extends Component {
       );
     } else if (progress === 1) {
       return <Plans plans={plans} selectedPlan={selectedPlan} setState={this.setStateProperty} />;
+    } else if (progress === 2) {
+      return <Checkout plan={plans[selectedPlan]} />;
     }
   }
 
@@ -131,11 +154,7 @@ class Create extends Component {
                   ? null
                   : <button className={styles.PrevButton} onClick={this.prevPage}>Back</button>
               }
-              {
-                progress === 2
-                  ? <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
-                  : <button className={styles.Submit} onClick={this.nextPage}>Next</button>
-              }
+              {this.renderFinalButton()}
             </div>
           </div>
         </div>
