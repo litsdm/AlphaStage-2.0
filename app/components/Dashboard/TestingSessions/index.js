@@ -3,7 +3,6 @@ import { array, string, func } from 'prop-types';
 
 import Sessions from './Sessions';
 import Empty from './Empty';
-import Show from './Show';
 import Tests from './Tests';
 
 class Index extends Component {
@@ -27,8 +26,6 @@ class Index extends Component {
       case 1:
         return <Empty createId={createId} switchPage={this.switchPage} />;
       case 2:
-        return <Show switchPage={this.switchPage} />;
-      case 3:
         return <Tests session={session} displayId={displayId} selectTest={selectTest} />;
       default:
         break;

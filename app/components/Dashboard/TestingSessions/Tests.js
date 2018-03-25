@@ -8,7 +8,8 @@ import styles from './Tests.scss';
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
 const Tests = ({ session, displayId, selectTest }) => {
-  const { testers, maxTesters, rewardType, reward, tests } = session;
+  const { testers, tests, plan, name } = session;
+  const { name: planName, duration: planDuration, maxTesters } = JSON.parse(plan);
 
   const getStatus = () => {
     const { startDate, endDate } = session;
@@ -110,14 +111,10 @@ const Tests = ({ session, displayId, selectTest }) => {
   return (
     <React.Fragment>
       <div className={styles.Container}>
+        {infoRow('Name', name)}
+        {infoRow('Plan', `${planName} (${planDuration})`)}
         {infoRow('Status', getStatus())}
         {infoRow('Testers', `${testers.length} / ${maxTesters}`)}
-        {infoRow('Reward Type', rewardType)}
-        {
-          rewardType !== 'No Reward'
-            ? infoRow('Reward', reward)
-            : null
-        }
       </div>
       <div className={styles.Divider} />
       <div className={styles.Container}>
