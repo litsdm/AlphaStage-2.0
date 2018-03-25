@@ -3,9 +3,8 @@ mutation CreateTestingSession($input: TSInput!) {
     _id,
     endDate,
     game,
-    maxTesters,
-    rewardType,
-    reward,
+    name,
+    plan,
     startDate,
     testers {
       username

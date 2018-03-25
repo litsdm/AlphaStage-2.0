@@ -15,21 +15,24 @@ const plans = [
     perks: ['2 weeks duration', 'Invite only', 'Maximum of 30 testers'],
     price: 'Free',
     duration: '2 weeks',
-    description: 'This plan is great if you want to test your game with a small group or people or inside your company. You have to invite people from this session\'s page once it is created.'
+    description: 'This plan is great if you want to test your game with a small group or people or inside your company. You have to invite people from this session\'s page once it is created.',
+    maxTesters: 30
   },
   {
     name: 'One Month',
     perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 100 testers'],
     price: '4.99',
     duration: '1 M',
-    description: 'No need to invite anyone, just relax and review your feedback whenever you have time. You will also be supporting Alpha Stage\'s development :).'
+    description: 'No need to invite anyone, just relax and review your feedback whenever you have time. You will also be supporting Alpha Stage\'s development :).',
+    maxTesters: 100
   },
   {
     name: 'Three Months',
     perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s Recommended Games'],
     price: '9.99',
     duration: '3 months',
-    description: 'Your game will appear in the game recommendations on the home page for every one to see. You will also be supporting Alpha Stage\'s development :).'
+    description: 'Your game will appear in the game recommendations on the home page for every one to see. You will also be supporting Alpha Stage\'s development :).',
+    maxTesters: 400
   }
 ];
 
@@ -45,24 +48,6 @@ class Create extends Component {
 
   onCancel = () => {
     const { id } = this.props;
-    document.getElementById(id).style.display = 'none';
-  }
-
-  onSubmit = () => {
-    const { gameId, id, createSession } = this.props;
-    const { focusedInput, ...input } = this.state;
-    const errorElement = document.getElementById('errorMessage');
-    errorElement.style.display = 'none';
-
-    const validate = this.isInputValid();
-
-    if (!validate.isValid) {
-      errorElement.innerHTML = validate.error;
-      errorElement.style.display = 'block';
-      return;
-    }
-
-    createSession({ ...input, game: gameId });
     document.getElementById(id).style.display = 'none';
   }
 
@@ -103,6 +88,26 @@ class Create extends Component {
 
   prevPage = () => this.setState({ progress: this.state.progress - 1 });
 
+  create = () => {
+    const { gameId, id, createSession } = this.props;
+    const { selectedPlan, name, objectives, startDate } = this.state;
+    const plan = plans[selectedPlan];
+    const durationParts = plan.duration.split(' ');
+
+    const endDate = moment(startDate).add(durationParts[0], durationParts[1]);
+
+    const session = {
+      name,
+      objectives,
+      startDate,
+      endDate,
+      plan: JSON.stringify(plan)
+    };
+
+    createSession({ ...session, game: gameId });
+    document.getElementById(id).style.display = 'none';
+  }
+
   renderFinalButton = () => {
     const { progress, selectedPlan } = this.state;
 
@@ -111,7 +116,7 @@ class Create extends Component {
     }
 
     if (selectedPlan === 0) {
-      return <button className={styles.Submit} onClick={this.createSession}>Create</button>;
+      return <button className={styles.Submit} onClick={this.create}>Create</button>;
     }
 
     return <button className={styles.Submit} onClick={this.onSubmit}>Checkout</button>;
