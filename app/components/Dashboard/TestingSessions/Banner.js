@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { object, string } from 'prop-types';
 import styles from './Banner.scss';
 
 class Banner extends Component {
   state = {
     hide: false
+  }
+
+  componentWillMount() {
+    this.determineDisplay();
+  }
+
+  determineDisplay = () => {
+    const { activeSession: { name } } = this.props;
+
+    if (name === 'Basic') this.setState({ hide: true });
   }
 
   onHide = () => this.setState({ hide: true });
@@ -36,7 +46,12 @@ class Banner extends Component {
 }
 
 Banner.propTypes = {
-  modalId: string.isRequired
+  modalId: string.isRequired,
+  activeSession: object
+};
+
+Banner.defaultProps = {
+  activeSession: {}
 };
 
 export default Banner;

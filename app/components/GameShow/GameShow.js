@@ -164,7 +164,7 @@ class GameShow extends Component {
 
     return (
       <div className="gameshow">
-        {activeSession ? <Banner modalId={sessionModalId} /> : null}
+        {activeSession ? <Banner modalId={sessionModalId} activeSession={activeSession} /> : null}
         <Header coverImage={game.coverImage} modalId={galleryModalId} />
         <ContentCard
           game={game}
