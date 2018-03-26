@@ -10,7 +10,7 @@ import InviteDropdown from './InviteDropdown';
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
 
-const Tests = ({ session, displayId, selectTest }) => {
+const Tests = ({ session, displayId, selectTest, game, invite }) => {
   const { testers, tests, plan, name } = session;
   const { name: planName, duration: planDuration, maxTesters } = JSON.parse(plan);
 
@@ -131,7 +131,7 @@ const Tests = ({ session, displayId, selectTest }) => {
           {infoRow('Testers', `${testers.length} / ${maxTesters}`)}
         </div>
         <button className={styles.Invite} onClick={toggleDropdown}>Invite Players</button>
-        <InviteDropdown />
+        <InviteDropdown game={game} invite={invite} />
       </div>
       <div className={styles.Divider} />
       <div className={styles.Container}>
@@ -153,12 +153,15 @@ const Tests = ({ session, displayId, selectTest }) => {
 
 Tests.propTypes = {
   displayId: string,
+  game: object,
   session: object.isRequired,
-  selectTest: func.isRequired
+  selectTest: func.isRequired,
+  invite: func.isRequired
 };
 
 Tests.defaultProps = {
-  displayId: ''
+  displayId: '',
+  game: {}
 };
 
 export default Tests;

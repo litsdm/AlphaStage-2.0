@@ -1,0 +1,5 @@
+mutation Invite($id: String, $email: String) {
+  invite(id: $id, email: $email) {
+    _id,
+  }
+}

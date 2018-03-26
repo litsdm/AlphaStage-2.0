@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, string, func } from 'prop-types';
+import { array, object, string, func } from 'prop-types';
 
 import Sessions from './Sessions';
 import Empty from './Empty';
@@ -16,7 +16,7 @@ class Index extends Component {
   }
 
   render() {
-    const { createId, sessions, displayId, selectTest } = this.props;
+    const { createId, sessions, displayId, selectTest, game, invite } = this.props;
     const { page, selectedIndex } = this.state;
     const session = sessions[selectedIndex];
 
@@ -26,7 +26,15 @@ class Index extends Component {
       case 1:
         return <Empty createId={createId} switchPage={this.switchPage} />;
       case 2:
-        return <Tests session={session} displayId={displayId} selectTest={selectTest} />;
+        return (
+          <Tests
+            session={session}
+            displayId={displayId}
+            selectTest={selectTest}
+            game={game}
+            invite={invite}
+          />
+        );
       default:
         break;
     }
@@ -35,13 +43,16 @@ class Index extends Component {
 
 Index.propTypes = {
   sessions: array,
+  game: object,
   createId: string.isRequired,
   displayId: string.isRequired,
-  selectTest: func.isRequired
+  selectTest: func.isRequired,
+  invite: func.isRequired
 };
 
 Index.defaultProps = {
-  sessions: []
+  sessions: [],
+  game: {}
 };
 
 export default Index;
