@@ -6,7 +6,7 @@ import styles from './Checkout.scss';
 const Checkout = ({ plan: { price, perks, description, duration, name } }) => {
   const planPrice = price === 'Free'
     ? '$0.00'
-    : `$${price} ${price === '9.99' ? 'Monthly' : ''}`;
+    : `$${price} USD`;
 
   const renderPerks = () => (
     perks.map(perk => (

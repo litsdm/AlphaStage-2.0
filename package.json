@@ -216,6 +216,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
+    "paypal-checkout": "^4.0.185",
     "react": "^16.2.0",
     "react-apollo": "^1.4.15",
     "react-dates": "^16.2.1",

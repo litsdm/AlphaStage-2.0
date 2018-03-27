@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 import moment from 'moment';
+import paypal from 'paypal-checkout';
 import styles from './CreateModal.scss';
 
 import Modal from '../../Modal';
@@ -27,9 +28,9 @@ const plans = [
     maxTesters: 100
   },
   {
-    name: 'Three Months',
+    name: '1337',
     perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s Recommended Games'],
-    price: '9.99',
+    price: '13.37',
     duration: '3 months',
     description: 'Your game will appear in the game recommendations on the home page for every one to see. You will also be supporting Alpha Stage\'s development :).',
     maxTesters: 400
@@ -108,6 +109,40 @@ class Create extends Component {
     document.getElementById(id).style.display = 'none';
   }
 
+  renderPaypalButton = () => {
+    const { selectedPlan } = this.state;
+    const plan = plans[selectedPlan];
+    paypal.Button.render({
+      env: 'production', // sandbox | production
+      style: {
+        label: 'checkout',
+        size: 'medium',
+        shape: 'rect',
+        color: 'blue',
+      },
+      client: {
+        sandbox: 'AXWaKGPgGL-_EYRZxa1SW7MvxlzLXe-yUZ3rwQc_UdjXrczoUBHeRUyjsrt4sYq89yNtpqzL3AYYdU4k',
+        production: process.env.PP_CLIENT
+      },
+      payment: (data, actions) => (
+        actions.payment.create({
+          payment: {
+            transactions: [
+              {
+                amount: { total: plan.price, currency: 'USD' }
+              }
+            ]
+          }
+        })
+      ),
+      onAuthorize: (data, actions) => actions.payment.execute()
+        .then(() => {
+          this.create();
+          return Promise.resolve();
+        })
+    }, '#paypal-button-container');
+  }
+
   renderFinalButton = () => {
     const { progress, selectedPlan } = this.state;
 
@@ -119,7 +154,7 @@ class Create extends Component {
       return <button className={styles.Submit} onClick={this.create}>Create</button>;
     }
 
-    return <button className={styles.Submit} onClick={this.onSubmit}>Checkout</button>;
+    this.renderPaypalButton();
   }
 
   renderPage = () => {
@@ -144,7 +179,7 @@ class Create extends Component {
 
   render() {
     const { id } = this.props;
-    const { progress } = this.state;
+    const { progress, selectedPlan } = this.state;
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
@@ -160,6 +195,11 @@ class Create extends Component {
                   : <button className={styles.PrevButton} onClick={this.prevPage}>Back</button>
               }
               {this.renderFinalButton()}
+              {
+                plans[selectedPlan].name !== 'Basic'
+                  ? <div id="paypal-button-container" />
+                  : null
+              }
             </div>
           </div>
         </div>

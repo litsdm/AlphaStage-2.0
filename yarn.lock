@@ -86,6 +86,10 @@
   version "8.9.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.9.3.tgz#47d00392c5834dd5a095346d72df7ff8995f7365"
 
+Base64@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/Base64/-/Base64-1.0.1.tgz#def45cc50c961bcc9bf2321d0f52bcbfec1f1bb1"
+
 JSONStream@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-0.8.4.tgz#91657dfe6ff857483066132b4618b62e8f4887bd"
@@ -1441,6 +1445,12 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+beaver-logger@^3.0.11, beaver-logger@^3.0.6:
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/beaver-logger/-/beaver-logger-3.0.12.tgz#5b13c68ad25ba51159efe4137b9d12e7ac01732d"
+  dependencies:
+    zalgo-promise "^1.0.3"
+
 beeper@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/beeper/-/beeper-1.1.1.tgz#e6d5ea8c5dad001304a70b22638447f69cb2f809"
@@ -1534,7 +1544,7 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bowser@^1.7.3:
+bowser@^1.7.1, bowser@^1.7.3:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.9.2.tgz#d66fc868ca5f4ba895bee1363c343fe7b37d3394"
 
@@ -1580,6 +1590,10 @@ braces@^2.3.0:
     snapdragon-node "^2.0.1"
     split-string "^3.0.2"
     to-regex "^3.0.1"
+
+braintree-paypal-client-config@^1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/braintree-paypal-client-config/-/braintree-paypal-client-config-1.0.3.tgz#cb9b9ae0e4774ec3557320c007c1fc7a1314fbbd"
 
 brorand@^1.0.1:
   version "1.1.0"
@@ -2401,6 +2415,18 @@ create-react-class@^15.5.2:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+cross-domain-safe-weakmap@^1.0.1, cross-domain-safe-weakmap@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/cross-domain-safe-weakmap/-/cross-domain-safe-weakmap-1.0.19.tgz#b5b903f094b9618ddc6fe0d3507d63c36cf2a4c8"
+  dependencies:
+    cross-domain-utils "^2.0.0"
+
+cross-domain-utils@^2.0.0, cross-domain-utils@^2.0.1, cross-domain-utils@^2.0.3:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/cross-domain-utils/-/cross-domain-utils-2.0.6.tgz#41306d0cddeab082ba96ab3827d723d5449b374e"
+  dependencies:
+    zalgo-promise "^1.0.11"
 
 cross-env@^5.1.3:
   version "5.1.3"
@@ -4791,6 +4817,14 @@ hawk@~6.0.2:
     cryptiles "3.x.x"
     hoek "4.x.x"
     sntp "2.x.x"
+
+hi-base32@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/hi-base32/-/hi-base32-0.1.1.tgz#a30fcb56e7362cf5ef6f543e4c280d50647e5e80"
+
+hi-base32@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/hi-base32/-/hi-base32-0.3.0.tgz#2a6bc75c2c938bdec59ddeca47baaa28371ec8bc"
 
 highlight.js@^9.3.0:
   version "9.12.0"
@@ -7425,6 +7459,27 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
+paypal-braintree-web-client@^1.0.7:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/paypal-braintree-web-client/-/paypal-braintree-web-client-1.0.8.tgz#39e5966742ae428c604cadff220935dc65d0b3b0"
+  dependencies:
+    zalgo-promise "^1.0.22"
+
+paypal-checkout@^4.0.185:
+  version "4.0.185"
+  resolved "https://registry.yarnpkg.com/paypal-checkout/-/paypal-checkout-4.0.185.tgz#7d96ff9038db392e5af95fb2bd328d0ec90f89bc"
+  dependencies:
+    Base64 "^1.0.0"
+    beaver-logger "^3.0.6"
+    bowser "^1.7.1"
+    braintree-paypal-client-config "^1.0.2"
+    cross-domain-utils "^2.0.1"
+    hi-base32 "^0.3.0"
+    paypal-braintree-web-client "^1.0.7"
+    post-robot "^8.0.0"
+    xcomponent "^6.0.0"
+    zalgo-promise "^1.0.10"
+
 pbkdf2@^3.0.3:
   version "3.0.14"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.14.tgz#a35e13c64799b06ce15320f459c230e68e73bade"
@@ -7517,6 +7572,14 @@ portfinder@^1.0.9:
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
+
+post-robot@^8.0.0, post-robot@^8.0.14:
+  version "8.0.18"
+  resolved "https://registry.yarnpkg.com/post-robot/-/post-robot-8.0.18.tgz#f7f1d160d08172b821a216b6e76ff1be334500f1"
+  dependencies:
+    cross-domain-safe-weakmap "^1.0.1"
+    cross-domain-utils "^2.0.0"
+    zalgo-promise "^1.0.3"
 
 postcss-calc@^5.2.0:
   version "5.3.1"
@@ -10803,6 +10866,17 @@ x-is-string@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/x-is-string/-/x-is-string-0.1.0.tgz#474b50865af3a49a9c4657f05acd145458f77d82"
 
+xcomponent@^6.0.0:
+  version "6.0.50"
+  resolved "https://registry.yarnpkg.com/xcomponent/-/xcomponent-6.0.50.tgz#61f8f8ec967da8d06e0d02906be80fdc465d17b6"
+  dependencies:
+    beaver-logger "^3.0.11"
+    cross-domain-safe-weakmap "^1.0.19"
+    cross-domain-utils "^2.0.3"
+    hi-base32 "^0.1.1"
+    post-robot "^8.0.14"
+    zalgo-promise "^1.0.22"
+
 xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
@@ -11028,6 +11102,10 @@ youtube-player@^5.4.0:
     debug "^2.6.6"
     load-script "^1.0.0"
     sister "^3.0.0"
+
+zalgo-promise@^1.0.10, zalgo-promise@^1.0.11, zalgo-promise@^1.0.22, zalgo-promise@^1.0.3:
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/zalgo-promise/-/zalgo-promise-1.0.26.tgz#be4b3ad52fd1634915fd8a51567a54909b7925a1"
 
 zen-observable-ts@^0.4.4:
   version "0.4.4"
