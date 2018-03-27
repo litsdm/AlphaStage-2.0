@@ -88,6 +88,10 @@ p {
   color: black;
 }
 
+.browse .slick-slider .slick-arrow:before {
+  color: white;
+}
+
 .gameshow .slick-slide.slick-active {
   height: 405px;
   width: 100% !important;

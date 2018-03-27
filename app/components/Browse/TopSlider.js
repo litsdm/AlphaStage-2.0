@@ -24,7 +24,7 @@ const TopSlider = ({ games }) => {
   };
 
   return (
-    <div className={styles.Wrapper}>
+    <div className={`browse ${styles.Wrapper}`}>
       <p className={styles.Title}>Game Recommendations</p>
       <div className={styles.Divider} />
       <Slider {...settings}>
