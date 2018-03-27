@@ -8,7 +8,11 @@ import Menu from './Menu';
 
 const SideBar = ({ user, logout, updateUserPic, expFill }) => (
   <div className={styles.SideBar}>
-    <Controls />
+    {
+      process.platform === 'darwin'
+        ? <Controls />
+        : null
+    }
     <Menu />
     <button
       className={styles.Help}

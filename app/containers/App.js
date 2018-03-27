@@ -13,6 +13,7 @@ import SideBar from '../components/SideBar/SideBar';
 import SupportModal from '../components/SideBar/SupportModal';
 import TopBar from '../components/TopBar';
 import Auth from '../components/Auth/Auth';
+import Controls from '../components/Controls';
 
 import userLevel from '../graphql/userLevel.graphql';
 
@@ -137,13 +138,22 @@ class App extends Component {
           isAuthorized
           ? (
             <React.Fragment>
+              {
+                process.platform !== 'darwin'
+                  ? <Controls />
+                  : null
+              }
               <SideBar
                 user={{ ...user, ...userExp }}
                 expFill={expFill}
                 logout={logout}
                 updateUserPic={updateUserPic}
               />
-              <div id="content-container" className="content-container">
+              <div
+                id="content-container"
+                className="content-container"
+                style={process.platform !== 'darwin' ? { marginTop: '24px' } : {}}
+              >
                 <TopBar history={this.props.history} />
                 <div className="content">
                   {this.props.children}

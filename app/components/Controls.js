@@ -22,13 +22,31 @@ const Controls = () => {
     win.close();
   };
 
-  return (
-    <div className={styles.Controls}>
-      <button className={styles.CloseControl} onClick={handleClose} />
-      <button className={styles.MinimizeControl} onClick={handleMinimize} />
-      <button className={styles.MaximizeControl} onClick={handleMaximize} />
-    </div>
-  );
+  const controls = process.platform === 'darwin'
+    ? (
+      <div className={styles.Controls}>
+        <button className={styles.CloseControl} onClick={handleClose} />
+        <button className={styles.MinimizeControl} onClick={handleMinimize} />
+        <button className={styles.MaximizeControl} onClick={handleMaximize} />
+      </div>
+    )
+    : (
+      <div className={styles.Bar}>
+        <div className={styles.WinControls}>
+          <button className={styles.WinMinimize} onClick={handleMinimize}>
+            <i className="fa fa-window-minimize" />
+          </button>
+          <button className={styles.WinMaximize} onClick={handleMaximize}>
+            <i className="fa fa-square" />
+          </button>
+          <button className={styles.WinClose} onClick={handleClose}>
+            <i className="fa fa-times" />
+          </button>
+        </div>
+      </div>
+    );
+
+  return controls;
 };
 
 export default Controls;
