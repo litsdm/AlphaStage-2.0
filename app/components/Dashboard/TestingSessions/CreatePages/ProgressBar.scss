@@ -1,0 +1,79 @@
+.Container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: -31px;
+}
+
+.Circle {
+  align-items: center;
+  display: flex;
+  flex-basis: 25%;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+
+  p {
+    font-size: 12px;
+    opacity: 0.5;
+  }
+
+  div {
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    i {
+      color: #fff;
+      display: none;
+    }
+
+    p {
+      color: #fff;
+      display: none;
+      font-weight: bold;
+      opacity: 1;
+    }
+  }
+
+  &.active {
+    p {
+      opacity: 1;
+    }
+
+    div {
+      background-color: #2B2C31;
+      border-color: #2B2C31;
+
+      p {
+        display: block;
+      }
+    }
+  }
+
+  &.done {
+    div {
+      background-color: #2091f3;
+      border-color: #2091f3;
+
+      i {
+        display: block;
+      }
+    }
+  }
+}
+
+.Bar {
+  background-color: #ccc;
+  height: 2px;
+  flex-basis: 12.5%;
+  margin-left: -78px;
+  margin-top: 18px;
+  margin-right: -78px;
+  width: 100%;
+}

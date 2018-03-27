@@ -1,34 +1,50 @@
 import React, { Component } from 'react';
-import { DateRangePicker } from 'react-dates';
-import uuid from 'uuid/v4';
 import { func, string } from 'prop-types';
+import moment from 'moment';
+import paypal from 'paypal-checkout';
 import styles from './CreateModal.scss';
 
 import Modal from '../../Modal';
-import Objectives from './Objectives';
+import ProgressBar from './CreatePages/ProgressBar';
+import Information from './CreatePages/Information';
+import Plans from './CreatePages/Plans';
+import Checkout from './CreatePages/Checkout';
+
+const plans = [
+  {
+    name: 'Basic',
+    perks: ['2 weeks duration', 'Invite only', 'Maximum of 30 testers'],
+    price: 'Free',
+    duration: '2 weeks',
+    description: 'This plan is great if you want to test your game with a small group or people or inside your company. You have to invite people from this session\'s page once it is created.',
+    maxTesters: 30
+  },
+  {
+    name: 'One Month',
+    perks: ['1 month duration', 'Available to every one on Alpha Stage', 'Maximum of 100 testers'],
+    price: '4.99',
+    duration: '1 M',
+    description: 'No need to invite anyone, just relax and review your feedback whenever you have time. You will also be supporting Alpha Stage\'s development :).',
+    maxTesters: 100
+  },
+  {
+    name: '1337',
+    perks: ['3 month duration', 'Available to every one on Alpha Stage', 'Maximum of 400 testers', 'Spot on Alpha Stage\'s Recommended Games'],
+    price: '13.37',
+    duration: '3 months',
+    description: 'Your game will appear in the game recommendations on the home page for every one to see. You will also be supporting Alpha Stage\'s development :).',
+    maxTesters: 400
+  }
+];
 
 class Create extends Component {
   state = {
-    endDate: null,
     focusedInput: null,
-    maxTesters: 50,
+    name: '',
     objectives: [],
-    rewardType: 'Money',
-    reward: '',
-    startDate: null
-  }
-
-  isInputValid = () => {
-    const { startDate, endDate, rewardType, reward } = this.state;
-
-    if (startDate === null || endDate === null) {
-      return { isValid: false, error: 'Both start date and end date must be selected.' };
-    }
-    if (rewardType !== 'No Reward' && reward === '') {
-      return { isValid: false, error: 'Please input the reward that each individual will receive.' };
-    }
-
-    return { isValid: true };
+    progress: 0,
+    startDate: moment(),
+    selectedPlan: 0
   }
 
   onCancel = () => {
@@ -36,114 +52,155 @@ class Create extends Component {
     document.getElementById(id).style.display = 'none';
   }
 
-  onSubmit = () => {
-    const { gameId, id, createSession } = this.props;
-    const { focusedInput, ...input } = this.state;
-    const errorElement = document.getElementById('errorMessage');
-    errorElement.style.display = 'none';
-
-    const validate = this.isInputValid();
-
-    if (!validate.isValid) {
-      errorElement.innerHTML = validate.error;
-      errorElement.style.display = 'block';
-      return;
-    }
-
-    createSession({ ...input, game: gameId });
-    document.getElementById(id).style.display = 'none';
-  }
-
-  onNumberChange = ({ target }) => {
-    const { value } = target;
-    const maxTesters = value ? parseInt(value, 10) : 50;
-    this.setState({ maxTesters });
-  }
-
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
   }
 
-  renderNumberButtons = () => {
-    const { maxTesters } = this.state;
-    const numbers = [50, 100, 200, 400];
+  setStateProperty = (name, value) => this.setState({ [name]: value });
 
-    return numbers.map(number => (
-      <button
-        className={number === maxTesters ? styles.active : ''}
-        value={number}
-        onClick={this.onNumberChange}
-        key={uuid()}
-      >
-        {number}
-      </button>
-    ));
+  validateInfo = () => {
+    const { name, startDate, objectives } = this.state;
+
+    if (!name) return { valid: false, error: 'Please enter a name for your Testing Session.' };
+    if (startDate === null) return { valid: false, error: 'Please select a valid start date.' };
+    if (objectives.length < 1) return { valid: false, error: 'Please enter at least one objective.' };
+
+    return { valid: true, error: null };
+  }
+
+  nextPage = () => {
+    const { progress } = this.state;
+
+    if (progress === 0) {
+      const { valid, error } = this.validateInfo();
+      const errorElement = document.getElementById('errorMessage');
+      errorElement.style.opacity = '0';
+
+      if (!valid) {
+        errorElement.innerHTML = error;
+        errorElement.style.opacity = '1';
+        return;
+      }
+    }
+
+    this.setState({ progress: progress + 1 });
+  }
+
+  prevPage = () => this.setState({ progress: this.state.progress - 1 });
+
+  create = () => {
+    const { gameId, id, createSession } = this.props;
+    const { selectedPlan, name, objectives, startDate } = this.state;
+    const plan = plans[selectedPlan];
+    const durationParts = plan.duration.split(' ');
+
+    const endDate = moment(startDate).add(durationParts[0], durationParts[1]);
+
+    const session = {
+      name,
+      objectives,
+      startDate,
+      endDate,
+      plan: JSON.stringify(plan)
+    };
+
+    createSession({ ...session, game: gameId });
+    document.getElementById(id).style.display = 'none';
+  }
+
+  renderPaypalButton = () => {
+    const { selectedPlan } = this.state;
+    const plan = plans[selectedPlan];
+    paypal.Button.render({
+      env: 'production', // sandbox | production
+      style: {
+        label: 'checkout',
+        size: 'medium',
+        shape: 'rect',
+        color: 'blue',
+      },
+      client: {
+        sandbox: 'AXWaKGPgGL-_EYRZxa1SW7MvxlzLXe-yUZ3rwQc_UdjXrczoUBHeRUyjsrt4sYq89yNtpqzL3AYYdU4k',
+        production: process.env.PP_CLIENT
+      },
+      payment: (data, actions) => (
+        actions.payment.create({
+          payment: {
+            transactions: [
+              {
+                amount: { total: plan.price, currency: 'USD' }
+              }
+            ]
+          }
+        })
+      ),
+      onAuthorize: (data, actions) => actions.payment.execute()
+        .then(() => {
+          this.create();
+          return Promise.resolve();
+        })
+    }, '#paypal-button-container');
+  }
+
+  renderFinalButton = () => {
+    const { progress, selectedPlan } = this.state;
+
+    if (progress < 2) {
+      return <button className={styles.Submit} onClick={this.nextPage}>Next</button>;
+    }
+
+    if (selectedPlan === 0) {
+      return <button className={styles.Submit} onClick={this.create}>Create</button>;
+    }
+
+    this.renderPaypalButton();
+  }
+
+  renderPage = () => {
+    const { objectives, startDate, focusedInput, progress, selectedPlan } = this.state;
+
+    if (progress === 0) {
+      return (
+        <Information
+          date={startDate}
+          focusedInput={focusedInput}
+          objectives={objectives}
+          handleChange={this.handleChange}
+          setState={this.setStateProperty}
+        />
+      );
+    } else if (progress === 1) {
+      return <Plans plans={plans} selectedPlan={selectedPlan} setState={this.setStateProperty} />;
+    } else if (progress === 2) {
+      return <Checkout plan={plans[selectedPlan]} />;
+    }
   }
 
   render() {
     const { id } = this.props;
-    const { rewardType, objectives } = this.state;
+    const { progress, selectedPlan } = this.state;
     return (
       <Modal id={id} title="Create Testing Session">
         <div className={styles.Container}>
-          <div className={styles.InputContainer}>
-            <p>Duration</p>
-            <DateRangePicker
-              startDate={this.state.startDate}
-              startDateId="sessionStart"
-              endDate={this.state.endDate}
-              endDateId="sessionEnd"
-              onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
-              focusedInput={this.state.focusedInput}
-              onFocusChange={focusedInput => this.setState({ focusedInput })}
-            />
-          </div>
-          <div className={styles.InputContainer}>
-            <p>Max Number of Testers</p>
-            <div className={styles.Numbers}>
-              {this.renderNumberButtons()}
-              <div className={styles.Other}>
-                <p>Other: </p><input onChange={this.onNumberChange} type="number" />
-              </div>
-            </div>
-          </div>
-          <div className={styles.InputContainer}>
-            <p>Objectives</p>
-            <Objectives objectives={objectives} handleChange={this.handleChange} />
-          </div>
-          <div className={styles.InputContainer}>
-            <p>Reward Type</p>
-            <select
-              className={styles.Select}
-              name="rewardType"
-              onChange={this.handleChange}
-            >
-              <option value="Money">Money</option>
-              <option value="No Reward">No Reward</option>
-            </select>
-          </div>
-          {
-            rewardType !== 'No Reward'
-            ? (
-              <div className={styles.InputContainer}>
-                <p>Individual Reward</p>
-                <input
-                  type={rewardType === 'Money' ? 'number' : 'text'}
-                  className={styles.Input}
-                  name="reward"
-                  onChange={this.handleChange}
-                />
-              </div>
-            )
-            : null
-          }
+          <ProgressBar progress={progress} />
+          {this.renderPage()}
           <div className={styles.Footer}>
             <p id="errorMessage" />
-            <React.Fragment>
+            <div>
               <button className={styles.Cancel} onClick={this.onCancel}>Cancel</button>
-              <button className={styles.Submit} onClick={this.onSubmit}>Submit</button>
-            </React.Fragment>
+              {
+                progress === 0
+                  ? null
+                  : <button className={styles.PrevButton} onClick={this.prevPage}>Back</button>
+              }
+              {this.renderFinalButton()}
+              {
+                plans[selectedPlan].name !== 'Basic'
+                  ? <div id="paypal-button-container" />
+                  : null
+              }
+            </div>
           </div>
         </div>
       </Modal>

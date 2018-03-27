@@ -13,9 +13,8 @@ query UserGames($id: String) {
       testingSessions {
         startDate,
         endDate,
-        maxTesters,
-        rewardType,
-        reward,
+        name,
+        plan,
         testers {
           _id,
           username,

@@ -5,10 +5,14 @@ import _ from 'lodash';
 import { object, string, func } from 'prop-types';
 import styles from './Tests.scss';
 
+import InviteDropdown from './InviteDropdown';
+
 const DEFAULT_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
-const Tests = ({ session, displayId, selectTest }) => {
-  const { testers, maxTesters, rewardType, reward, tests } = session;
+
+const Tests = ({ session, displayId, selectTest, game, invite }) => {
+  const { testers, tests, plan, name } = session;
+  const { name: planName, duration: planDuration, maxTesters } = JSON.parse(plan);
 
   const getStatus = () => {
     const { startDate, endDate } = session;
@@ -32,6 +36,16 @@ const Tests = ({ session, displayId, selectTest }) => {
     selectTest(test, () => {
       document.getElementById(displayId).style.display = 'block';
     });
+  };
+
+  const toggleDropdown = () => {
+    const dropdown = document.getElementById('inviteDropdown');
+
+    if (dropdown.style.display === 'none') {
+      dropdown.style.display = 'block';
+    } else {
+      dropdown.style.display = 'none';
+    }
   };
 
   const renderMark = (mark) => {
@@ -109,15 +123,15 @@ const Tests = ({ session, displayId, selectTest }) => {
 
   return (
     <React.Fragment>
-      <div className={styles.Container}>
-        {infoRow('Status', getStatus())}
-        {infoRow('Testers', `${testers.length} / ${maxTesters}`)}
-        {infoRow('Reward Type', rewardType)}
-        {
-          rewardType !== 'No Reward'
-            ? infoRow('Reward', reward)
-            : null
-        }
+      <div className={styles.TopContainer}>
+        <div className={styles.Info}>
+          {infoRow('Name', name)}
+          {infoRow('Plan', `${planName} (${planDuration})`)}
+          {infoRow('Status', getStatus())}
+          {infoRow('Testers', `${testers.length} / ${maxTesters}`)}
+        </div>
+        <button className={styles.Invite} onClick={toggleDropdown}>Invite Players</button>
+        <InviteDropdown game={game} invite={invite} />
       </div>
       <div className={styles.Divider} />
       <div className={styles.Container}>
@@ -139,12 +153,15 @@ const Tests = ({ session, displayId, selectTest }) => {
 
 Tests.propTypes = {
   displayId: string,
+  game: object,
   session: object.isRequired,
-  selectTest: func.isRequired
+  selectTest: func.isRequired,
+  invite: func.isRequired
 };
 
 Tests.defaultProps = {
-  displayId: ''
+  displayId: '',
+  game: {}
 };
 
 export default Tests;

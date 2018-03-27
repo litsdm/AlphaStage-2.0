@@ -7,7 +7,7 @@ import styles from './Sessions.scss';
 import NSButton from './NSButton';
 
 const Sessions = ({ createId, sessions, switchPage }) => {
-  const handleSwitch = (index) => () => switchPage(3, index);
+  const handleSwitch = (index) => () => switchPage(2, index);
 
   const renderStatus = (session) => {
     const { startDate, endDate } = session;
@@ -23,7 +23,8 @@ const Sessions = ({ createId, sessions, switchPage }) => {
 
   const renderSessionRows = () =>
     sessions.map((session, index) => {
-      const { startDate, endDate, testers, maxTesters } = session;
+      const { startDate, endDate, testers, plan, name } = session;
+      const { maxTesters } = JSON.parse(plan);
 
       const displayStart = moment(startDate).format('MMM Do, YYYY');
       const displayEnd = moment(endDate).format('MMM Do, YYYY');
@@ -41,6 +42,7 @@ const Sessions = ({ createId, sessions, switchPage }) => {
             {`${displayStart} - ${displayEnd}`}
           </p>
           {renderStatus(session)}
+          <p>{name}</p>
           <p className={styles.Testers}>
             {`Testers: ${testers.length} / ${maxTesters}`}
           </p>

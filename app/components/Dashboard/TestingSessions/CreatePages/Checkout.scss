@@ -1,0 +1,60 @@
+.Container {
+  padding: 24px;
+}
+
+.ContentCard {
+  background-color: #fff;
+  padding: 24px;
+}
+
+.Title {
+  font-size: 24px;
+}
+
+.PriceDivider {
+  align-items: center;
+  display: flex;
+  margin-top: 6px;
+
+  div {
+    background-color: #ddd;
+    height: 1px;
+    margin-right: 12px;
+    width: 30%;
+  }
+
+  p {
+    opacity: 0.4;
+  }
+}
+
+.Info {
+  margin: 24px 0;
+}
+
+.Perk {
+  margin-top: 6px;
+
+  i {
+    color: #2098f3;
+  }
+}
+
+.Description {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.Divider {
+  background-color: #ddd;
+  height: 1px;
+  width: 100%;
+}
+
+.Total {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 24px;
+  text-align: right;
+}

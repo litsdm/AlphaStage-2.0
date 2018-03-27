@@ -14,6 +14,7 @@ import deleteGame from '../graphql/deleteGame.graphql';
 import createTestingSession from '../graphql/createTestingSession.graphql';
 import markTest from '../graphql/markTest.graphql';
 import setStrProperty from '../graphql/setStrProperty.graphql';
+import invite from '../graphql/invite.graphql';
 
 const mapStateToProps = ({ user }) => (
   {
@@ -65,6 +66,11 @@ const withGraphql = compose(
       updateProperty: (gameId, name, value) => mutate({ variables: { gameId, name, value } })
     })
   }),
+  graphql(invite, {
+    props: ({ mutate }) => ({
+      inviteUser: (id, email) => mutate({ variables: { id, email } })
+    })
+  }),
   graphql(deleteGame, {
     props: ({ mutate }) => {
       const token = localStorage.getItem('token');
@@ -104,8 +110,10 @@ const DashboardPage = (props) => {
     delGame,
     createSession,
     markFeedback,
-    updateProperty
+    updateProperty,
+    inviteUser
   } = props;
+
   return (
     loading
       ? <Loader />
@@ -118,6 +126,7 @@ const DashboardPage = (props) => {
           createTestingSession={createSession}
           markTest={markFeedback}
           updateProperty={updateProperty}
+          invite={inviteUser}
         />
       )
   );
@@ -131,6 +140,7 @@ DashboardPage.propTypes = {
   createSession: func.isRequired,
   markFeedback: func.isRequired,
   updateProperty: func.isRequired,
+  inviteUser: func.isRequired,
   games: array,
   loading: bool
 };

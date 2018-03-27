@@ -35,7 +35,7 @@ class Dashboard extends Component {
   selectTest = (selectedTest, cb) => this.setState({ selectedTest }, cb)
 
   renderPage() {
-    const { games } = this.props;
+    const { games, invite } = this.props;
     const { tabIndex, currentIndex } = this.state;
 
     const currentGame = games[currentIndex];
@@ -58,6 +58,8 @@ class Dashboard extends Component {
             createId={`create-${currentGame._id}`}
             displayId={`display-${currentGame._id}`}
             selectTest={this.selectTest}
+            game={currentGame}
+            invite={invite}
           />
         );
 
@@ -119,7 +121,8 @@ Dashboard.propTypes = {
   deleteGame: func.isRequired,
   createTestingSession: func.isRequired,
   markTest: func.isRequired,
-  updateProperty: func.isRequired
+  updateProperty: func.isRequired,
+  invite: func.isRequired
 };
 
 Dashboard.defaultProps = {
