@@ -45,13 +45,13 @@ class SupportModal extends Component {
       <Modal id="supportModal" title="Help & Feedback">
         <div className={styles.Content}>
           <div className={styles.Social}>
-            <a href="#facebook" onClick={() => shell.openExternal('https://www.facebook.com/Alpha-Stage-988855841290318/')}>
+            <a href="#facebook" onClick={() => shell.openExternal('https://www.facebook.com/alphastage.gg/')}>
               <i className="fa fa-facebook-f" />
             </a>
-            <a href="#twitter">
+            <a href="#twitter" onClick={() => shell.openExternal('https://twitter.com/AlphaStage_gg')}>
               <i className="fa fa-twitter" />
             </a>
-            <a href="#instagram">
+            <a href="#instagram" onClick={() => shell.openExternal('https://www.instagram.com/alpha.stage/')}>
               <i className="fa fa-instagram" />
             </a>
             <a href="#github" onClick={() => shell.openExternal('https://github.com/cdiezmoran')}>
