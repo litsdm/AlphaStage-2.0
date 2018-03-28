@@ -39,9 +39,7 @@ const withGraphql = compose(
     }
   }),
   graphql(createTestingSession, {
-    props: ({ mutate }) => {
-      const token = localStorage.getItem('token');
-      const user = jwtDecode(token);
+    props: ({ ownProps: { user }, mutate }) => {
       const queriesToRefetch = [
         {
           query: userGamesQuery,
@@ -157,7 +155,7 @@ DashboardPage.defaultProps = {
   loading: false
 };
 
-const DashboardWithProps = connect(mapStateToProps, null)(DashboardPage);
-const DashboardWithGames = withGraphql(DashboardWithProps);
+const DashboardWithGames = withGraphql(DashboardPage);
+const DashboardWithProps = connect(mapStateToProps, null)(DashboardWithGames);
 
-export default DashboardWithGames;
+export default DashboardWithProps;
