@@ -6,6 +6,8 @@ import { bool, func, object } from 'prop-types';
 import createGame from '../graphql/createGame.graphql';
 import editGame from '../graphql/editGame.graphql';
 import fullGameQuery from '../graphql/fullGame.graphql';
+import userGamesQuery from '../graphql/userGames.graphql';
+import allGamesQuery from '../graphql/allGames.graphql';
 
 import CreateGame from '../components/CreateGame/CreateGame';
 
@@ -15,15 +17,30 @@ const mapStateToProps = ({ user }) => (
   }
 );
 
+const queriesToRefetch = (userId) => (
+  [
+    {
+      query: userGamesQuery,
+      variables: { id: userId }
+    },
+    {
+      query: allGamesQuery,
+      variables: { checkInvisible: true }
+    }
+  ]
+);
+
 const withMutation = compose(
   graphql(createGame, {
-    props: ({ mutate }) => ({
-      submitGame: (input) => mutate({ variables: { input } }),
+    props: ({ ownProps: { user }, mutate }) => ({
+      submitGame: (input) =>
+        mutate({ variables: { input }, refetchQueries: queriesToRefetch(user._id) }),
     }),
   }),
   graphql(editGame, {
-    props: ({ mutate }) => ({
-      saveGame: (input) => mutate({ variables: { input } }),
+    props: ({ ownProps: { user }, mutate }) => ({
+      saveGame: (input) =>
+        mutate({ variables: { input }, refetchQueries: queriesToRefetch(user._id) }),
     }),
   }),
   graphql(fullGameQuery, {
@@ -67,6 +84,7 @@ CreateGamePage.defaultProps = {
   game: {}
 };
 
-const connectedComponent = connect(mapStateToProps, null)(CreateGamePage);
+const CreateWithData = withMutation(CreateGamePage);
+const CreateWithProps = connect(mapStateToProps, null)(CreateWithData);
 
-export default withMutation(connectedComponent);
+export default withMutation(CreateWithProps);
