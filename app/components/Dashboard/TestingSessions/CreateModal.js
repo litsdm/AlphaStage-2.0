@@ -89,6 +89,16 @@ class Create extends Component {
 
   prevPage = () => this.setState({ progress: this.state.progress - 1 });
 
+  resetProcess = () =>
+    this.setState({
+      focusedInput: null,
+      name: '',
+      objectives: [],
+      progress: 0,
+      startDate: moment(),
+      selectedPlan: 0
+    });
+
   create = () => {
     const { gameId, id, createSession } = this.props;
     const { selectedPlan, name, objectives, startDate } = this.state;
@@ -107,6 +117,7 @@ class Create extends Component {
 
     createSession({ ...session, game: gameId });
     document.getElementById(id).style.display = 'none';
+    this.resetProcess();
   }
 
   renderPaypalButton = () => {
