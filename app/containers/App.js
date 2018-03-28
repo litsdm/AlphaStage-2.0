@@ -9,6 +9,8 @@ import DecompressZip from 'decompress-zip';
 import swal from 'sweetalert';
 import { func, object, node } from 'prop-types';
 
+import client from '../client';
+
 import SideBar from '../components/SideBar/SideBar';
 import SupportModal from '../components/SideBar/SupportModal';
 import TopBar from '../components/TopBar';
@@ -41,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
   logout: () => {
     localStorage.removeItem('token');
     dispatch(removeUser());
+    client.resetStore();
   },
   updateUserPic: profilePic => dispatch(updateProfilePic(profilePic)),
   startInstalling: () => dispatch(startInstall()),
