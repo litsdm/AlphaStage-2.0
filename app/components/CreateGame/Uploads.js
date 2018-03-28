@@ -19,13 +19,12 @@ const Uploads = (props) => {
     windowsBuild,
   } = props;
 
-  const getSignedRequest = (file, name) => {
-    const uploadingName = `uploading${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-    const fileName = `${name}-${fileId}.${file.type.split('/')[1]}`;
+  const getSignedRequest = (file, name, targetName) => {
+    const fileName = `${targetName}-${fileId}.${file.type.split('/')[1]}`;
     let buildUrl = '';
 
     if (uploadError) handleChange({ target: { name: 'uploadError', value: '' } });
-    handleChange({ target: { name: uploadingName, value: true } });
+    handleChange({ target: { name, value: true } });
 
     callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
       .then(res => res.json())
@@ -35,20 +34,26 @@ const Uploads = (props) => {
       })
       .then(res => {
         if (res.status !== 200) return Promise.reject();
-        handleBuildChange(name, buildUrl, uploadingName);
+        handleBuildChange(targetName, buildUrl, name);
         return buildUrl;
       })
       .catch(() => {
-        handleBuildChange('uploadError', 'An error ocurred, please try again later.', uploadingName);
+        handleBuildChange('uploadError', 'An error ocurred, please try again later.', name);
       });
   };
 
   const handleFileChange = ({ target }) => {
     const file = target.files[0];
+    const { name } = target;
+    const uploadingName = `uploading${name.charAt(0).toUpperCase()}${name.slice(1)}`;
 
-    if (file == null) return;
+    if (file === null) return;
+    if (file.name.split('.').pop() !== 'zip') {
+      handleBuildChange('uploadError', 'Please select a .zip file', uploadingName);
+      return;
+    }
 
-    getSignedRequest(file, target.name);
+    getSignedRequest(file, uploadingName, name);
   };
 
   const { availableWin, availableMac } = platforms;
@@ -81,6 +86,7 @@ const Uploads = (props) => {
             name={name}
             className={styles.FileInput}
             type="file"
+            accept=".zip"
             onChange={handleFileChange}
           />
           <label
@@ -99,6 +105,8 @@ const Uploads = (props) => {
       <div className={styles.ColumnLeft}>
         <p className={styles.Title}>Uploads</p>
         <p className={styles.Description}>
+          Please select a .zip file for your build.
+          <br />
           To update your build just click on <q>Add Build</q> again and select the new one.
           {edit ? ' Note: If you update your build on edit it will be saved even if you click the cancel button or don\'t click save. This will be fixed in a later version.' : ''}
         </p>
