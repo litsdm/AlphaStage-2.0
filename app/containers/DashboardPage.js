@@ -5,6 +5,7 @@ import { array, bool, func, object } from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
 import Dashboard from '../components/Dashboard/Dashboard';
+import Empty from '../components/Dashboard/Empty';
 import Loader from '../components/Loader';
 
 import userGamesQuery from '../graphql/userGames.graphql';
@@ -114,10 +115,9 @@ const DashboardPage = (props) => {
     inviteUser
   } = props;
 
-  return (
-    loading
-      ? <Loader />
-      : (
+  const renderDashboard = () => (
+    games.length !== 0
+      ? (
         <Dashboard
           user={user}
           games={games}
@@ -129,6 +129,13 @@ const DashboardPage = (props) => {
           invite={inviteUser}
         />
       )
+      : <Empty />
+  );
+
+  return (
+    loading
+      ? <Loader />
+      : renderDashboard()
   );
 };
 

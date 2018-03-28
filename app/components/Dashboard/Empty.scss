@@ -1,0 +1,30 @@
+.Empty {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.Button {
+  background: linear-gradient(hsl(194, 90%, 54%), hsl(208, 90%, 54%));
+  border-radius: 24px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.4px;
+  margin-top: 12px;
+  padding: 8px 26px;
+  transition: all .1s ease-out;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100px;
+
+  &:hover {
+    background: linear-gradient(hsl(192, 90%, 54%), hsl(206, 90%, 54%));
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}

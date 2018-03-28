@@ -38,7 +38,7 @@ class Auth extends Component {
             : <Login switchForm={this.toggleNewUser} addUser={addUserFromToken} />
           }
           <Info
-            message={isNewUser ? 'Take a part in creating better video games!' : 'Welcome back!'}
+            message={isNewUser ? 'Take your game to the next level!' : 'Welcome back!'}
             isNewUser={isNewUser}
           />
         </div>
