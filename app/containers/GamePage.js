@@ -124,7 +124,14 @@ class GamePage extends Component {
   }
 
   onMediaStop = (type, blobObject) => {
+    this.createSessionsDirIfNeeded();
     this.saveRecordedFile(type, blobObject);
+  }
+
+  createSessionsDirIfNeeded = () => {
+    const appDataPath = app.getPath('appData');
+    const dir = `${appDataPath}/ASLibrary/Sessions`;
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   }
 
   saveRecordedFile = (type, { blob }) => {
