@@ -12,7 +12,7 @@ const Modal = ({ title, isGallery, isSettings, trailerId, children, id }) => {
 
   let player;
   const stopVideo = () => {
-    if (!player) player = YTPlayer(trailerId);
+    if (!player && trailerId) player = YTPlayer(trailerId);
     player.stopVideo();
   };
 

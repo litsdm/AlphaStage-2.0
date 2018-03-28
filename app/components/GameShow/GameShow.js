@@ -174,7 +174,11 @@ class GameShow extends Component {
           openGame={openGame}
           activeSession={activeSession}
         />
-        <Modal isGallery id={galleryModalId} trailerId={`trailer-${game._id}`}>
+        <Modal
+          isGallery
+          id={galleryModalId}
+          trailerId={game.trailer ? `trailer-${game._id}` : null}
+        >
           {this.renderSlider()}
         </Modal>
         <FeedbackModal
