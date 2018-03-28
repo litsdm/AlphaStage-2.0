@@ -167,7 +167,7 @@ class GamePage extends Component {
     const { game } = this.props;
     const fileName = `test-${game._id}-${new Date().getTime()}.${file.type.split('/')[1]}`;
     let s3Url;
-    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
+    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}&folder-name=FeedbackVids`)
       .then(res => res.json())
       .then(({ signedRequest, url }) => {
         s3Url = url;

@@ -25,8 +25,7 @@ const Uploads = (props) => {
 
     if (uploadError) handleChange({ target: { name: 'uploadError', value: '' } });
     handleChange({ target: { name, value: true } });
-
-    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}`)
+    callApi(`sign-s3?file-name=${fileName}&file-type=${file.type}&folder-name=GameBuilds`)
       .then(res => res.json())
       .then(({ signedRequest, url }) => {
         buildUrl = url;
