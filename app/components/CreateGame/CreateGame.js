@@ -347,8 +347,6 @@ class CreateGame extends Component {
 
     const platforms = { availableWin, availableMac };
 
-    console.log(releaseStatus);
-
     return (
       <div className={styles.CreateGame}>
         <Basic

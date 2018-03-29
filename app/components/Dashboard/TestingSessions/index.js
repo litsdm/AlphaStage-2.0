@@ -11,6 +11,15 @@ class Index extends Component {
     selectedIndex: 0
   };
 
+  componentWillReceiveProps({ sessions: nextSessions }) {
+    const { sessions } = this.props;
+
+    if (sessions.length !== nextSessions.length) {
+      const page = nextSessions.length > 0 ? 0 : 1;
+      this.setState({ page });
+    }
+  }
+
   switchPage = (page, selectedIndex = 0) => {
     this.setState({ page, selectedIndex });
   }

@@ -10,17 +10,18 @@
 
   a {
     align-items: center;
-    background-color: #20c2f3;
+    background-color: #2091f3;
     border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     display: flex;
     font-size: 2rem;
     height: 75px;
     justify-content: center;
-    transition: 0.2s all ease;
     width: 75px;
 
     &:hover {
-      background-color: #2091f3;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      margin-top: -1px;
     }
   }
 }
