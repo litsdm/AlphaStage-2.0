@@ -29,7 +29,9 @@ class Signup extends Component {
 
     const payload = {
       user: {
-        ...this.state
+        email,
+        username,
+        password
       }
     };
 
