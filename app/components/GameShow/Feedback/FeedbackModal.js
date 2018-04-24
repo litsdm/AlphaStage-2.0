@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { string, object, func } from 'prop-types';
+import swal from 'sweetalert';
 import styles from './FeedbackModal.scss';
 
 import Modal from '../../Modal';
@@ -54,6 +55,7 @@ class FeedbackModal extends Component {
     sendFeedback(input, gameId);
     addExp({ exp: 125, level, currentExp: experience });
     document.getElementById(id).style.display = 'none';
+    swal('Feedback Sent!', 'Thank you for helping developers get their game to the next level. You have received 125 exp points!', 'success');
   }
 
   render() {
