@@ -42,9 +42,6 @@ class Login extends Component {
 
         const { hasAccess, gameCount } = jwtDecode(token);
 
-        console.log(hasAccess, gameCount);
-        console.log(!hasAccess && gameCount <= 0);
-
         if (!hasAccess && gameCount <= 0) {
           switchPage(2);
           return;
