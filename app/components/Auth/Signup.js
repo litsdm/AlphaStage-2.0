@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 import toastr from 'toastr';
+import jwtDecode from 'jwt-decode';
 import styles from './styles.scss';
 
 import callApi from '../../helpers/apiCaller';
@@ -24,7 +25,7 @@ class Signup extends Component {
   };
 
   signup = () => {
-    const { addUser } = this.props;
+    const { addUser, switchPage } = this.props;
     const { email, username, password, confirmPassword } = this.state;
 
     const payload = {
@@ -51,6 +52,13 @@ class Signup extends Component {
       .then(({ token, message }) => {
         if (message) return Promise.reject(message);
 
+        const { hasAccess } = jwtDecode(token);
+
+        if (!hasAccess) {
+          switchPage(2);
+          return;
+        }
+
         localStorage.setItem('token', token);
         addUser(token);
         return token;
@@ -59,7 +67,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { switchForm } = this.props;
+    const { switchPage } = this.props;
     const { email, username, password, confirmPassword } = this.state;
     return (
       <div className={styles.Signup}>
@@ -117,7 +125,7 @@ class Signup extends Component {
         </button>
 
         <span className={styles.Switch}>
-          Already have an account? <button onClick={switchForm}>Login now!</button>
+          Already have an account? <button onClick={() => switchPage(1)}>Login now!</button>
         </span>
       </div>
     );
@@ -125,7 +133,7 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  switchForm: func.isRequired,
+  switchPage: func.isRequired,
   addUser: func.isRequired
 };
 
