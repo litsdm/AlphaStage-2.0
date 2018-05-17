@@ -41,9 +41,9 @@ const mapStateToProps = ({ user }) => (
 
 const mapDispatchToProps = dispatch => ({
   logout: () => {
-    client.resetStore();
     localStorage.removeItem('token');
     dispatch(removeUser());
+    client.resetStore();
   },
   updateUserPic: profilePic => dispatch(updateProfilePic(profilePic)),
   startInstalling: () => dispatch(startInstall()),

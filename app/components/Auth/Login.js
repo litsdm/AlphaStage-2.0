@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 import toastr from 'toastr';
+import jwtDecode from 'jwt-decode';
 import styles from './styles.scss';
 
 import callApi from '../../helpers/apiCaller';
@@ -22,7 +23,7 @@ class Login extends Component {
   }
 
   login = () => {
-    const { addUser } = this.props;
+    const { addUser, switchPage } = this.props;
     const { email, password } = this.state;
 
     let errorMessage = '';
@@ -39,6 +40,13 @@ class Login extends Component {
       .then(({ token, message }) => {
         if (message) return Promise.reject(message);
 
+        const { hasAccess, gameCount } = jwtDecode(token);
+
+        if (!hasAccess && gameCount <= 0) {
+          switchPage(2);
+          return;
+        }
+
         localStorage.setItem('token', token);
         addUser(token);
         return token;
@@ -47,7 +55,7 @@ class Login extends Component {
   }
 
   render() {
-    const { switchForm } = this.props;
+    const { switchPage } = this.props;
     const { email, password } = this.state;
     return (
       <div className={styles.Login}>
@@ -81,7 +89,10 @@ class Login extends Component {
         </button>
 
         <span className={styles.Switch}>
-          New to Alpha Stage? <button onClick={switchForm}>Create an account!</button>
+          New to Alpha Stage?
+          <button onClick={() => switchPage(0)}>
+            {' '}Create an account!
+          </button>
         </span>
       </div>
     );
@@ -89,7 +100,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  switchForm: func.isRequired,
+  switchPage: func.isRequired,
   addUser: func.isRequired
 };
 

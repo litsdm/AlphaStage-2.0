@@ -160,7 +160,6 @@ class CreateGame extends Component {
       descriptionState: JSON.stringify(convertToRaw(currentContent)),
       developerIds: [user._id],
       genre,
-      invisible: true,
       languages,
       macBuild,
       ownerId: user._id,

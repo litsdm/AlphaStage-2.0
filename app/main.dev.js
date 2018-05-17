@@ -96,6 +96,12 @@ app.on('ready', async () => {
     }).catch(console.error);
   });
 
+  ipcMain.on('close-paypal', () => {
+    BrowserWindow.getAllWindows().forEach((win) => {
+      if (!win.webContents.getURL()) win.close();
+    });
+  });
+
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {

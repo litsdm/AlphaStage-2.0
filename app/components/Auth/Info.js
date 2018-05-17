@@ -1,10 +1,10 @@
 import React from 'react';
-import { bool, string } from 'prop-types';
+import { number, string } from 'prop-types';
 import styles from './styles.scss';
 import logo from '../../../resources/icon.png';
 
-const Info = ({ message, isNewUser }) => (
-  <div className={[styles.Info, isNewUser ? styles.NewUser : ''].join(' ')}>
+const Info = ({ message, page }) => (
+  <div className={[styles.Info, page === 0 ? styles.NewUser : ''].join(' ')}>
     <img src={logo} alt="logo" style={{ width: '100px' }} />
     <h2>{message}</h2>
   </div>
@@ -12,7 +12,7 @@ const Info = ({ message, isNewUser }) => (
 
 Info.propTypes = {
   message: string.isRequired,
-  isNewUser: bool.isRequired
+  page: number.isRequired
 };
 
 export default Info;

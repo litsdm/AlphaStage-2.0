@@ -6,6 +6,7 @@ import styles from './styles.scss';
 
 import Login from './Login';
 import Signup from './Signup';
+import NoAccess from './NoAccess';
 import Info from './Info';
 import Controls from '../Controls';
 
@@ -17,29 +18,37 @@ const mapDispatchToProps = dispatch => ({
 
 class Auth extends Component {
   state = {
-    isNewUser: false
+    page: 0
   }
 
-  toggleNewUser = () => {
-    this.setState({ isNewUser: !this.state.isNewUser });
+  switchPage = (page) => this.setState({ page });
+
+  renderPage = () => {
+    const { addUserFromToken } = this.props;
+    const { page } = this.state;
+    switch (page) {
+      case 0:
+        return <Signup switchPage={this.switchPage} addUser={addUserFromToken} />;
+      case 1:
+        return <Login switchPage={this.switchPage} addUser={addUserFromToken} />;
+      case 2:
+        return <NoAccess switchPage={this.switchPage} />;
+      default:
+        break;
+    }
   }
 
   render() {
-    const { addUserFromToken } = this.props;
-    const { isNewUser } = this.state;
+    const { page } = this.state;
     return (
       <div className={styles.Auth}>
         <Controls />
         <div className={styles.Draggable} />
-        <div className={[styles.AuthBox, isNewUser ? '' : styles.OldUser].join(' ')}>
-          {
-            isNewUser
-            ? <Signup switchForm={this.toggleNewUser} addUser={addUserFromToken} />
-            : <Login switchForm={this.toggleNewUser} addUser={addUserFromToken} />
-          }
+        <div className={[styles.AuthBox, page === 0 ? '' : styles.OldUser].join(' ')}>
+          {this.renderPage()}
           <Info
-            message={isNewUser ? 'Take your game to the next level!' : 'Welcome back!'}
-            isNewUser={isNewUser}
+            message={page === 0 ? 'Take your game to the next level!' : 'Welcome back!'}
+            page={page}
           />
         </div>
       </div>

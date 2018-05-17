@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ipcRenderer } from 'electron';
 import { func, string } from 'prop-types';
 import moment from 'moment';
 import paypal from 'paypal-checkout';
@@ -135,17 +136,20 @@ class Create extends Component {
         sandbox: 'AXWaKGPgGL-_EYRZxa1SW7MvxlzLXe-yUZ3rwQc_UdjXrczoUBHeRUyjsrt4sYq89yNtpqzL3AYYdU4k',
         production: process.env.PP_CLIENT
       },
-      payment: (data, actions) => (
-        actions.payment.create({
-          payment: {
-            transactions: [
-              {
-                amount: { total: plan.price, currency: 'USD' }
-              }
-            ]
-          }
-        })
-      ),
+      payment: (data, actions) => {
+        ipcRenderer.send('close-paypal');
+        return (
+          actions.payment.create({
+            payment: {
+              transactions: [
+                {
+                  amount: { total: plan.price, currency: 'USD' }
+                }
+              ]
+            }
+          })
+        );
+      },
       onAuthorize: (data, actions) => actions.payment.execute()
         .then(() => {
           this.create();
