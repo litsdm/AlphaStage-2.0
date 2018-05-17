@@ -1,7 +1,7 @@
 {
   "name": "alpha-stage",
   "productName": "Alpha Stage",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Playtesting platform for game developers that allows them to get valuable feedback from testers saving them time and money. To do this, it records the user’s gameplay or segments of it and sends it back to the developers for review.",
   "main": "./main.prod.js",
   "author": {
